@@ -9,14 +9,14 @@ import UIKit
 
 class ComicsCollectionViewController: UICollectionViewController {
 
+    private var customLayout = ViewFactory.layout
     private var useCase: ComicsCollectionUseCaseRepresenable
 
     init(
-        useCase: ComicsCollectionUseCaseRepresenable,
-        layout: UICollectionViewLayout = UICollectionViewFlowLayout()
+        useCase: ComicsCollectionUseCaseRepresenable
     ) {
         self.useCase = useCase
-        super.init(collectionViewLayout: layout)
+        super.init(collectionViewLayout: customLayout)
     }
 
     required init?(coder: NSCoder) {
@@ -25,73 +25,79 @@ class ComicsCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.useCase.initView()
+        initialSetup()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        useCase.close()
+    }
+
+    // MARK: - Setup
+
+    private func initialSetup() {
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
         // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: CellsIdentifier.basic)
+        self.collectionView!.register(ComicCollectionViewCell.self, forCellWithReuseIdentifier: ComicCollectionViewCell.identifier)
+        customLayout.itemSize = .init(
+            width: (view.frame.size.width / 2) - 1,
+            height: (view.frame.size.height / 4) - 4
+        )
 
-        // Do any additional setup after loading the view.
+        useCase.initView(onRefresh: { [weak self] in
+            self?.collectionView.reloadData()
+        })
     }
 
-    // MARK: UICollectionViewDataSource
+    // MARK: - UICollectionViewDelegate
 
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
+    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool { false }
 
+    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool { false }
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension ComicsCollectionViewController {
+
+    override func numberOfSections(in collectionView: UICollectionView) -> Int { 1 }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+        switch useCase.state {
+        case .loading:
+            return 2
+        case .success(let comics):
+            return comics.count
+        default:
+            return 0
+        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellsIdentifier.basic, for: indexPath)
-    
-        // Configure the cell
-    
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ComicCollectionViewCell.identifier, for: indexPath) as! ComicCollectionViewCell
+
+        switch useCase.state {
+        case .success(let comics):
+            cell.model = comics[indexPath.row]
+        default:
+            break
+        }
+
         return cell
     }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
-
 }
 
 extension ComicsCollectionViewController {
 
-    enum CellsIdentifier {
-        static let basic = "Cell"
+    enum ViewFactory {
+        static var layout: UICollectionViewFlowLayout {
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .vertical
+            layout.minimumLineSpacing = 5
+            layout.minimumInteritemSpacing = 1
+            return layout
+        }
     }
 }

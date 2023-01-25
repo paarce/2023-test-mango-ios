@@ -11,8 +11,10 @@ import Foundation
 class ModuleCoordinator {
 
     func createComicsCollection() -> ComicsCollectionViewController {
-        let useCase = ComicsCollectionUseCase(
-            provider: ComicsCollectionProvider(service: ComicsCollectionServiceService()))
-        return .init(useCase: useCase)
+        .init(
+            useCase: ComicsCollectionUseCase(
+                provider: ComicsCollectionProvider(service: ComicsCollectionServiceService())
+            )
+        )
     }
 }

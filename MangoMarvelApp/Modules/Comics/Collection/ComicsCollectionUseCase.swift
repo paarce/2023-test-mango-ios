@@ -10,22 +10,35 @@ import Foundation
 enum ComicsCollectionState {
     case empty
     case loading
-    case error
-    case success
+    case fail(ErrorDTO)
+    case success([ComicDTO])
+}
+
+enum ComicsCollectionContent {
+    case loading
+    case fail(Error)
+    case success([Comic])
 }
 
 protocol ComicsCollectionUseCaseRepresenable {
 
     var state: ComicsCollectionState { get }
+    var onRefresh: (() ->Void)? { get }
 
-    func initView()
+    func initView(onRefresh: (() -> Void)?)
     func reload()
     func moveTo(page: Int)
+    func close()
+}
+
+protocol ComicsCollectionObserver {
+    func update(content: ComicsCollectionContent)
 }
 
 class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
 
     private var provider: ComicsCollectionProviderReprentable
+    var onRefresh: (() -> Void)?
     private (set) var state: ComicsCollectionState
 
     init(state: ComicsCollectionState = .empty, provider: ComicsCollectionProviderReprentable) {
@@ -33,16 +46,44 @@ class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
         self.provider = provider
     }
 
-    func initView() {
-        guard state != .loading else { return }
-        self.provider.reload()
+    func initView(onRefresh: (() -> Void)?) {
+        self.onRefresh = onRefresh
+        provider.observer = self
+//        guard case .loading = state else { return }
+        provider.reload()
     }
 
     func reload() {
-        self.provider.reload()
+        provider.reload()
     }
 
     func moveTo(page: Int) {
-        self.provider.fetchNextPageIfPossible()
+        provider.fetchNextPageIfPossible()
     }
+
+    func close() {
+        provider.observer = nil
+    }
+}
+
+extension ComicsCollectionUseCase: ComicsCollectionObserver {
+
+    func update(content: ComicsCollectionContent) {
+
+        switch content {
+        case .loading:
+            self.state = .loading
+        case .fail(let error):
+            self.state = .fail(.init(error: error))
+        case .success(let comics):
+            if comics.isEmpty {
+                self.state = .empty
+            } else {
+                self.state = .success(comics.map({ .init(comic: $0) }))
+            }
+        }
+        onRefresh?()
+        
+    }
+
 }

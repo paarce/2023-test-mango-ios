@@ -11,13 +11,15 @@ protocol ComicsCollectionProviderReprentable {
 
     var service: ComicsCollectionServiceRepresentable { get }
     var offset: Int? { get }
-//    var observer: CharacterListViewModelObserver? { get set }
+    var observer: ComicsCollectionObserver? { get set }
 
     func reload()
     func fetchNextPageIfPossible()
 }
 
 class ComicsCollectionProvider: ComicsCollectionProviderReprentable {
+
+    var observer: ComicsCollectionObserver?
     private (set) var service: ComicsCollectionServiceRepresentable
     private (set) var offset: Int?
     private var isLoading = false
@@ -43,6 +45,7 @@ class ComicsCollectionProvider: ComicsCollectionProviderReprentable {
     private func fetch(offset: Int?) {
         guard !isLoading else { return }
         isLoading = true
+        self.observer?.update(content: .loading)
 
         service.fecth(
             options: .init(page: offset, keywords: nil)
@@ -51,10 +54,10 @@ class ComicsCollectionProvider: ComicsCollectionProviderReprentable {
             self.isLoading = false
             switch result {
             case .success(let response):
-                print(response)
+                self.observer?.update(content: .success(response.data.results))
 
             case .failure(let error):
-                print(error)
+                self.observer?.update(content: .fail(error))
             }
         }
     }
