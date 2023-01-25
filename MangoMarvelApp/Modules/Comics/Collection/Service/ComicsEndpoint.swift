@@ -29,3 +29,14 @@ struct ComicsEndpoint: EndpointRepresentable {
         self.params = params
     }
 }
+
+struct Comic: Codable {
+    let id: Int
+    let digitalId: Int?
+    let title: String?
+    let variantDescription: String?
+    let description: String?
+    let modified: String?
+}
+
+typealias ComicsCollection = APIResponse<CollectionResponse<Comic>>

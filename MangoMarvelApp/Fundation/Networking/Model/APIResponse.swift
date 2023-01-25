@@ -22,7 +22,7 @@ struct CollectionResponse<M: Codable>: Codable {
     let limit: Int
     let total: Int
     let count: Int
-    let result: [M]
+    let results: [M]
 }
 
 struct ErrorResponse: Codable {

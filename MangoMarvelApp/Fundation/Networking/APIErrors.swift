@@ -35,9 +35,9 @@ enum APIError: LocalizedError {
         case .serverError:
             return "Somthing went wrong IN the server. Please retry."
         case .missingParameter(message: let message):
-            return "\(message ?? "Missing parameter")."
+            return message ?? "Missing parameter"
         case .invalid(message: let message):
-            return "\(message ?? "Invalid parameter")."
+            return message ?? "Invalid parameter"
         case .methodNotAllowed:
             return "You are trying to use a worng method Please retry."
         case .forbidden:
@@ -47,6 +47,17 @@ enum APIError: LocalizedError {
 }
 
 extension APIError {
+
+    static func handleDecoding(error: DecodingError) -> APIError {
+        switch error {
+        case .keyNotFound(let codingPath, let context):
+            return APIError.parseError(keys: [codingPath], description: context.debugDescription)
+        case .dataCorrupted(let context):
+            return APIError.parseError(keys: context.codingPath, description: context.debugDescription)
+        default:
+            return APIError.parseError(keys: [], description: error.localizedDescription)
+        }
+    }
 
     static func handleResponse(code: Int, message: String?) -> APIError {
         switch code {

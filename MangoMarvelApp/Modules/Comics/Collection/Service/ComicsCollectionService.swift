@@ -11,7 +11,7 @@ import Combine
 protocol ComicsCollectionServiceRepresentable {
     func fecth(
         options: ComicsEndpoint.Options,
-        completion: @escaping (Result<Codable, Error>) -> Void
+        completion: @escaping (Result<ComicsCollection, Error>) -> Void
     )
 }
 
@@ -27,7 +27,7 @@ class ComicsCollectionServiceService: ComicsCollectionServiceRepresentable {
 
     func fecth(
         options: ComicsEndpoint.Options,
-        completion: @escaping (Result<Codable, Error>) -> Void
+        completion: @escaping (Result<ComicsCollection, Error>) -> Void
     ) {
         let endpoint = ComicsEndpoint(options: options)
         do {
@@ -44,14 +44,3 @@ class ComicsCollectionServiceService: ComicsCollectionServiceRepresentable {
         }
     }
 }
-
-struct Comic: Codable {
-    let id: Int
-    let digitalId: Int?
-    let title: String?
-    let variantDescription: String?
-    let description: String?
-    let modified: String?
-}
-
-typealias ComicsCollection = APIResponse<CollectionResponse<Comic>>

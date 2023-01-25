@@ -27,6 +27,7 @@
 		F34FA85A29815DDE00E985C7 /* ModulesCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA85929815DDE00E985C7 /* ModulesCordinator.swift */; };
 		F34FA85C29816E2C00E985C7 /* ComicsEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA85B29816E2C00E985C7 /* ComicsEndpoint.swift */; };
 		F34FA85F29816EA100E985C7 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA85E29816EA100E985C7 /* APIResponse.swift */; };
+		F34FA861298180E400E985C7 /* Encrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA860298180E400E985C7 /* Encrypt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		F34FA85929815DDE00E985C7 /* ModulesCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesCordinator.swift; sourceTree = "<group>"; };
 		F34FA85B29816E2C00E985C7 /* ComicsEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsEndpoint.swift; sourceTree = "<group>"; };
 		F34FA85E29816EA100E985C7 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
+		F34FA860298180E400E985C7 /* Encrypt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encrypt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				F34FA84929814C4000E985C7 /* Environment.swift */,
+				F34FA860298180E400E985C7 /* Encrypt.swift */,
 				F34FA84429814A6A00E985C7 /* Networking */,
 			);
 			path = Fundation;
@@ -371,6 +374,7 @@
 				F34FA84629814A9A00E985C7 /* RequestHandler.swift in Sources */,
 				F34FA851298151D300E985C7 /* ComicsCollectionUseCase.swift in Sources */,
 				F34FA8532981530F00E985C7 /* ComicsCollectionProvider.swift in Sources */,
+				F34FA861298180E400E985C7 /* Encrypt.swift in Sources */,
 				F34FA85C29816E2C00E985C7 /* ComicsEndpoint.swift in Sources */,
 				CC41C22425DD3FA10057D0C9 /* SceneDelegate.swift in Sources */,
 			);

@@ -27,18 +27,13 @@ struct RestClient: RequestPerformer {
                     throw handleError(data: data, response: response)
                 }
                 return data
-
             }
             .decode (type: R.self, decoder: JSONDecoder())
             .mapError({ error -> Error in
                 if let error = error as? APIError {
                     return error
                 } else if let decoding = error as? DecodingError {
-                    if case .dataCorrupted(let context) = decoding {
-                        return APIError.parseError(keys: context.codingPath, description: context.debugDescription)
-                    } else {
-                        return APIError.parseError(keys: [], description: error.localizedDescription)
-                    }
+                    return APIError.handleDecoding(error: decoding)
                 } else {
                     return APIError.unknown
                 }
@@ -50,7 +45,6 @@ struct RestClient: RequestPerformer {
 
         let errorResponse = try? JSONDecoder().decode(ErrorResponse.self, from: data)
         if let httpUrlResponse = response as? HTTPURLResponse {
-            print(httpUrlResponse)
             return APIError.handleResponse(
                 code: httpUrlResponse.statusCode,
                 message: errorResponse?.message
@@ -59,3 +53,4 @@ struct RestClient: RequestPerformer {
         return APIError.unknown
     }
 }
+
