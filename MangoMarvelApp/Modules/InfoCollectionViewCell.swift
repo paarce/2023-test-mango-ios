@@ -8,8 +8,23 @@
 import UIKit
 
 struct InfoCellModel {
-    let image: UIImage
+    let image: UIImage?
     let messasge: String
+
+    init(error: ErrorDTO) {
+        image = nil
+        messasge = error.message
+    }
+
+    init(loadingMessage: String) {
+        image = UIImage(named: "loadingIimage")
+        messasge = loadingMessage
+    }
+
+    init(emptyMessage: String) {
+        image = nil
+        messasge = emptyMessage
+    }
 }
 
 class InfoCollectionViewCell: UICollectionViewCell {
@@ -19,7 +34,7 @@ class InfoCollectionViewCell: UICollectionViewCell {
     private var content = ViewFactory.content()
     private var imageView = ViewFactory.image()
     private var body = ViewFactory.body()
-    private var model: InfoCellModel = .init(image: UIImage(contentsOfFile: "placeholderImage")!, messasge: "ERRRORRRRRRR")
+    private var model: InfoCellModel?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,6 +43,12 @@ class InfoCollectionViewCell: UICollectionViewCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        setupConstraints()
     }
 
     private func setupSubViews() {
@@ -42,9 +63,21 @@ class InfoCollectionViewCell: UICollectionViewCell {
     private func setupConstraints() {
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        content.translatesAutoresizingMaskIntoConstraints = false
         imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        content.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        content.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        content.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        content.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+        content.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: -100.0).isActive = true
+    }
+
+    func set(model: InfoCellModel?) {
+        guard let model = model else { return }
+        imageView.image = model.image ?? Constants.placeholderImage
+        body.text = model.messasge
+    }
+
+    private enum Constants {
+        static let placeholderImage = UIImage(contentsOfFile: "placeholderImage")
     }
 }
 

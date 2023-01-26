@@ -34,6 +34,7 @@
 		F34FAD492981A52700E985C7 /* ComicDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD482981A52700E985C7 /* ComicDTO.swift */; };
 		F34FAD4D2981BE0800E985C7 /* ImageRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD4C2981BE0800E985C7 /* ImageRemote.swift */; };
 		F34FAD4F2981E08600E985C7 /* InfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD4E2981E08600E985C7 /* InfoCollectionViewCell.swift */; };
+		F34FAD5129828CB100E985C7 /* ComicsCollectionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD5029828CB100E985C7 /* ComicsCollectionLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		F34FAD482981A52700E985C7 /* ComicDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDTO.swift; sourceTree = "<group>"; };
 		F34FAD4C2981BE0800E985C7 /* ImageRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRemote.swift; sourceTree = "<group>"; };
 		F34FAD4E2981E08600E985C7 /* InfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		F34FAD5029828CB100E985C7 /* ComicsCollectionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsCollectionLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +211,7 @@
 				F34FA850298151D300E985C7 /* ComicsCollectionUseCase.swift */,
 				F34FA8522981530F00E985C7 /* ComicsCollectionProvider.swift */,
 				F34FAD482981A52700E985C7 /* ComicDTO.swift */,
+				F34FAD5029828CB100E985C7 /* ComicsCollectionLayout.swift */,
 			);
 			path = Collection;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				F34FA861298180E400E985C7 /* Encrypt.swift in Sources */,
 				F34FA85C29816E2C00E985C7 /* ComicsEndpoint.swift in Sources */,
 				F34FA8642981904600E985C7 /* ComicCollectionViewCell.swift in Sources */,
+				F34FAD5129828CB100E985C7 /* ComicsCollectionLayout.swift in Sources */,
 				F34FAD452981949800E985C7 /* UIView+extension.swift in Sources */,
 				F34FAD4F2981E08600E985C7 /* InfoCollectionViewCell.swift in Sources */,
 				CC41C22425DD3FA10057D0C9 /* SceneDelegate.swift in Sources */,

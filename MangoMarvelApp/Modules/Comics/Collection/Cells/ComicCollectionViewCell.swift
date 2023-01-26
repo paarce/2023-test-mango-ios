@@ -87,19 +87,6 @@ class ComicCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func updateConstraints(cellSize: CGSize?) {
-        guard let cellSize else { return }
-        if imageHeightConstraint == nil {
-            imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: cellSize.height)
-            imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: cellSize.width)
-        } else {
-            imageHeightConstraint?.constant = cellSize.height
-            imageWidthConstraint?.constant = cellSize.width
-        }
-//        imageHeightConstraint?.isActive = true
-//        imageWidthConstraint?.isActive = true
-    }
-
     private enum Constants {
         static let padding: CGFloat = 10.0
         static let imagePercentage: CGFloat = 0.70

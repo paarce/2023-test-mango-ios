@@ -36,18 +36,16 @@ class ComicsCollectionViewController: UICollectionViewController {
     // MARK: - Setup
 
     private func initialSetup() {
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        // Register cell classes
         self.collectionView!.register(ComicCollectionViewCell.self, forCellWithReuseIdentifier: ComicCollectionViewCell.identifier)
-        customLayout.itemSize = .init(
-            width: (view.frame.size.width / 2) - 1,
-            height: (view.frame.size.height / 4) - 4
-        )
+        self.collectionView!.register(InfoCollectionViewCell.self, forCellWithReuseIdentifier: InfoCollectionViewCell.identifier)
 
         useCase.initView(onRefresh: { [weak self] in
-            self?.collectionView.reloadData()
+            self?.refresh()
         })
+    }
+
+    private func refresh() {
+        collectionView.reloadData()
     }
 
     // MARK: - UICollectionViewDelegate
@@ -66,7 +64,7 @@ extension ComicsCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch useCase.state {
         case .loading:
-            return 2
+            return 1
         case .success(let comics):
             return comics.count
         default:
@@ -76,15 +74,37 @@ extension ComicsCollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ComicCollectionViewCell.identifier, for: indexPath) as! ComicCollectionViewCell
-        let size = useCase.cellSize(from: view.frame.size, in: ComicCollectionViewCell.identifier)
-        cell.updateConstraints(cellSize: size)
-        cell.set(model: useCase.comics?[indexPath.item])
-        return cell
+        switch useCase.state {
+        case .success:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ComicCollectionViewCell.identifier, for: indexPath) as! ComicCollectionViewCell
+            cell.set(model: useCase.storeComics?[indexPath.item])
+            return cell
+        case .loading:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectionViewCell.identifier, for: indexPath) as! InfoCollectionViewCell
+            cell.set(model: .init(loadingMessage: "We are gettings the comics..."))
+            return cell
+        default:
+            return collectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectionViewCell.identifier, for: indexPath) as! InfoCollectionViewCell
+        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         useCase.loadNextPageIfNeeded(lastIndexShowed: indexPath.item)
+    }
+}
+
+extension ComicsCollectionViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        var cellIdentifier: String
+        switch useCase.state {
+        case .success:
+            cellIdentifier = ComicCollectionViewCell.identifier
+        default:
+            cellIdentifier = InfoCollectionViewCell.identifier
+        }
+        return useCase.cellSize(from: view.frame.size, in: cellIdentifier)
     }
 }
 

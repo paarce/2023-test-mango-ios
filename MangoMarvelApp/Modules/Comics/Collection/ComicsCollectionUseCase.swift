@@ -33,14 +33,14 @@ enum ComicsCollectionContent {
 protocol ComicsCollectionUseCaseRepresenable {
 
     var state: ComicsCollectionState { get }
-    var comics: [ComicDTO]? { get }
+    var storeComics: [ComicDTO]? { get }
     var onRefresh: (() ->Void)? { get }
 
     func initView(onRefresh: (() -> Void)?)
     func reload()
     func loadNextPageIfNeeded(lastIndexShowed: Int)
     func close()
-    func cellSize(from frameSize: CGSize, in identifier: String) -> CGSize?
+    func cellSize(from frameSize: CGSize, in identifier: String) -> CGSize
 }
 
 protocol ComicsCollectionObserver {
@@ -53,7 +53,7 @@ class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
     private var provider: ComicsCollectionProviderReprentable
     private (set) var state: ComicsCollectionState
     private (set) var onRefresh: (() -> Void)?
-    var comics: [ComicDTO]? {
+    var storeComics: [ComicDTO]? {
         switch state {
         case .success(let comics) :
             return comics
@@ -87,14 +87,16 @@ class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
         provider.observer = nil
     }
 
-    func cellSize(from frameSize: CGSize, in identifier: String) -> CGSize? {
+    func cellSize(from frameSize: CGSize, in identifier: String) -> CGSize {
         if identifier == ComicCollectionViewCell.identifier {
             return .init(
                 width: (frameSize.width / 2) - 1,
                 height: (frameSize.height / 4) - 4
             )
+        } else if identifier == InfoCollectionViewCell.identifier {
+            return .init(width: frameSize.width, height: frameSize.height)
         } else {
-            return nil
+            return .zero
         }
     }
 
@@ -104,7 +106,7 @@ class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
     }
 
     private enum Constants {
-        static let offsetToLoadMore = 15
+        static let offsetToLoadMore = 10
     }
 }
 
@@ -114,7 +116,7 @@ extension ComicsCollectionUseCase: ComicsCollectionObserver {
 
         switch content {
         case .loading:
-            guard comics == nil else { return }
+            guard storeComics == nil else { return }
             state = .loading
         case .fail(let error):
             state = .fail(.init(error: error))
@@ -122,7 +124,7 @@ extension ComicsCollectionUseCase: ComicsCollectionObserver {
             if comics.isEmpty {
                 state = .empty
             } else {
-                var array = self.comics ?? []
+                var array = self.storeComics ?? []
                 array.append(contentsOf: comics.map({ .init(comic: $0) }))
                 state = .success(array)
             }
