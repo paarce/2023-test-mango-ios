@@ -10,8 +10,7 @@ import Foundation
 struct ComicsEndpoint: EndpointRepresentable {
 
     struct Options {
-        let page: Int?
-        let keywords: String?
+        let offset: Int?
     }
 
     let id: EndpointSupported = .comics
@@ -20,11 +19,8 @@ struct ComicsEndpoint: EndpointRepresentable {
 
     init(options: Options) {
         var params: [String: String] = [:]
-        if let page = options.page {
-            params["page"] = "\(page)"
-        }
-        if let keywords = options.keywords  {
-            params["name"] = keywords
+        if let offset = options.offset {
+            params["offset"] = "\(offset)"
         }
         self.params = params
     }
@@ -33,10 +29,11 @@ struct ComicsEndpoint: EndpointRepresentable {
 struct Comic: Codable {
     let id: Int
     let digitalId: Int?
-    let title: String?
+    let title: String
     let variantDescription: String?
     let description: String?
     let modified: String?
+    let thumbnail: ImageInfo
 }
 
 typealias ComicsCollection = APIResponse<CollectionResponse<Comic>>

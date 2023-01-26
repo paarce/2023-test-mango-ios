@@ -32,6 +32,8 @@
 		F34FAD452981949800E985C7 /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD442981949800E985C7 /* UIView+extension.swift */; };
 		F34FAD472981A4F900E985C7 /* ErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD462981A4F900E985C7 /* ErrorDTO.swift */; };
 		F34FAD492981A52700E985C7 /* ComicDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD482981A52700E985C7 /* ComicDTO.swift */; };
+		F34FAD4D2981BE0800E985C7 /* ImageRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD4C2981BE0800E985C7 /* ImageRemote.swift */; };
+		F34FAD4F2981E08600E985C7 /* InfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD4E2981E08600E985C7 /* InfoCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +85,8 @@
 		F34FAD442981949800E985C7 /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
 		F34FAD462981A4F900E985C7 /* ErrorDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDTO.swift; sourceTree = "<group>"; };
 		F34FAD482981A52700E985C7 /* ComicDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDTO.swift; sourceTree = "<group>"; };
+		F34FAD4C2981BE0800E985C7 /* ImageRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRemote.swift; sourceTree = "<group>"; };
+		F34FAD4E2981E08600E985C7 /* InfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,11 +171,12 @@
 		F34FA83F298145BA00E985C7 /* Fundation */ = {
 			isa = PBXGroup;
 			children = (
+				F34FAD4A2981BDAE00E985C7 /* DTO */,
+				F34FA84429814A6A00E985C7 /* Networking */,
 				F34FAD432981946900E985C7 /* Extensions */,
 				F34FA84929814C4000E985C7 /* Environment.swift */,
 				F34FA860298180E400E985C7 /* Encrypt.swift */,
-				F34FA84429814A6A00E985C7 /* Networking */,
-				F34FAD462981A4F900E985C7 /* ErrorDTO.swift */,
+				F34FAD4C2981BE0800E985C7 /* ImageRemote.swift */,
 			);
 			path = Fundation;
 			sourceTree = "<group>";
@@ -181,6 +186,7 @@
 			children = (
 				F34FA841298145CB00E985C7 /* Comics */,
 				F34FA85929815DDE00E985C7 /* ModulesCordinator.swift */,
+				F34FAD4E2981E08600E985C7 /* InfoCollectionViewCell.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -257,6 +263,14 @@
 				F34FAD442981949800E985C7 /* UIView+extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F34FAD4A2981BDAE00E985C7 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				F34FAD462981A4F900E985C7 /* ErrorDTO.swift */,
+			);
+			path = DTO;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -390,6 +404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F34FA84E298150CA00E985C7 /* ComicsCollectionViewController.swift in Sources */,
+				F34FAD4D2981BE0800E985C7 /* ImageRemote.swift in Sources */,
 				F34FA84829814ACF00E985C7 /* APIErrors.swift in Sources */,
 				F34FA84C29814DF800E985C7 /* EndpointRepresentable.swift in Sources */,
 				F34FA84A29814C4000E985C7 /* Environment.swift in Sources */,
@@ -408,6 +423,7 @@
 				F34FA85C29816E2C00E985C7 /* ComicsEndpoint.swift in Sources */,
 				F34FA8642981904600E985C7 /* ComicCollectionViewCell.swift in Sources */,
 				F34FAD452981949800E985C7 /* UIView+extension.swift in Sources */,
+				F34FAD4F2981E08600E985C7 /* InfoCollectionViewCell.swift in Sources */,
 				CC41C22425DD3FA10057D0C9 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

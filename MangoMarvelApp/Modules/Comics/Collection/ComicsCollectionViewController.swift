@@ -77,15 +77,14 @@ extension ComicsCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ComicCollectionViewCell.identifier, for: indexPath) as! ComicCollectionViewCell
-
-        switch useCase.state {
-        case .success(let comics):
-            cell.model = comics[indexPath.row]
-        default:
-            break
-        }
-
+        let size = useCase.cellSize(from: view.frame.size, in: ComicCollectionViewCell.identifier)
+        cell.updateConstraints(cellSize: size)
+        cell.set(model: useCase.comics?[indexPath.item])
         return cell
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        useCase.loadNextPageIfNeeded(lastIndexShowed: indexPath.item)
     }
 }
 

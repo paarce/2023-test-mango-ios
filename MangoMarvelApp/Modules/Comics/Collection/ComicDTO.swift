@@ -5,17 +5,19 @@
 //  Created by Augusto Cordero Perez on 25/1/23.
 //
 
-import Foundation
+import UIKit
 
-struct ComicDTO {
+class ComicDTO {
 
     let title: String
     let body: String
     let imageURL: URL?
+    var image: UIImage?
 
     init(comic: Comic) {
-        title = comic.title ?? ""
+        title = "\(comic.id) - \(comic.title)"
         body = comic.description ?? ""
-        imageURL = nil
+        let str = comic.thumbnail.path + "." + comic.thumbnail.fileExtension
+        imageURL = URL(string: str)
     }
 }

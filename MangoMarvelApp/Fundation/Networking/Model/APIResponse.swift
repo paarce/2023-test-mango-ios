@@ -25,6 +25,16 @@ struct CollectionResponse<M: Codable>: Codable {
     let results: [M]
 }
 
+struct ImageInfo: Codable {
+    let path: String
+    let fileExtension: String
+
+    enum CodingKeys: String, CodingKey {
+        case path
+        case fileExtension = "extension"
+    }
+}
+
 struct ErrorResponse: Codable {
     let code: String?
     let message: String?

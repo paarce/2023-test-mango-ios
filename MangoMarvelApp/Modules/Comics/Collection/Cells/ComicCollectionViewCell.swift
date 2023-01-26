@@ -11,24 +11,20 @@ class ComicCollectionViewCell: UICollectionViewCell {
 
     static let identifier = "ComicCollectionViewCell"
 
-    private var container = ViewFactory.container()
-    private var content = ViewFactory.container()
-    private var image = ViewFactory.image()
+    private var content = ViewFactory.content()
+    private var imageView = ViewFactory.image()
     private var title = ViewFactory.title()
     private var body = ViewFactory.body()
+    private var imageHeightConstraint: NSLayoutConstraint?
+    private var imageWidthConstraint: NSLayoutConstraint?
 
     private var constraintSet = false
 
-    var model: ComicDTO? {
-        didSet {
-            setupModel()
-        }
-    }
+    private var model: ComicDTO?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSubViews()
-        setupModel()
     }
 
     required init?(coder: NSCoder) {
@@ -42,56 +38,78 @@ class ComicCollectionViewCell: UICollectionViewCell {
     }
 
     private func setupSubViews() {
-        contentView.addSubview(container)
-        contentView.addSubview(image)
+        contentView.addSubview(imageView)
         contentView.addSubview(content)
         contentView.addSubview(title)
         contentView.addSubview(body)
-
-        container.addArrangedSubview(image)
-        container.addArrangedSubview(content)
+        contentView.bringSubviewToFront(content)
 
         content.addArrangedSubview(title)
         content.addArrangedSubview(body)
+
+        imageView.clipsToBounds = true
+        imageView.alpha = 0.5
+        body.textColor = .darkGray
     }
 
     private func setupConstraints() {
 
         guard !constraintSet else { return }
         constraintSet = true
-
-        container.constrainEdges(
+        imageView.constrainEdges(to: contentView)
+        content.constrainEdges(
             to: contentView,
-            insets: .init(top: 0, left: Constants.padding, bottom: 0, right: Constants.padding)
+            insets: .init(top: Constants.padding, left: Constants.padding, bottom: Constants.padding, right: Constants.padding)
         )
-        image.heightAnchor.constraint(equalToConstant: contentView.frame.size.height * Constants.imagePercentage).isActive = true
         title.setContentHuggingPriority(.defaultHigh, for: .vertical)
         body.setContentHuggingPriority(.defaultLow, for: .vertical)
+        imageView.setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
 
-    private func setupModel() {
+    func set(model: ComicDTO?) {
+        self.model = model
         guard let model = model else { return }
         title.text = model.title
         body.text = model.body
+
+        if let image = model.image {
+            self.imageView.image = image
+        } else if let url = model.imageURL {
+            //TODO: Include cache https://medium.com/@srits.ashish/how-to-download-image-asynchronously-in-uitableviewcell-using-nscache-abbf02cb1e12
+            ImageRemote.downloadImage(from: url, completion: { [weak self] image in
+                self?.model?.image = image
+                DispatchQueue.main.async {
+                    self?.imageView.image = image ?? Constants.placeholderImage
+                }
+            })
+        } else {
+            self.imageView.image = Constants.placeholderImage
+        }
+    }
+
+    func updateConstraints(cellSize: CGSize?) {
+        guard let cellSize else { return }
+        if imageHeightConstraint == nil {
+            imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: cellSize.height)
+            imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: cellSize.width)
+        } else {
+            imageHeightConstraint?.constant = cellSize.height
+            imageWidthConstraint?.constant = cellSize.width
+        }
+//        imageHeightConstraint?.isActive = true
+//        imageWidthConstraint?.isActive = true
     }
 
     private enum Constants {
         static let padding: CGFloat = 10.0
-        static let imagePercentage: CGFloat = 0.75
+        static let imagePercentage: CGFloat = 0.70
+        static let placeholderImage = UIImage(contentsOfFile: "placeholderImage")
     }
 }
 
 extension ComicCollectionViewCell {
 
     enum ViewFactory {
-        static func container() -> UIStackView {
-            let stack = UIStackView()
-            stack.axis = .vertical
-            stack.distribution = .fill
-            stack.alignment = .fill
-            stack.spacing = 0
-            return stack
-        }
 
         static func content() -> UIStackView {
             let stack = UIStackView()
@@ -103,17 +121,14 @@ extension ComicCollectionViewCell {
         }
 
         static func image() -> UIImageView {
-            let imageview =  UIImageView(image: nil)
-            imageview.contentMode = .scaleAspectFit
-            if #available(iOS 13.0, *) {
-                return UIImageView(image: UIImage(systemName: "house"))
-            }
+            let imageview =  UIImageView()
+            imageview.contentMode = .scaleAspectFill
             return imageview
         }
 
         static func title() -> UILabel {
             let label = UILabel()
-            label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+            label.font = UIFont.systemFont(ofSize: 16, weight: .black)
             label.numberOfLines = 0
             label.textAlignment = .left
             return label
@@ -122,7 +137,6 @@ extension ComicCollectionViewCell {
         static func body() -> UILabel {
             let label = UILabel()
             label.font = UIFont.systemFont(ofSize: 10, weight: .light)
-            label.textColor = .lightGray
             label.numberOfLines = 0
             label.textAlignment = .left
             return label

@@ -5,10 +5,14 @@
 //  Created by Augusto Cordero Perez on 25/1/23.
 //
 
-import Foundation
+import UIKit
 
 @available(iOS 13.0, *)
 class ModuleCoordinator {
+
+    func createMainNavigator() -> UINavigationController {
+        UINavigationController(rootViewController:  createComicsCollection())
+    }
 
     func createComicsCollection() -> ComicsCollectionViewController {
         .init(

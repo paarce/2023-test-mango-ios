@@ -10,7 +10,6 @@ import Foundation
 protocol ComicsCollectionProviderReprentable {
 
     var service: ComicsCollectionServiceRepresentable { get }
-    var offset: Int? { get }
     var observer: ComicsCollectionObserver? { get set }
 
     func reload()
@@ -21,39 +20,40 @@ class ComicsCollectionProvider: ComicsCollectionProviderReprentable {
 
     var observer: ComicsCollectionObserver?
     private (set) var service: ComicsCollectionServiceRepresentable
-    private (set) var offset: Int?
+    private var page: Int
+    private let limit = 20
     private var isLoading = false
 
-    init(service: ComicsCollectionServiceRepresentable, offset: Int? = nil) {
+    init(service: ComicsCollectionServiceRepresentable, page: Int = 0) {
         self.service = service
-        self.offset = offset
+        self.page = page
     }
 
     //MARK: - ComicsCollectionProviderReprentable
 
     func reload() {
-        fetch(offset: offset)
+        fetch(page: page)
     }
 
     func fetchNextPageIfPossible() {
-        let nextPage = (offset ?? 0) + 1
-        fetch(offset: nextPage)
+        fetch(page: page + 1)
     }
 
     //MARK: - Private methods
 
-    private func fetch(offset: Int?) {
+    private func fetch(page: Int) {
         guard !isLoading else { return }
         isLoading = true
         self.observer?.update(content: .loading)
 
         service.fecth(
-            options: .init(page: offset, keywords: nil)
+            options: .init(offset: page * limit)
         ) { [weak self] result in
             guard let self = self else { return }
             self.isLoading = false
             switch result {
             case .success(let response):
+                self.page = response.data.offset / self.limit
                 self.observer?.update(content: .success(response.data.results))
 
             case .failure(let error):

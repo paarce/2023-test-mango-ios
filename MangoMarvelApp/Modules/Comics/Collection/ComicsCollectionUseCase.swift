@@ -7,7 +7,17 @@
 
 import Foundation
 
-enum ComicsCollectionState {
+enum ComicsCollectionState: Equatable {
+    static func == (lhs: ComicsCollectionState, rhs: ComicsCollectionState) -> Bool {
+        switch (lhs, rhs) {
+        case (.empty, .empty), (.loading, .loading),
+            (.fail, .fail), (.success, .success):
+            return true
+        default:
+            return false
+        }
+    }
+
     case empty
     case loading
     case fail(ErrorDTO)
@@ -23,12 +33,14 @@ enum ComicsCollectionContent {
 protocol ComicsCollectionUseCaseRepresenable {
 
     var state: ComicsCollectionState { get }
+    var comics: [ComicDTO]? { get }
     var onRefresh: (() ->Void)? { get }
 
     func initView(onRefresh: (() -> Void)?)
     func reload()
-    func moveTo(page: Int)
+    func loadNextPageIfNeeded(lastIndexShowed: Int)
     func close()
+    func cellSize(from frameSize: CGSize, in identifier: String) -> CGSize?
 }
 
 protocol ComicsCollectionObserver {
@@ -37,9 +49,18 @@ protocol ComicsCollectionObserver {
 
 class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
 
+
     private var provider: ComicsCollectionProviderReprentable
-    var onRefresh: (() -> Void)?
     private (set) var state: ComicsCollectionState
+    private (set) var onRefresh: (() -> Void)?
+    var comics: [ComicDTO]? {
+        switch state {
+        case .success(let comics) :
+            return comics
+        default:
+            return nil
+        }
+    }
 
     init(state: ComicsCollectionState = .empty, provider: ComicsCollectionProviderReprentable) {
         self.state = state
@@ -49,7 +70,7 @@ class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
     func initView(onRefresh: (() -> Void)?) {
         self.onRefresh = onRefresh
         provider.observer = self
-//        guard case .loading = state else { return }
+        guard state != .loading else { return }
         provider.reload()
     }
 
@@ -57,12 +78,33 @@ class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
         provider.reload()
     }
 
-    func moveTo(page: Int) {
+    func loadNextPageIfNeeded(lastIndexShowed: Int) {
+        guard shouldFetchNextPage(lastIndexShowed) else { return }
         provider.fetchNextPageIfPossible()
     }
 
     func close() {
         provider.observer = nil
+    }
+
+    func cellSize(from frameSize: CGSize, in identifier: String) -> CGSize? {
+        if identifier == ComicCollectionViewCell.identifier {
+            return .init(
+                width: (frameSize.width / 2) - 1,
+                height: (frameSize.height / 4) - 4
+            )
+        } else {
+            return nil
+        }
+    }
+
+    private func shouldFetchNextPage(_ lastIndexShowed: Int) -> Bool {
+        guard case .success(let comics) = state else { return false }
+        return (comics.count - lastIndexShowed) < Constants.offsetToLoadMore
+    }
+
+    private enum Constants {
+        static let offsetToLoadMore = 15
     }
 }
 
@@ -72,18 +114,20 @@ extension ComicsCollectionUseCase: ComicsCollectionObserver {
 
         switch content {
         case .loading:
-            self.state = .loading
+            guard comics == nil else { return }
+            state = .loading
         case .fail(let error):
-            self.state = .fail(.init(error: error))
+            state = .fail(.init(error: error))
         case .success(let comics):
             if comics.isEmpty {
-                self.state = .empty
+                state = .empty
             } else {
-                self.state = .success(comics.map({ .init(comic: $0) }))
+                var array = self.comics ?? []
+                array.append(contentsOf: comics.map({ .init(comic: $0) }))
+                state = .success(array)
             }
         }
         onRefresh?()
-        
     }
 
 }
