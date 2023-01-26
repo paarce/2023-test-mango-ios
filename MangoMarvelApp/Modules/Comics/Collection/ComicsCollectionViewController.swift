@@ -7,6 +7,7 @@
 
 import UIKit
 
+//TODO: Multilanguage
 class ComicsCollectionViewController: UICollectionViewController {
 
     private var customLayout = ViewFactory.layout
@@ -63,12 +64,10 @@ extension ComicsCollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch useCase.state {
-        case .loading:
-            return 1
         case .success(let comics):
             return comics.count
         default:
-            return 0
+            return 1
         }
     }
 
@@ -81,10 +80,16 @@ extension ComicsCollectionViewController {
             return cell
         case .loading:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectionViewCell.identifier, for: indexPath) as! InfoCollectionViewCell
-            cell.set(model: .init(loadingMessage: "We are gettings the comics..."))
+            cell.set(model: .init(loadingMessage: "We are receiving the comics..."))
             return cell
-        default:
-            return collectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectionViewCell.identifier, for: indexPath) as! InfoCollectionViewCell
+        case .fail(let error):
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectionViewCell.identifier, for: indexPath) as! InfoCollectionViewCell
+            cell.set(model: .init(error: error))
+            return cell
+        case .empty:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectionViewCell.identifier, for: indexPath) as! InfoCollectionViewCell
+            cell.set(model: .init(emptyMessage: "Here you should shoulde see the MARVEL comics."))
+            return cell
         }
     }
 

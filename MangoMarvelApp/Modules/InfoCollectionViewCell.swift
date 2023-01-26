@@ -65,7 +65,7 @@ class InfoCollectionViewCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         content.translatesAutoresizingMaskIntoConstraints = false
         imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        content.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        content.heightAnchor.constraint(equalToConstant: 200).isActive = true
         content.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
         content.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: -100.0).isActive = true
     }
