@@ -15,7 +15,7 @@ struct RestClient: RequestPerformer {
     private let session: URLSession
 
     init(sessionConfiguration: URLSessionConfiguration = URLSessionConfiguration.default) {
-        configuration = URLSession.shared.configuration
+        configuration = sessionConfiguration
         session = URLSession(configuration: configuration)
     }
 

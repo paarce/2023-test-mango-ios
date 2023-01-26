@@ -25,7 +25,7 @@ extension EndpointRepresentable {
     var header: [String: Any] { [:] }
 }
 
-enum EndpointSupported {
+enum EndpointSupported: Equatable {
     case comics
     case comic(id: String)
 

@@ -49,7 +49,6 @@ protocol ComicsCollectionObserver {
 
 class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
 
-
     private var provider: ComicsCollectionProviderReprentable
     private (set) var state: ComicsCollectionState
     private (set) var onRefresh: (() -> Void)?
@@ -101,7 +100,7 @@ class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
     }
 
     private func shouldFetchNextPage(_ lastIndexShowed: Int) -> Bool {
-        guard case .success(let comics) = state else { return false }
+        guard case .success(let comics) = state, comics.count > lastIndexShowed else { return false }
         return (comics.count - lastIndexShowed) < Constants.offsetToLoadMore
     }
 

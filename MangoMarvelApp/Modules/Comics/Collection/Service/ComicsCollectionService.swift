@@ -16,7 +16,7 @@ protocol ComicsCollectionServiceRepresentable {
 }
 
 @available(iOS 13.0, *)
-class ComicsCollectionServiceService: ComicsCollectionServiceRepresentable {
+class ComicsCollectionService: ComicsCollectionServiceRepresentable {
 
     private let client: RequestPerformer
     var anyCancellable: AnyCancellable?

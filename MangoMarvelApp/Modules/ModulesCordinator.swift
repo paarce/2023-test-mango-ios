@@ -14,10 +14,10 @@ class ModuleCoordinator {
         UINavigationController(rootViewController:  createComicsCollection())
     }
 
-    func createComicsCollection() -> ComicsCollectionViewController {
-        .init(
+    func createComicsCollection() -> UIViewController {
+        ComicsCollectionViewController(
             useCase: ComicsCollectionUseCase(
-                provider: ComicsCollectionProvider(service: ComicsCollectionServiceService())
+                provider: ComicsCollectionProvider(service: ComicsCollectionService())
             )
         )
     }

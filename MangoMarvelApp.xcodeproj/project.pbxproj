@@ -39,6 +39,12 @@
 		F34FAD5A2982DDFC00E985C7 /* ComicsCollectionServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD592982DDFC00E985C7 /* ComicsCollectionServiceStub.swift */; };
 		F34FAD5C29832A5A00E985C7 /* Model+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD5B29832A5A00E985C7 /* Model+extension.swift */; };
 		F34FAD5E29832B1400E985C7 /* ComicsCollectionObserverStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD5D29832B1400E985C7 /* ComicsCollectionObserverStub.swift */; };
+		F34FAD6029832D1E00E985C7 /* ComicsCollectionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD5F29832D1E00E985C7 /* ComicsCollectionServiceTests.swift */; };
+		F34FAD6329832D9F00E985C7 /* RequestPerformerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD6229832D9F00E985C7 /* RequestPerformerStub.swift */; };
+		F34FAD65298332F000E985C7 /* ComicsCollectionUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD64298332F000E985C7 /* ComicsCollectionUseCaseTests.swift */; };
+		F34FAD672983337B00E985C7 /* ComicsCollectionProviderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD662983337B00E985C7 /* ComicsCollectionProviderStub.swift */; };
+		F34FAD6929833CAA00E985C7 /* ModuleCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD6829833CAA00E985C7 /* ModuleCoordinatorTests.swift */; };
+		F34FAD6B29833E5B00E985C7 /* ComicsEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD6A29833E5B00E985C7 /* ComicsEndpointTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +103,12 @@
 		F34FAD592982DDFC00E985C7 /* ComicsCollectionServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsCollectionServiceStub.swift; sourceTree = "<group>"; };
 		F34FAD5B29832A5A00E985C7 /* Model+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+extension.swift"; sourceTree = "<group>"; };
 		F34FAD5D29832B1400E985C7 /* ComicsCollectionObserverStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsCollectionObserverStub.swift; sourceTree = "<group>"; };
+		F34FAD5F29832D1E00E985C7 /* ComicsCollectionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsCollectionServiceTests.swift; sourceTree = "<group>"; };
+		F34FAD6229832D9F00E985C7 /* RequestPerformerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPerformerStub.swift; sourceTree = "<group>"; };
+		F34FAD64298332F000E985C7 /* ComicsCollectionUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsCollectionUseCaseTests.swift; sourceTree = "<group>"; };
+		F34FAD662983337B00E985C7 /* ComicsCollectionProviderStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsCollectionProviderStub.swift; sourceTree = "<group>"; };
+		F34FAD6829833CAA00E985C7 /* ModuleCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleCoordinatorTests.swift; sourceTree = "<group>"; };
+		F34FAD6A29833E5B00E985C7 /* ComicsEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsEndpointTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,7 +175,9 @@
 		CC41C23725DD3FA30057D0C9 /* MangoMarvelAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				F34FAD6129832D8800E985C7 /* Fundation */,
 				F34FAD542982DC4700E985C7 /* Comics */,
+				F34FAD6829833CAA00E985C7 /* ModuleCoordinatorTests.swift */,
 				CC41C23825DD3FA30057D0C9 /* MangoMarvelAppTests.swift */,
 				CC41C23A25DD3FA30057D0C9 /* Info.plist */,
 			);
@@ -299,6 +313,9 @@
 			children = (
 				F34FAD582982DDDC00E985C7 /* Stub */,
 				F34FAD562982DCA000E985C7 /* ComicsCollectionProviderTests.swift */,
+				F34FAD5F29832D1E00E985C7 /* ComicsCollectionServiceTests.swift */,
+				F34FAD64298332F000E985C7 /* ComicsCollectionUseCaseTests.swift */,
+				F34FAD6A29833E5B00E985C7 /* ComicsEndpointTests.swift */,
 			);
 			path = Collection;
 			sourceTree = "<group>";
@@ -308,8 +325,17 @@
 			children = (
 				F34FAD592982DDFC00E985C7 /* ComicsCollectionServiceStub.swift */,
 				F34FAD5D29832B1400E985C7 /* ComicsCollectionObserverStub.swift */,
+				F34FAD662983337B00E985C7 /* ComicsCollectionProviderStub.swift */,
 			);
 			path = Stub;
+			sourceTree = "<group>";
+		};
+		F34FAD6129832D8800E985C7 /* Fundation */ = {
+			isa = PBXGroup;
+			children = (
+				F34FAD6229832D9F00E985C7 /* RequestPerformerStub.swift */,
+			);
+			path = Fundation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -475,8 +501,14 @@
 				F34FAD5E29832B1400E985C7 /* ComicsCollectionObserverStub.swift in Sources */,
 				F34FAD5A2982DDFC00E985C7 /* ComicsCollectionServiceStub.swift in Sources */,
 				F34FAD5C29832A5A00E985C7 /* Model+extension.swift in Sources */,
+				F34FAD65298332F000E985C7 /* ComicsCollectionUseCaseTests.swift in Sources */,
+				F34FAD6329832D9F00E985C7 /* RequestPerformerStub.swift in Sources */,
 				F34FAD572982DCA000E985C7 /* ComicsCollectionProviderTests.swift in Sources */,
 				CC41C23925DD3FA30057D0C9 /* MangoMarvelAppTests.swift in Sources */,
+				F34FAD6029832D1E00E985C7 /* ComicsCollectionServiceTests.swift in Sources */,
+				F34FAD6B29833E5B00E985C7 /* ComicsEndpointTests.swift in Sources */,
+				F34FAD6929833CAA00E985C7 /* ModuleCoordinatorTests.swift in Sources */,
+				F34FAD672983337B00E985C7 /* ComicsCollectionProviderStub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
