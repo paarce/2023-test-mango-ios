@@ -30,10 +30,14 @@ struct Comic: Codable {
     let id: Int
     let digitalId: Int?
     let title: String
-    let variantDescription: String?
     let description: String?
-    let modified: String?
     let thumbnail: ImageInfo
+}
+
+extension Comic: Equatable {
+    static func == (lhs: Comic, rhs: Comic) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
 typealias ComicsCollection = APIResponse<CollectionResponse<Comic>>

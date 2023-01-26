@@ -9,9 +9,7 @@ import Foundation
 
 protocol ComicsCollectionProviderReprentable {
 
-    var service: ComicsCollectionServiceRepresentable { get }
     var observer: ComicsCollectionObserver? { get set }
-
     func reload()
     func fetchNextPageIfPossible()
 }
@@ -19,7 +17,7 @@ protocol ComicsCollectionProviderReprentable {
 class ComicsCollectionProvider: ComicsCollectionProviderReprentable {
 
     var observer: ComicsCollectionObserver?
-    private (set) var service: ComicsCollectionServiceRepresentable
+    private var service: ComicsCollectionServiceRepresentable
     private var page: Int
     private let limit = 20
     private var isLoading = false

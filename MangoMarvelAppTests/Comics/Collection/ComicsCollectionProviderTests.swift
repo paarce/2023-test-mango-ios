@@ -6,24 +6,186 @@
 //
 
 import XCTest
+@testable import MangoMarvelApp
 
 final class ComicsCollectionProviderTests: XCTestCase {
 
+    var classUnderTest: ComicsCollectionProviderReprentable!
+    var service: ComicsCollectionServiceStub!
+    var observer: ComicsCollectionObserverStub!
+
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        service = .init()
+        observer = ComicsCollectionObserverStub()
+        classUnderTest = ComicsCollectionProvider(service: service)
+        classUnderTest.observer = observer
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        service = nil
+        observer = nil
+        classUnderTest = nil
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testInitialFetchComics_success() throws {
+
+        //Given
+        var observerCalledCount = 0
+        let comics: [Comic] = [
+            .mock(id: 1),
+            .mock(id: 2),
+            .mock(id: 3),
+        ]
+        service.result = .success(.mock(comics: comics))
+
+        //Then
+        service.fecthCalled = { withOptions in
+            XCTAssertEqual(withOptions.offset, 0)
+        }
+        observer.updateCalled = { content in
+            if case .success(let comicsFecthed) = content {
+                XCTAssertEqual(comics, comicsFecthed)
+                XCTAssertEqual(observerCalledCount, 1)
+            } else if case .loading = content {
+                observerCalledCount += 1
+            }
+        }
+
+        //When
+        classUnderTest.reload()
     }
 
+    func testFetchComics_nextPage_success() throws {
 
+        //Given
+        var observerCalledCount = 0
+        let comics: [Comic] = [
+            .mock(id: 1),
+            .mock(id: 2),
+            .mock(id: 3),
+        ]
+        service.result = .success(.mock(offset: 0, comics: comics))
+
+        //Then
+        service.fecthCalled = { withOptions in
+            XCTAssertEqual(withOptions.offset, 20)
+        }
+        observer.updateCalled = { content in
+            if case .success(let comicsFecthed) = content {
+                XCTAssertEqual(comics, comicsFecthed)
+                XCTAssertEqual(observerCalledCount, 1)
+            } else if case .loading = content {
+                observerCalledCount += 1
+            }
+        }
+
+        //When
+        classUnderTest.fetchNextPageIfPossible()
+    }
+
+    func testFetchComics_reload_fromAnotherPage_success() throws {
+
+        let numPage = Int.random(in: 2..<10)
+        classUnderTest = ComicsCollectionProvider(service: service, page: numPage)
+
+        //Given
+        let comics: [Comic] = [
+            .mock(id: 1),
+            .mock(id: 2),
+            .mock(id: 3),
+        ]
+        service.result = .success(.mock(comics: comics))
+
+        //Then
+        service.fecthCalled = { withOptions in
+            XCTAssertEqual(withOptions.offset, numPage * 20)
+        }
+        observer.updateCalled = { content in
+            guard case .success(let comicsFecthed) = content else {
+                XCTFail("Unexpected result. Expected '.success', got: \(content)")
+                return
+            }
+            XCTAssertEqual(comics, comicsFecthed)
+        }
+
+        //When
+        classUnderTest.reload()
+    }
+
+    func testFetchComics_nextPage_fromAnotherPage_success() throws {
+
+        let numPage = Int.random(in: 2..<10)
+        classUnderTest = ComicsCollectionProvider(service: service, page: numPage)
+
+        //Given
+        let comics: [Comic] = [
+            .mock(id: 1),
+            .mock(id: 2),
+            .mock(id: 3),
+        ]
+        service.result = .success(.mock(comics: comics))
+
+        //Then
+        service.fecthCalled = { withOptions in
+            XCTAssertEqual(withOptions.offset, (numPage + 1) * 20)
+        }
+        observer.updateCalled = { content in
+            guard case .success(let comicsFecthed) = content else {
+                XCTFail("Unexpected result. Expected '.success', got: \(content)")
+                return
+            }
+            XCTAssertEqual(comics, comicsFecthed)
+        }
+
+        //When
+        classUnderTest.fetchNextPageIfPossible()
+    }
+
+    func testInitialFetchComics_fail() throws {
+
+        //Given
+        var observerCalledCount = 0
+        service.result = .failure(APIError.serverError)
+
+        //Then
+        service.fecthCalled = { withOptions in
+            XCTAssertEqual(withOptions.offset, 0)
+        }
+        observer.updateCalled = { content in
+            if case .fail(let error) = content,
+               let apiError = try? XCTUnwrap(error as? APIError) {
+                XCTAssertEqual(apiError.errorDescription, APIError.serverError.errorDescription)
+                XCTAssertEqual(observerCalledCount, 1)
+            } else if case .loading = content {
+                observerCalledCount += 1
+            }
+        }
+
+        //When
+        classUnderTest.reload()
+    }
+
+    func testFetchComics_nextPage_fromAnotherPage_fail() throws {
+
+        //Given
+        var observerCalledCount = 0
+        service.result = .failure(APIError.serverError)
+
+        //Then
+        service.fecthCalled = { withOptions in
+            XCTAssertEqual(withOptions.offset, 20)
+        }
+        observer.updateCalled = { content in
+            if case .fail(let error) = content,
+               let apiError = try? XCTUnwrap(error as? APIError) {
+                XCTAssertEqual(apiError.errorDescription, APIError.serverError.errorDescription)
+                XCTAssertEqual(observerCalledCount, 1)
+            } else if case .loading = content {
+                observerCalledCount += 1
+            }
+        }
+
+        //When
+        classUnderTest.fetchNextPageIfPossible()
+    }
 }

@@ -36,6 +36,9 @@
 		F34FAD4F2981E08600E985C7 /* InfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD4E2981E08600E985C7 /* InfoCollectionViewCell.swift */; };
 		F34FAD532982A09D00E985C7 /* LoadMoreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD522982A09D00E985C7 /* LoadMoreCollectionViewCell.swift */; };
 		F34FAD572982DCA000E985C7 /* ComicsCollectionProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD562982DCA000E985C7 /* ComicsCollectionProviderTests.swift */; };
+		F34FAD5A2982DDFC00E985C7 /* ComicsCollectionServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD592982DDFC00E985C7 /* ComicsCollectionServiceStub.swift */; };
+		F34FAD5C29832A5A00E985C7 /* Model+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD5B29832A5A00E985C7 /* Model+extension.swift */; };
+		F34FAD5E29832B1400E985C7 /* ComicsCollectionObserverStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD5D29832B1400E985C7 /* ComicsCollectionObserverStub.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +94,9 @@
 		F34FAD4E2981E08600E985C7 /* InfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		F34FAD522982A09D00E985C7 /* LoadMoreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreCollectionViewCell.swift; sourceTree = "<group>"; };
 		F34FAD562982DCA000E985C7 /* ComicsCollectionProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsCollectionProviderTests.swift; sourceTree = "<group>"; };
+		F34FAD592982DDFC00E985C7 /* ComicsCollectionServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsCollectionServiceStub.swift; sourceTree = "<group>"; };
+		F34FAD5B29832A5A00E985C7 /* Model+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+extension.swift"; sourceTree = "<group>"; };
+		F34FAD5D29832B1400E985C7 /* ComicsCollectionObserverStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsCollectionObserverStub.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				F34FAD552982DC4C00E985C7 /* Collection */,
+				F34FAD5B29832A5A00E985C7 /* Model+extension.swift */,
 			);
 			path = Comics;
 			sourceTree = "<group>";
@@ -290,9 +297,19 @@
 		F34FAD552982DC4C00E985C7 /* Collection */ = {
 			isa = PBXGroup;
 			children = (
+				F34FAD582982DDDC00E985C7 /* Stub */,
 				F34FAD562982DCA000E985C7 /* ComicsCollectionProviderTests.swift */,
 			);
 			path = Collection;
+			sourceTree = "<group>";
+		};
+		F34FAD582982DDDC00E985C7 /* Stub */ = {
+			isa = PBXGroup;
+			children = (
+				F34FAD592982DDFC00E985C7 /* ComicsCollectionServiceStub.swift */,
+				F34FAD5D29832B1400E985C7 /* ComicsCollectionObserverStub.swift */,
+			);
+			path = Stub;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,6 +472,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F34FAD5E29832B1400E985C7 /* ComicsCollectionObserverStub.swift in Sources */,
+				F34FAD5A2982DDFC00E985C7 /* ComicsCollectionServiceStub.swift in Sources */,
+				F34FAD5C29832A5A00E985C7 /* Model+extension.swift in Sources */,
 				F34FAD572982DCA000E985C7 /* ComicsCollectionProviderTests.swift in Sources */,
 				CC41C23925DD3FA30057D0C9 /* MangoMarvelAppTests.swift in Sources */,
 			);
