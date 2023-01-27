@@ -45,6 +45,12 @@
 		F34FAD672983337B00E985C7 /* ComicsCollectionProviderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD662983337B00E985C7 /* ComicsCollectionProviderStub.swift */; };
 		F34FAD6929833CAA00E985C7 /* ModuleCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD6829833CAA00E985C7 /* ModuleCoordinatorTests.swift */; };
 		F34FAD6B29833E5B00E985C7 /* ComicsEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD6A29833E5B00E985C7 /* ComicsEndpointTests.swift */; };
+		F34FAD6E2983BDC900E985C7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD6D2983BDC900E985C7 /* AppState.swift */; };
+		F34FAD722983BF6800E985C7 /* MangoMarvelApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD702983BF6800E985C7 /* MangoMarvelApp.xcdatamodeld */; };
+		F34FAD742983C00100E985C7 /* FavComicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD732983C00100E985C7 /* FavComicsView.swift */; };
+		F34FAD762983C01700E985C7 /* FavComicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD752983C01700E985C7 /* FavComicViewModel.swift */; };
+		F34FAD782983CA2500E985C7 /* FavComicInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD772983CA2500E985C7 /* FavComicInteraction.swift */; };
+		F34FAD7A2983CDA500E985C7 /* ComicCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD792983CDA500E985C7 /* ComicCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +115,12 @@
 		F34FAD662983337B00E985C7 /* ComicsCollectionProviderStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsCollectionProviderStub.swift; sourceTree = "<group>"; };
 		F34FAD6829833CAA00E985C7 /* ModuleCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleCoordinatorTests.swift; sourceTree = "<group>"; };
 		F34FAD6A29833E5B00E985C7 /* ComicsEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsEndpointTests.swift; sourceTree = "<group>"; };
+		F34FAD6D2983BDC900E985C7 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		F34FAD712983BF6800E985C7 /* MangoMarvelApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MangoMarvelApp.xcdatamodel; sourceTree = "<group>"; };
+		F34FAD732983C00100E985C7 /* FavComicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavComicsView.swift; sourceTree = "<group>"; };
+		F34FAD752983C01700E985C7 /* FavComicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavComicViewModel.swift; sourceTree = "<group>"; };
+		F34FAD772983CA2500E985C7 /* FavComicInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavComicInteraction.swift; sourceTree = "<group>"; };
+		F34FAD792983CDA500E985C7 /* ComicCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +208,7 @@
 		F34FA83F298145BA00E985C7 /* Fundation */ = {
 			isa = PBXGroup;
 			children = (
+				F34FAD6F2983BF2E00E985C7 /* Persistence */,
 				F34FAD4A2981BDAE00E985C7 /* DTO */,
 				F34FA84429814A6A00E985C7 /* Networking */,
 				F34FAD432981946900E985C7 /* Extensions */,
@@ -213,6 +226,7 @@
 				F34FA85929815DDE00E985C7 /* ModulesCordinator.swift */,
 				F34FAD4E2981E08600E985C7 /* InfoCollectionViewCell.swift */,
 				F34FAD522982A09D00E985C7 /* LoadMoreCollectionViewCell.swift */,
+				F34FAD6D2983BDC900E985C7 /* AppState.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -220,6 +234,7 @@
 		F34FA841298145CB00E985C7 /* Comics */ = {
 			isa = PBXGroup;
 			children = (
+				F34FAD6C2983BD3700E985C7 /* Fav */,
 				F34FA842298145E200E985C7 /* Collection */,
 				F34FA843298145EE00E985C7 /* Detail */,
 			);
@@ -235,6 +250,7 @@
 				F34FA850298151D300E985C7 /* ComicsCollectionUseCase.swift */,
 				F34FA8522981530F00E985C7 /* ComicsCollectionProvider.swift */,
 				F34FAD482981A52700E985C7 /* ComicDTO.swift */,
+				F34FAD792983CDA500E985C7 /* ComicCellViewModel.swift */,
 			);
 			path = Collection;
 			sourceTree = "<group>";
@@ -336,6 +352,24 @@
 				F34FAD6229832D9F00E985C7 /* RequestPerformerStub.swift */,
 			);
 			path = Fundation;
+			sourceTree = "<group>";
+		};
+		F34FAD6C2983BD3700E985C7 /* Fav */ = {
+			isa = PBXGroup;
+			children = (
+				F34FAD732983C00100E985C7 /* FavComicsView.swift */,
+				F34FAD752983C01700E985C7 /* FavComicViewModel.swift */,
+				F34FAD772983CA2500E985C7 /* FavComicInteraction.swift */,
+			);
+			path = Fav;
+			sourceTree = "<group>";
+		};
+		F34FAD6F2983BF2E00E985C7 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				F34FAD702983BF6800E985C7 /* MangoMarvelApp.xcdatamodeld */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -470,8 +504,11 @@
 			files = (
 				F34FA84E298150CA00E985C7 /* ComicsCollectionViewController.swift in Sources */,
 				F34FAD4D2981BE0800E985C7 /* ImageRemote.swift in Sources */,
+				F34FAD762983C01700E985C7 /* FavComicViewModel.swift in Sources */,
 				F34FA84829814ACF00E985C7 /* APIErrors.swift in Sources */,
+				F34FAD6E2983BDC900E985C7 /* AppState.swift in Sources */,
 				F34FA84C29814DF800E985C7 /* EndpointRepresentable.swift in Sources */,
+				F34FAD7A2983CDA500E985C7 /* ComicCellViewModel.swift in Sources */,
 				F34FA84A29814C4000E985C7 /* Environment.swift in Sources */,
 				F34FA8582981585700E985C7 /* RestClient.swift in Sources */,
 				CC41C22625DD3FA10057D0C9 /* ViewController.swift in Sources */,
@@ -481,13 +518,16 @@
 				F34FA85A29815DDE00E985C7 /* ModulesCordinator.swift in Sources */,
 				F34FA85F29816EA100E985C7 /* APIResponse.swift in Sources */,
 				CC41C22225DD3FA10057D0C9 /* AppDelegate.swift in Sources */,
+				F34FAD742983C00100E985C7 /* FavComicsView.swift in Sources */,
 				F34FA84629814A9A00E985C7 /* RequestHandler.swift in Sources */,
+				F34FAD722983BF6800E985C7 /* MangoMarvelApp.xcdatamodeld in Sources */,
 				F34FAD472981A4F900E985C7 /* ErrorDTO.swift in Sources */,
 				F34FA851298151D300E985C7 /* ComicsCollectionUseCase.swift in Sources */,
 				F34FA8532981530F00E985C7 /* ComicsCollectionProvider.swift in Sources */,
 				F34FA861298180E400E985C7 /* Encrypt.swift in Sources */,
 				F34FA85C29816E2C00E985C7 /* ComicsEndpoint.swift in Sources */,
 				F34FA8642981904600E985C7 /* ComicCollectionViewCell.swift in Sources */,
+				F34FAD782983CA2500E985C7 /* FavComicInteraction.swift in Sources */,
 				F34FAD452981949800E985C7 /* UIView+extension.swift in Sources */,
 				F34FAD4F2981E08600E985C7 /* InfoCollectionViewCell.swift in Sources */,
 				CC41C22425DD3FA10057D0C9 /* SceneDelegate.swift in Sources */,
@@ -679,7 +719,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4V75V87SH9;
 				INFOPLIST_FILE = MangoMarvelApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -699,7 +739,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4V75V87SH9;
 				INFOPLIST_FILE = MangoMarvelApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -835,6 +875,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F34FAD702983BF6800E985C7 /* MangoMarvelApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F34FAD712983BF6800E985C7 /* MangoMarvelApp.xcdatamodel */,
+			);
+			currentVersion = F34FAD712983BF6800E985C7 /* MangoMarvelApp.xcdatamodel */;
+			path = MangoMarvelApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CC41C21625DD3FA00057D0C9 /* Project object */;
 }

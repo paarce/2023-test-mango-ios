@@ -40,6 +40,8 @@ class ComicsCollectionViewController: UICollectionViewController {
         self.collectionView!.register(ComicCollectionViewCell.self, forCellWithReuseIdentifier: ComicCollectionViewCell.identifier)
         self.collectionView!.register(InfoCollectionViewCell.self, forCellWithReuseIdentifier: InfoCollectionViewCell.identifier)
 
+        self.navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .rewind, target: self, action: #selector(moveToFavsView))
+
         useCase.initView(onRefresh: { [weak self] in
             self?.refresh()
         })
@@ -47,6 +49,12 @@ class ComicsCollectionViewController: UICollectionViewController {
 
     private func refresh() {
         collectionView.reloadData()
+    }
+
+    @objc
+    private func moveToFavsView() {
+        let favsView = AppState.shared.coodinator.createFavComics(favComicInteraction: useCase.favInteraction)
+        self.navigationController?.pushViewController(favsView, animated: true)
     }
 
     // MARK: - UICollectionViewDelegate
@@ -119,7 +127,7 @@ extension ComicsCollectionViewController {
         static var layout: UICollectionViewFlowLayout {
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .vertical
-            layout.minimumLineSpacing = 5
+            layout.minimumLineSpacing = 2
             layout.minimumInteritemSpacing = 1
             return layout
         }

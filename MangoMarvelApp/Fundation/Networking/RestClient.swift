@@ -8,7 +8,6 @@
 import Foundation
 import Combine
 
-@available(iOS 13.0, *)
 struct RestClient: RequestPerformer {
 
     private let configuration: URLSessionConfiguration

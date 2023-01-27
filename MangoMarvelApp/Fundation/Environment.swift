@@ -7,16 +7,16 @@
 
 import Foundation
 
-enum EnvironmentId {
+enum EnvId {
     case dev
 }
 
-protocol EnvironmentRepresentable {
+protocol EnvRepresentable {
     var baseUrlComponents: URLComponents { get }
-    var id: EnvironmentId { get }
+    var id: EnvId { get }
 }
 
-extension EnvironmentRepresentable {
+extension EnvRepresentable {
 
     var baseUrlComponents: URLComponents {
         switch id {
@@ -34,13 +34,10 @@ extension EnvironmentRepresentable {
     var privateKey: String {"5fde302bf4439b5728d18383c8171021e47ea9c9" }
 }
 
-struct Environment: EnvironmentRepresentable {
+struct Env: EnvRepresentable {
+    let id: EnvId
 
-    static var shared = Environment()
-
-    let id: EnvironmentId
-
-    private init() {
-        self.id = .dev
+    init(id: EnvId = .dev) {
+        self.id = id
     }
 }

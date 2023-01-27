@@ -15,12 +15,12 @@ class ComicCollectionViewCell: UICollectionViewCell {
     private var imageView = ViewFactory.image()
     private var title = ViewFactory.title()
     private var body = ViewFactory.body()
-    private var imageHeightConstraint: NSLayoutConstraint?
-    private var imageWidthConstraint: NSLayoutConstraint?
+    private var interactionStack = ViewFactory.interaction()
+    private var fav = ViewFactory.fav()
 
     private var constraintSet = false
 
-    private var model: ComicDTO?
+    private var model: ComicCellViewModel?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,14 +42,21 @@ class ComicCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(content)
         contentView.addSubview(title)
         contentView.addSubview(body)
+        contentView.addSubview(interactionStack)
+        contentView.addSubview(fav)
         contentView.bringSubviewToFront(content)
 
         content.addArrangedSubview(title)
         content.addArrangedSubview(body)
+        content.addArrangedSubview(interactionStack)
+
+        interactionStack.addArrangedSubview(fav)
 
         imageView.clipsToBounds = true
         imageView.alpha = 0.5
         body.textColor = .darkGray
+
+        fav.addTarget(self, action:  #selector(addFav(button:)), for: .touchUpInside)
     }
 
     private func setupConstraints() {
@@ -63,18 +70,22 @@ class ComicCollectionViewCell: UICollectionViewCell {
         )
         title.setContentHuggingPriority(.defaultHigh, for: .vertical)
         body.setContentHuggingPriority(.defaultLow, for: .vertical)
+        interactionStack.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        fav.setContentHuggingPriority(.defaultHigh, for: .vertical)
         imageView.setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
 
-    func set(model: ComicDTO?) {
+    func set(model: ComicCellViewModel?) {
         self.model = model
         guard let model = model else { return }
-        title.text = model.title
-        body.text = model.body
+        title.text = model.dto.title
+        body.text = model.dto.body
+
+        fav.setTitle(model.favButtonText, for: .normal)
 
         if let image = model.image {
             self.imageView.image = image
-        } else if let url = model.imageURL {
+        } else if let url = model.dto.imageURL {
             //TODO: Include cache https://medium.com/@srits.ashish/how-to-download-image-asynchronously-in-uitableviewcell-using-nscache-abbf02cb1e12
             ImageRemote.downloadImage(from: url, completion: { [weak self] image in
                 self?.model?.image = image
@@ -85,6 +96,18 @@ class ComicCollectionViewCell: UICollectionViewCell {
         } else {
             self.imageView.image = Constants.placeholderImage
         }
+    }
+
+
+    private func updateDynamicComponents() {
+        guard let model = model else { return }
+        fav.setTitle(model.favButtonText, for: .normal)
+    }
+
+    @objc
+    private func addFav(button: UIButton) {
+        model?.isFav.toggle()
+        updateDynamicComponents()
     }
 
     private enum Constants {
@@ -127,6 +150,26 @@ extension ComicCollectionViewCell {
             label.numberOfLines = 0
             label.textAlignment = .left
             return label
+        }
+
+        static func interaction() -> UIStackView {
+            let stack = UIStackView()
+            stack.axis = .horizontal
+            stack.distribution = .fill
+            stack.alignment = .trailing
+            stack.spacing = 0
+            return stack
+        }
+
+        static func fav() -> UIButton {
+            let button = UIButton()
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .black)
+            button.titleEdgeInsets = .init(top: 5, left: 5, bottom: 5, right: 5)
+            return button
+        }
+
+        static func spacer() -> UIView {
+            UIView()
         }
     }
 }

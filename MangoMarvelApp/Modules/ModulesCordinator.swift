@@ -6,19 +6,28 @@
 //
 
 import UIKit
+import CoreData
+import SwiftUI
 
-@available(iOS 13.0, *)
 class ModuleCoordinator {
 
     func createMainNavigator() -> UINavigationController {
         UINavigationController(rootViewController:  createComicsCollection())
     }
 
-    func createComicsCollection() -> UIViewController {
+    func createComicsCollection(context: NSManagedObjectContext = AppState.shared.persistenContext) -> UIViewController {
         ComicsCollectionViewController(
             useCase: ComicsCollectionUseCase(
-                provider: ComicsCollectionProvider(service: ComicsCollectionService())
+                provider: ComicsCollectionProvider(service: ComicsCollectionService()),
+                favComicsHandler: FavComicHandler(context: context)
             )
+        )
+    }
+
+    func createFavComics(favComicInteraction: FavComicInteractionRepresentable) -> UIViewController {
+        UIHostingController(rootView:
+            FavComicsView(viewModel: .init(interaction: favComicInteraction))
+                .environment(\.managedObjectContext, favComicInteraction.context)
         )
     }
 }

@@ -21,7 +21,7 @@ enum ComicsCollectionState: Equatable {
     case empty
     case loading
     case fail(ErrorDTO)
-    case success([ComicDTO])
+    case success([ComicCellViewModel])
 }
 
 enum ComicsCollectionContent {
@@ -32,8 +32,9 @@ enum ComicsCollectionContent {
 
 protocol ComicsCollectionUseCaseRepresenable {
 
+    var favInteraction: FavComicInteractionRepresentable { get }
     var state: ComicsCollectionState { get }
-    var storeComics: [ComicDTO]? { get }
+    var storeComics: [ComicCellViewModel]? { get }
     var onRefresh: (() ->Void)? { get }
 
     func initView(onRefresh: (() -> Void)?)
@@ -49,10 +50,16 @@ protocol ComicsCollectionObserver {
 
 class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
 
+    private var favComicsHandler: FavComicHanlderRepresentable
     private var provider: ComicsCollectionProviderReprentable
     private (set) var state: ComicsCollectionState
     private (set) var onRefresh: (() -> Void)?
-    var storeComics: [ComicDTO]? {
+    private var favComicsId: [Int]?
+
+    var favInteraction: FavComicInteractionRepresentable {
+        favComicsHandler.interaction
+    }
+    var storeComics: [ComicCellViewModel]? {
         switch state {
         case .success(let comics) :
             return comics
@@ -61,7 +68,12 @@ class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
         }
     }
 
-    init(state: ComicsCollectionState = .empty, provider: ComicsCollectionProviderReprentable) {
+    init(
+        state: ComicsCollectionState = .empty,
+        provider: ComicsCollectionProviderReprentable,
+        favComicsHandler: FavComicHanlderRepresentable
+    ) {
+        self.favComicsHandler = favComicsHandler
         self.state = state
         self.provider = provider
     }
@@ -69,6 +81,7 @@ class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
     func initView(onRefresh: (() -> Void)?) {
         self.onRefresh = onRefresh
         provider.observer = self
+        favComicsId = favComicsHandler.fetch().map { Int($0.id) }
         guard state != .loading else { return }
         provider.reload()
     }
@@ -123,8 +136,14 @@ extension ComicsCollectionUseCase: ComicsCollectionObserver {
             if comics.isEmpty {
                 state = .empty
             } else {
+
+                let viewModels = comics.map({ ComicCellViewModel(
+                    comic: $0,
+                    isFav: favComicsId?.contains($0.id) ?? false,
+                    interaction: favComicsHandler.interaction
+                )})
                 var array = self.storeComics ?? []
-                array.append(contentsOf: comics.map({ .init(comic: $0) }))
+                array.append(contentsOf: viewModels)
                 state = .success(array)
             }
         }

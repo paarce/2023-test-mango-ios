@@ -17,7 +17,7 @@ struct Request: RequestRepresentable {
     private let headers: [String: String] = [:]
     let urlRequest: URLRequest
 
-    init(environment: EnvironmentRepresentable = Environment.shared, endpoint: EndpointRepresentable) throws {
+    init(environment: EnvRepresentable = AppState.shared.currentEnv, endpoint: EndpointRepresentable) throws {
 
         var urlComponents = environment.baseUrlComponents
         urlComponents.path = urlComponents.path.appending(endpoint.id.pathName)
@@ -72,8 +72,6 @@ struct Request: RequestRepresentable {
     }
 }
 
-
-@available(iOS 13.0, *)
 protocol RequestPerformer {
     func perform<T, R>(request: T)  -> AnyPublisher<R, Error> where T: RequestRepresentable, R: Decodable
 }
