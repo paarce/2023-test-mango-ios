@@ -9,8 +9,6 @@ import SwiftUI
 
 struct FavComicsView: View {
 
-    @Environment(\.managedObjectContext) var managedObjectContext
-
     var viewModel: FavComicViewModel
 
     init(viewModel: FavComicViewModel) {

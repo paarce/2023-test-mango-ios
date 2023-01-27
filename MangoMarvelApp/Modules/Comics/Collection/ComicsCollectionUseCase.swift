@@ -35,7 +35,6 @@ protocol ComicsCollectionUseCaseRepresenable {
     var favInteraction: FavComicInteractionRepresentable { get }
     var state: ComicsCollectionState { get }
     var storeComics: [ComicCellViewModel]? { get }
-    var onRefresh: (() ->Void)? { get }
 
     func initView(onRefresh: (() -> Void)?)
     func reload()
@@ -53,7 +52,7 @@ class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
     private var favComicsHandler: FavComicHanlderRepresentable
     private var provider: ComicsCollectionProviderReprentable
     private (set) var state: ComicsCollectionState
-    private (set) var onRefresh: (() -> Void)?
+    private var onRefresh: (() -> Void)?
     private var favComicsId: [Int]?
 
     var favInteraction: FavComicInteractionRepresentable {

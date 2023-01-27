@@ -30,7 +30,6 @@ final class ComicsCollectionUseCaseTests: XCTestCase {
 
         classUnderTest.initView(onRefresh: {})
 
-        XCTAssertNotNil(classUnderTest.onRefresh)
         XCTAssertNotNil(provider.observer)
         XCTAssertTrue(provider.reloadCalled)
     }
@@ -41,7 +40,6 @@ final class ComicsCollectionUseCaseTests: XCTestCase {
 
         classUnderTest.initView(onRefresh: {})
 
-        XCTAssertNotNil(classUnderTest.onRefresh)
         XCTAssertNotNil(provider.observer)
         XCTAssertFalse(provider.reloadCalled)
     }
@@ -52,7 +50,6 @@ final class ComicsCollectionUseCaseTests: XCTestCase {
 
         classUnderTest.initView(onRefresh: {})
 
-        XCTAssertNotNil(classUnderTest.onRefresh)
         XCTAssertNotNil(provider.observer)
         XCTAssertTrue(provider.reloadCalled)
     }
@@ -63,7 +60,6 @@ final class ComicsCollectionUseCaseTests: XCTestCase {
 
         classUnderTest.initView(onRefresh: {})
 
-        XCTAssertNotNil(classUnderTest.onRefresh)
         XCTAssertNotNil(provider.observer)
         XCTAssertTrue(provider.reloadCalled)
     }
@@ -193,7 +189,6 @@ extension Array where Element == ComicCellViewModel {
 }
 
 extension ComicCellViewModel {
-
 
     static func mock(
         id: Int,
