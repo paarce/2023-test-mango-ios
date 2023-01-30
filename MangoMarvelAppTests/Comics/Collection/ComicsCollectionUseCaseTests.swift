@@ -12,11 +12,10 @@ final class ComicsCollectionUseCaseTests: XCTestCase {
 
     var classUnderTest: ComicsCollectionUseCaseRepresenable!
     var provider: ComicsCollectionProviderStub!
-    var favHandler: FavComicHanlderRepresentable!
 
     override func setUpWithError() throws {
         provider = ComicsCollectionProviderStub()
-        favHandler = FavComicHanlderStub(context: PersistenceMock().managedObjectContext())
+        classUnderTest = ComicsCollectionUseCase(provider: provider)
     }
 
     override func tearDownWithError() throws {
@@ -26,132 +25,120 @@ final class ComicsCollectionUseCaseTests: XCTestCase {
 
     func testInitView() throws {
 
-        classUnderTest = ComicsCollectionUseCase(provider: provider, favComicsHandler: favHandler)
-
         classUnderTest.initView(onRefresh: {})
 
-        XCTAssertNotNil(provider.observer)
-        XCTAssertTrue(provider.reloadCalled)
+        XCTAssertNotNil(provider.delegate)
+        XCTAssertTrue(provider.fetchComicsCalled)
     }
 
     func testInitView_withLoadingState() throws {
 
-        classUnderTest = ComicsCollectionUseCase(state: .loading, provider: provider, favComicsHandler: favHandler)
+        classUnderTest.update(content: .loading)
 
         classUnderTest.initView(onRefresh: {})
 
-        XCTAssertNotNil(provider.observer)
-        XCTAssertFalse(provider.reloadCalled)
+        XCTAssertNotNil(provider.delegate)
+        XCTAssertFalse(provider.fetchComicsCalled)
     }
 
     func testInitView_withSucccesState() throws {
 
-        classUnderTest = ComicsCollectionUseCase(state: .success([]), provider: provider, favComicsHandler: favHandler)
+        classUnderTest.update(content: .success([]))
 
         classUnderTest.initView(onRefresh: {})
 
-        XCTAssertNotNil(provider.observer)
-        XCTAssertTrue(provider.reloadCalled)
+        XCTAssertNotNil(provider.delegate)
+        XCTAssertTrue(provider.fetchComicsCalled)
     }
 
     func testInitView_withFailState() throws {
 
-        classUnderTest = ComicsCollectionUseCase(state: .fail(.init(error: APIError.serverError)), provider: provider, favComicsHandler: favHandler)
+        classUnderTest.update(content: .fail(APIError.serverError))
 
         classUnderTest.initView(onRefresh: {})
 
-        XCTAssertNotNil(provider.observer)
-        XCTAssertTrue(provider.reloadCalled)
+        XCTAssertNotNil(provider.delegate)
+        XCTAssertTrue(provider.fetchComicsCalled)
     }
 
     func testClose() throws {
 
-        classUnderTest = ComicsCollectionUseCase(provider: provider, favComicsHandler: favHandler)
         classUnderTest.close()
-        XCTAssertNil(provider.observer)
+        XCTAssertNil(provider.delegate)
     }
 
     func testReload() throws {
 
-        classUnderTest = ComicsCollectionUseCase(provider: provider, favComicsHandler: favHandler)
         classUnderTest.reload()
-        XCTAssertTrue(provider.reloadCalled)
+        XCTAssertTrue(provider.fetchComicsCalled)
     }
 
     func testLoadNextPageIfNeeded_withEmptyState() throws {
-        classUnderTest = ComicsCollectionUseCase(provider: provider, favComicsHandler: favHandler)
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertFalse(provider.fetchNextPageIfPossibleCalled)
+        XCTAssertFalse(provider.fetchComicsNextPageCalled)
     }
 
     func testLoadNextPageIfNeeded_withFailState() throws {
-        classUnderTest = ComicsCollectionUseCase(state: .fail(.init(error: APIError.serverError)), provider: provider, favComicsHandler: favHandler)
+        classUnderTest.update(content: .fail(APIError.serverError))
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertFalse(provider.fetchNextPageIfPossibleCalled)
+        XCTAssertFalse(provider.fetchComicsNextPageCalled)
     }
 
     func testLoadNextPageIfNeeded_withLoadingState() throws {
-        classUnderTest = ComicsCollectionUseCase(state: .loading, provider: provider, favComicsHandler: favHandler)
+        classUnderTest.update(content: .loading)
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertFalse(provider.fetchNextPageIfPossibleCalled)
+        XCTAssertFalse(provider.fetchComicsNextPageCalled)
     }
 
     func testLoadNextPageIfNeeded_withSuccessState_butEmptyArray() throws {
-        classUnderTest = ComicsCollectionUseCase(state: .success([]), provider: provider, favComicsHandler: favHandler)
+        classUnderTest.update(content: .success([]))
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertFalse(provider.fetchNextPageIfPossibleCalled)
+        XCTAssertFalse(provider.fetchComicsNextPageCalled)
     }
 
     func testLoadNextPageIfNeeded_withSuccessState_butFewComicsArray() throws {
-        let comics: [ComicCellViewModel] = .collectionMock(count: 3, interaction: favHandler.interaction)
-        classUnderTest = ComicsCollectionUseCase(state: .success(comics), provider: provider, favComicsHandler: favHandler)
+
+        classUnderTest.update(content: .success(.collectionMock(count: 3)))
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertTrue(provider.fetchNextPageIfPossibleCalled)
+        XCTAssertTrue(provider.fetchComicsNextPageCalled)
     }
 
     func testLoadNextPageIfNeeded_withSuccessState_with10elements() throws {
-
-        let comics: [ComicCellViewModel] = .collectionMock(count: 10, interaction: favHandler.interaction)
-        classUnderTest = ComicsCollectionUseCase(state: .success(comics), provider: provider, favComicsHandler: favHandler)
+        classUnderTest.update(content: .success(.collectionMock(count: 10)))
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertTrue(provider.fetchNextPageIfPossibleCalled)
+        XCTAssertTrue(provider.fetchComicsNextPageCalled)
     }
 
     func testLoadNextPageIfNeeded_withSuccessState_withMoreThan10elements() throws {
-
-        let comics: [ComicCellViewModel] = .collectionMock(count: 20, interaction: favHandler.interaction)
-        classUnderTest = ComicsCollectionUseCase(state: .success(comics), provider: provider, favComicsHandler: favHandler)
+        classUnderTest.update(content: .success(.collectionMock(count: 20)))
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertFalse(provider.fetchNextPageIfPossibleCalled)
+        XCTAssertFalse(provider.fetchComicsNextPageCalled)
     }
 
     func testLoadNextPageIfNeeded_withSuccessState_withMoreThan10elements_butLastHiigher() throws {
 
-        let comics: [ComicCellViewModel] = .collectionMock(count: 20, interaction: favHandler.interaction)
-        classUnderTest = ComicsCollectionUseCase(state: .success(comics), provider: provider, favComicsHandler: favHandler)
+        classUnderTest.update(content: .success(.collectionMock(count: 20)))
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 200)
 
-        XCTAssertFalse(provider.fetchNextPageIfPossibleCalled)
+        XCTAssertFalse(provider.fetchComicsNextPageCalled)
     }
 
     func testCellSize_withComicCell() throws {
-
-        classUnderTest = ComicsCollectionUseCase(provider: provider, favComicsHandler: favHandler)
 
         let size = classUnderTest.cellSize(from: .init(width: 100, height: 100), in: ComicCollectionViewCell.identifier)
 
@@ -160,8 +147,6 @@ final class ComicsCollectionUseCaseTests: XCTestCase {
 
     func testCellSize_withInfoCell() throws {
 
-        classUnderTest = ComicsCollectionUseCase(provider: provider, favComicsHandler: favHandler)
-
         let size = classUnderTest.cellSize(from: .init(width: 100, height: 100), in: InfoCollectionViewCell.identifier)
 
         XCTAssertEqual(size, .init(width: 100, height: 100))
@@ -169,33 +154,19 @@ final class ComicsCollectionUseCaseTests: XCTestCase {
 
     func testCellSize_withRamdom() throws {
 
-        classUnderTest = ComicsCollectionUseCase(provider: provider, favComicsHandler: favHandler)
-
         let size = classUnderTest.cellSize(from: .init(width: 100, height: 100), in: "CELL")
 
         XCTAssertEqual(size, .zero)
     }
 }
 
-extension Array where Element == ComicCellViewModel {
+extension Array where Element == Comic {
 
     static func collectionMock(
-        count: Int,
-        interaction: FavComicInteractionRepresentable
-    ) -> [ComicCellViewModel] {
+        count: Int
+    ) -> [Comic] {
         Array<Int>(0..<count)
-            .map({ .mock(id: $0, isFav: false, interaction: interaction) })
-    }
-}
-
-extension ComicCellViewModel {
-
-    static func mock(
-        id: Int,
-        isFav: Bool,
-        interaction: FavComicInteractionRepresentable
-    ) -> ComicCellViewModel {
-        .init(comic: .mock(id: id), isFav: isFav, interaction: interaction)
+            .map({ .mock(id: $0) })
     }
 }
 

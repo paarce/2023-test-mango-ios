@@ -7,44 +7,72 @@
 
 import Foundation
 
-protocol ComicsCollectionProviderReprentable {
-
-    var observer: ComicsCollectionObserver? { get set }
-    func reload()
-    func fetchNextPageIfPossible()
+protocol ComicsRemoteProviderReprentable {
+    func fetchComics()
+    func fetchComicsNextPage()
 }
 
-class ComicsCollectionProvider: ComicsCollectionProviderReprentable {
+protocol ComicsLocalProviderReprentable {
 
-    var observer: ComicsCollectionObserver?
-    private var service: ComicsCollectionServiceRepresentable
+    func fecthFavoritesIds() -> [Int]
+    func addFavorite(comic: ComicDTO)
+    func removeFavorite(comic: ComicDTO)
+}
+
+protocol ComicsProviderReprentable: ComicsRemoteProviderReprentable, ComicsLocalProviderReprentable {
+
+    var delegate: ComicsStateDelegate? { get set }
+}
+
+class ComicsCollectionProvider: ComicsProviderReprentable  {
+
+    var delegate: ComicsStateDelegate?
+    private var remoteService: ComicsCollectionServiceRepresentable
+    private var localService: ComicsLocalService
     private var page: Int
-    private let limit = 20
-    private var isLoading = false
+    private let limit: Int
+    private var isLoading: Bool
 
-    init(service: ComicsCollectionServiceRepresentable, page: Int = 0) {
-        self.service = service
-        self.page = page
+    init(remoteService: ComicsCollectionServiceRepresentable, localService: ComicsLocalService ) {
+        self.remoteService = remoteService
+        self.localService = localService
+        page = 0
+        limit = 20
+        isLoading = false
     }
 
-    //MARK: - ComicsCollectionProviderReprentable
+    //MARK: - ComicsRemoteProviderReprentable
 
-    func reload() {
-        fetch(page: page)
+    func fetchComics() {
+        fetchRemote(page: page)
     }
 
-    func fetchNextPageIfPossible() {
-        fetch(page: page + 1)
+    func fetchComicsNextPage() {
+        fetchRemote(page: page + 1)
+    }
+
+    //MARK: - ComicsLocalProviderReprentable
+
+    func fecthFavoritesIds() -> [Int]{
+        localService.fetch().map({ Int($0.id) })
+    }
+
+    func addFavorite(comic: ComicDTO) {
+        localService.addFav(comic: comic)
+    }
+
+    func removeFavorite(comic: ComicDTO) {
+        localService.removeFav(comic: comic)
     }
 
     //MARK: - Private methods
 
-    private func fetch(page: Int) {
+    private func fetchRemote(page: Int) {
         guard !isLoading else { return }
         isLoading = true
-        self.observer?.update(content: .loading)
+        delegate?.update(content: .loading)
 
-        service.fecth(
+        remoteService.fecth(
             options: .init(offset: page * limit)
         ) { [weak self] result in
             guard let self = self else { return }
@@ -52,10 +80,10 @@ class ComicsCollectionProvider: ComicsCollectionProviderReprentable {
             switch result {
             case .success(let response):
                 self.page = response.data.offset / self.limit
-                self.observer?.update(content: .success(response.data.results))
+                self.delegate?.update(content: .success(response.data.results))
 
             case .failure(let error):
-                self.observer?.update(content: .fail(error))
+                self.delegate?.update(content: .fail(error))
             }
         }
     }

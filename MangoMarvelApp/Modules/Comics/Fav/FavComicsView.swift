@@ -42,6 +42,6 @@ struct FavComicsView: View {
 
 struct FavComicsView_Previews: PreviewProvider {
     static var previews: some View {
-        FavComicsView(viewModel: .init(interaction: FavComicInteraction(context: AppState.shared.persistenContext)))
+        FavComicsView(viewModel: .init(localService: AppState.shared.coodinator.services.comicsLocalService))
     }
 }

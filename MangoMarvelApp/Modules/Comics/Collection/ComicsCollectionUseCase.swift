@@ -7,20 +7,10 @@
 
 import Foundation
 
-enum ComicsCollectionState: Equatable {
-    static func == (lhs: ComicsCollectionState, rhs: ComicsCollectionState) -> Bool {
-        switch (lhs, rhs) {
-        case (.empty, .empty), (.loading, .loading),
-            (.fail, .fail), (.success, .success):
-            return true
-        default:
-            return false
-        }
-    }
-
+enum ComicsViewState {
     case empty
     case loading
-    case fail(ErrorDTO)
+    case fail(Error)
     case success([ComicCellViewModel])
 }
 
@@ -30,11 +20,18 @@ enum ComicsCollectionContent {
     case success([Comic])
 }
 
-protocol ComicsCollectionUseCaseRepresenable {
+protocol ComicsStateDelegate {
+    func update(content: ComicsCollectionContent)
+}
 
-    var favInteraction: FavComicInteractionRepresentable { get }
-    var state: ComicsCollectionState { get }
-    var storeComics: [ComicCellViewModel]? { get }
+protocol ComicsInteractionDelegate {
+    func addFav(comic: ComicDTO)
+    func removeFav(comic: ComicDTO)
+}
+
+protocol ComicsCollectionUseCaseRepresenable: ComicsStateDelegate, ComicsInteractionDelegate {
+
+    var state: ComicsViewState { get }
 
     func initView(onRefresh: (() -> Void)?)
     func reload()
@@ -43,60 +40,84 @@ protocol ComicsCollectionUseCaseRepresenable {
     func cellSize(from frameSize: CGSize, in identifier: String) -> CGSize
 }
 
-protocol ComicsCollectionObserver {
-    func update(content: ComicsCollectionContent)
-}
+class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable  {
 
-class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
-
-    private var favComicsHandler: FavComicHanlderRepresentable
-    private var provider: ComicsCollectionProviderReprentable
-    private (set) var state: ComicsCollectionState
+    private var provider: ComicsProviderReprentable
+    private (set) var state: ComicsViewState
     private var onRefresh: (() -> Void)?
-    private var favComicsId: [Int]?
-
-    var favInteraction: FavComicInteractionRepresentable {
-        favComicsHandler.interaction
-    }
-    var storeComics: [ComicCellViewModel]? {
-        switch state {
-        case .success(let comics) :
-            return comics
-        default:
-            return nil
-        }
-    }
+    private var initialFavIds: [Int]?
 
     init(
-        state: ComicsCollectionState = .empty,
-        provider: ComicsCollectionProviderReprentable,
-        favComicsHandler: FavComicHanlderRepresentable
+        provider: ComicsProviderReprentable
     ) {
-        self.favComicsHandler = favComicsHandler
-        self.state = state
+        self.state = .empty
         self.provider = provider
     }
 
     func initView(onRefresh: (() -> Void)?) {
         self.onRefresh = onRefresh
-        provider.observer = self
-        favComicsId = favComicsHandler.fetch().map { Int($0.id) }
-        guard state != .loading else { return }
-        provider.reload()
+        provider.delegate = self
+        initialFavIds = provider.fecthFavoritesIds()
+        provider.fetchComics()
     }
 
     func reload() {
-        provider.reload()
+        provider.fetchComics()
     }
 
     func loadNextPageIfNeeded(lastIndexShowed: Int) {
         guard shouldFetchNextPage(lastIndexShowed) else { return }
-        provider.fetchNextPageIfPossible()
+        provider.fetchComicsNextPage()
     }
 
     func close() {
-        provider.observer = nil
+        provider.delegate = nil
     }
+
+    func addFav(comic: ComicDTO) {
+        provider.addFavorite(comic: comic)
+    }
+
+    func removeFav(comic: ComicDTO) {
+        provider.removeFavorite(comic: comic)
+    }
+}
+
+extension ComicsCollectionUseCase {
+
+    private var storeComics: [ComicCellViewModel]? {
+        guard case .success(let comics) = state else { return nil }
+        return comics
+    }
+
+    func update(content: ComicsCollectionContent) {
+
+        switch content {
+        case .loading:
+            guard storeComics == nil else { return }
+            state = .loading
+        case .fail(let error):
+            state = .fail(error)
+        case .success(let comics):
+            if comics.isEmpty {
+                state = .empty
+            } else {
+
+                let viewModels = comics.map({ ComicCellViewModel(
+                    comic: $0,
+                    isFav: initialFavIds?.contains($0.id) ?? false,
+                    interaction: self
+                )})
+                var array = self.storeComics ?? []
+                array.append(contentsOf: viewModels)
+                state = .success(array)
+            }
+        }
+        onRefresh?()
+    }
+}
+
+extension ComicsCollectionUseCase {
 
     func cellSize(from frameSize: CGSize, in identifier: String) -> CGSize {
         if identifier == ComicCollectionViewCell.identifier {
@@ -119,34 +140,4 @@ class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable {
     private enum Constants {
         static let offsetToLoadMore = 10
     }
-}
-
-extension ComicsCollectionUseCase: ComicsCollectionObserver {
-
-    func update(content: ComicsCollectionContent) {
-
-        switch content {
-        case .loading:
-            guard storeComics == nil else { return }
-            state = .loading
-        case .fail(let error):
-            state = .fail(.init(error: error))
-        case .success(let comics):
-            if comics.isEmpty {
-                state = .empty
-            } else {
-
-                let viewModels = comics.map({ ComicCellViewModel(
-                    comic: $0,
-                    isFav: favComicsId?.contains($0.id) ?? false,
-                    interaction: favComicsHandler.interaction
-                )})
-                var array = self.storeComics ?? []
-                array.append(contentsOf: viewModels)
-                state = .success(array)
-            }
-        }
-        onRefresh?()
-    }
-
 }

@@ -9,37 +9,27 @@ import Foundation
 import CoreData
 @testable import MangoMarvelApp
 
-class FavComicInteractionStub: FavComicInteractionRepresentable {
-    var context: NSManagedObjectContext
+class ComicsLocalServiceStub: ComicsLocalService {
 
-    init(context: NSManagedObjectContext) {
-        self.context = context
-    }
-
-    func add(comic: MangoMarvelApp.ComicDTO) {
-
-    }
-
-    func remove(comic: MangoMarvelApp.ComicDTO) {
-
-    }
-
-    func remove(fav: MangoMarvelApp.FavComic) {
-
-    }
-
-    func saveContext() -> Bool {
-        true
-    }
-}
-
-class FavComicHanlderStub: FavComicHanlderRepresentable {
-    var interaction: MangoMarvelApp.FavComicInteractionRepresentable
-
-    init(context: NSManagedObjectContext) {
-        self.interaction = FavComicInteractionStub(context: context)
-    }
+    var fecthFavoritesIdsResult = [MangoMarvelApp.FavComic]()
     func fetch() -> [MangoMarvelApp.FavComic] {
-        []
+        fecthFavoritesIdsResult
     }
+
+    var addFavCalled = false
+    func addFav(comic: MangoMarvelApp.ComicDTO) {
+        addFavCalled = true
+    }
+
+    var removeFavCalled = false
+    func removeFav(comic: MangoMarvelApp.ComicDTO) {
+        removeFavCalled = true
+    }
+
+    var removeCalled = false
+    func remove(fav: MangoMarvelApp.FavComic) {
+        removeCalled = false
+    }
+    
+
 }

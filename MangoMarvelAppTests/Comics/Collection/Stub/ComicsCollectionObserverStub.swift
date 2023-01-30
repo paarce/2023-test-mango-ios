@@ -8,7 +8,7 @@
 import Foundation
 @testable import MangoMarvelApp
 
-final class ComicsCollectionObserverStub: ComicsCollectionObserver {
+final class ComicsStateDelegateStub: ComicsStateDelegate {
 
     var updateCalled: ((MangoMarvelApp.ComicsCollectionContent) -> Void)?
     func update(content: MangoMarvelApp.ComicsCollectionContent) {

@@ -9,17 +9,31 @@ import Foundation
 
 @testable import MangoMarvelApp
 
-final class ComicsCollectionProviderStub: ComicsCollectionProviderReprentable {
-    
-    var observer: MangoMarvelApp.ComicsCollectionObserver?
+final class ComicsCollectionProviderStub: ComicsProviderReprentable {
+    var delegate: MangoMarvelApp.ComicsStateDelegate?
 
-    var reloadCalled = false
-    func reload() {
-        reloadCalled = true
+    var fetchComicsCalled = false
+    func fetchComics() {
+        fetchComicsCalled = true
     }
 
-    var fetchNextPageIfPossibleCalled = false
-    func fetchNextPageIfPossible() {
-        fetchNextPageIfPossibleCalled = true
+    var fetchComicsNextPageCalled = false
+    func fetchComicsNextPage() {
+        fetchComicsNextPageCalled = true
+    }
+
+    var fecthFavoritesIdsResult = [Int]()
+    func fecthFavoritesIds() -> [Int] {
+        fecthFavoritesIdsResult
+    }
+
+    var addFavoriteCalled = false
+    func addFavorite(comic: MangoMarvelApp.ComicDTO) {
+        addFavoriteCalled = true
+    }
+
+    var removeFavoriteCalled = false
+    func removeFavorite(comic: MangoMarvelApp.ComicDTO) {
+        removeFavoriteCalled = true
     }
 }

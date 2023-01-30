@@ -43,17 +43,13 @@ class ComicsCollectionViewController: UICollectionViewController {
         self.navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .rewind, target: self, action: #selector(moveToFavsView))
 
         useCase.initView(onRefresh: { [weak self] in
-            self?.refresh()
+            self?.collectionView.reloadData()
         })
-    }
-
-    private func refresh() {
-        collectionView.reloadData()
     }
 
     @objc
     private func moveToFavsView() {
-        let favsView = AppState.shared.coodinator.createFavComics(favComicInteraction: useCase.favInteraction)
+        let favsView = AppState.shared.coodinator.createFavComics()
         self.navigationController?.pushViewController(favsView, animated: true)
     }
 
@@ -62,11 +58,8 @@ class ComicsCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool { false }
 
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool { false }
-}
 
-// MARK: - UICollectionViewDataSource
-
-extension ComicsCollectionViewController {
+    // MARK: - UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int { 1 }
 
@@ -81,22 +74,13 @@ extension ComicsCollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        switch useCase.state {
-        case .success:
+        if case .success(let comics) = useCase.state {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ComicCollectionViewCell.identifier, for: indexPath) as! ComicCollectionViewCell
-            cell.set(model: useCase.storeComics?[indexPath.item])
+            cell.set(model: comics[indexPath.item])
             return cell
-        case .loading:
+        } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectionViewCell.identifier, for: indexPath) as! InfoCollectionViewCell
-            cell.set(model: .init(loadingMessage: "We are receiving the comics..."))
-            return cell
-        case .fail(let error):
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectionViewCell.identifier, for: indexPath) as! InfoCollectionViewCell
-            cell.set(model: .init(error: error))
-            return cell
-        case .empty:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectionViewCell.identifier, for: indexPath) as! InfoCollectionViewCell
-            cell.set(model: .init(emptyMessage: "Here you should shoulde see the MARVEL comics."))
+            cell.set(model: .init(comicsState: useCase.state))
             return cell
         }
     }
@@ -118,6 +102,21 @@ extension ComicsCollectionViewController: UICollectionViewDelegateFlowLayout {
             cellIdentifier = InfoCollectionViewCell.identifier
         }
         return useCase.cellSize(from: view.frame.size, in: cellIdentifier)
+    }
+}
+
+private extension InfoCellModel {
+    init?(comicsState: ComicsViewState) {
+        switch comicsState {
+        case .loading:
+            self = .init(loadingMessage: "We are receiving the comics...")
+        case .fail(let error):
+            self = .init(error: error)
+        case .empty:
+            self = .init(loadingMessage: "Here you should shoulde see the MARVEL comics.")
+        default:
+            return nil
+        }
     }
 }
 

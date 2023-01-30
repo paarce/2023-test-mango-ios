@@ -14,11 +14,9 @@ class AppState {
 
     let currentEnv: Env
     let coodinator: ModuleCoordinator
-    let persistenContext: NSManagedObjectContext
 
     private init() {
         currentEnv = .init()
-        coodinator = .init()
 
         let container = NSPersistentContainer(name: Constants.containerName)
             container.loadPersistentStores { _, error in
@@ -26,7 +24,7 @@ class AppState {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         }
-        persistenContext = container.viewContext
+        coodinator = .init(services: .init(context: container.viewContext))
     }
 
     private enum Constants {

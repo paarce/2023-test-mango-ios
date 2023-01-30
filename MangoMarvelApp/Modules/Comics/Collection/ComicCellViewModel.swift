@@ -10,7 +10,7 @@ import UIKit
 class ComicCellViewModel {
 
     let dto: ComicDTO
-    let interaction: FavComicInteractionRepresentable
+    let interaction: ComicsInteractionDelegate
     var image: UIImage?
     var favButtonText: String {
         isFav ? "Remove fav" : "Add fav"
@@ -25,7 +25,7 @@ class ComicCellViewModel {
         comic: Comic,
         image: UIImage? = nil,
         isFav: Bool,
-        interaction: FavComicInteractionRepresentable
+        interaction: ComicsInteractionDelegate
     ) {
         self.dto = .init(comic: comic)
         self.image = image
@@ -35,9 +35,9 @@ class ComicCellViewModel {
 
     func handleFav() {
         if isFav {
-            interaction.add(comic: dto)
+            interaction.addFav(comic: dto)
         } else {
-            interaction.remove(comic: dto)
+            interaction.removeFav(comic: dto)
         }
     }
 }

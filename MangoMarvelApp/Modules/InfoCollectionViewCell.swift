@@ -11,9 +11,9 @@ struct InfoCellModel {
     let image: UIImage?
     let messasge: String
 
-    init(error: ErrorDTO) {
+    init(error: Error) {
         image = nil
-        messasge = error.message
+        messasge = error.localizedDescription
     }
 
     init(loadingMessage: String) {

@@ -9,15 +9,15 @@ import Foundation
 
 struct FavComicViewModel {
 
-    private let interaction: FavComicInteractionRepresentable
+    private let localService: ComicsLocalService
 
-    init(interaction: FavComicInteractionRepresentable) {
-        self.interaction = interaction
+    init(localService: ComicsLocalService) {
+        self.localService = localService
     }
 
     func deleteFavs(from favs: [FavComic],at offsets: IndexSet) {
       offsets.forEach { index in
-          interaction.remove(fav: favs[index])
+          localService.remove(fav: favs[index])
       }
     }
 }
