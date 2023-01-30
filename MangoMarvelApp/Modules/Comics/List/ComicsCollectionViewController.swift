@@ -34,17 +34,19 @@ class ComicsCollectionViewController: UICollectionViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        presenter.close()
+        if self.isMovingFromParent {
+            presenter.close()
+        }
     }
 
     // MARK: - Setup
 
     private func initialSetup() {
         collectionView.allowsMultipleSelection = false
-        self.collectionView!.register(ComicCollectionViewCell.self, forCellWithReuseIdentifier: ComicCollectionViewCell.identifier)
-        self.collectionView!.register(InfoCollectionViewCell.self, forCellWithReuseIdentifier: InfoCollectionViewCell.identifier)
+        collectionView.register(ComicCollectionViewCell.self, forCellWithReuseIdentifier: ComicCollectionViewCell.identifier)
+        collectionView.register(InfoCollectionViewCell.self, forCellWithReuseIdentifier: InfoCollectionViewCell.identifier)
 
-        self.navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .rewind, target: self, action: #selector(moveToFavsView))
+        self.navigationItem.rightBarButtonItem = .init(image: .init(systemName: "heart.fill"), style: .plain, target: self, action: #selector(moveToFavsView))
 
         presenter.initView(onRefresh: { [weak self] in
             self?.collectionView.reloadData()
@@ -69,12 +71,8 @@ class ComicsCollectionViewController: UICollectionViewController {
     override func numberOfSections(in collectionView: UICollectionView) -> Int { 1 }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch presenter.state {
-        case .success(let comics):
-            return comics.count
-        default:
-            return 1
-        }
+        guard case .success(let comics) = presenter.state else { return 1 }
+        return comics.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -91,7 +89,6 @@ class ComicsCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.item)
         guard case .success(let comics) = presenter.state, comics.count > indexPath.item else { return }
         moveToDetail(comic: comics[indexPath.item].dto)
     }
@@ -99,20 +96,23 @@ class ComicsCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         presenter.loadNextPageIfNeeded(lastIndexShowed: indexPath.item)
     }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        self.collectionView.reloadData()
+    }
 }
 
 extension ComicsCollectionViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        var cellIdentifier: String
         switch presenter.state {
         case .success:
-            cellIdentifier = ComicCollectionViewCell.identifier
+            return resizer.cellSize(from: view.frame.size, in: ComicCollectionViewCell.identifier)
         default:
-            cellIdentifier = InfoCollectionViewCell.identifier
+            return resizer.cellSize(from: view.frame.size, in: InfoCollectionViewCell.identifier)
         }
-        return resizer.cellSize(from: view.frame.size, in: cellIdentifier)
     }
 }
 

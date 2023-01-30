@@ -21,6 +21,11 @@ struct CollectionResponse<M: Codable>: Codable {
     let results: [M]
 }
 
+struct ErrorResponse: Codable {
+    let code: String?
+    let message: String?
+}
+
 struct ImageInfo: Codable {
     let path: String
     let fileExtension: String
@@ -31,7 +36,10 @@ struct ImageInfo: Codable {
     }
 }
 
-struct ErrorResponse: Codable {
-    let code: String?
-    let message: String?
+extension ImageInfo {
+
+    var url: URL? {
+        URL(string: self.path + "." + self.fileExtension)
+    }
 }
+

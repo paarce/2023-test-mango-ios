@@ -53,7 +53,7 @@ class ComicCollectionViewCell: UICollectionViewCell {
         interactionStack.addArrangedSubview(fav)
 
         imageView.clipsToBounds = true
-        imageView.alpha = 0.5
+        imageView.alpha = 0.4
         body.textColor = .darkGray
 
         fav.addTarget(self, action:  #selector(addFav(button:)), for: .touchUpInside)
@@ -146,7 +146,7 @@ extension ComicCollectionViewCell {
 
         static func body() -> UILabel {
             let label = UILabel()
-            label.font = UIFont.systemFont(ofSize: 10, weight: .light)
+            label.font = UIFont.systemFont(ofSize: 10, weight: .black)
             label.numberOfLines = 0
             label.textAlignment = .left
             return label

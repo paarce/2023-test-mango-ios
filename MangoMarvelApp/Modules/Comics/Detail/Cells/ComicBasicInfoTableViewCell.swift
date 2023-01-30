@@ -40,11 +40,6 @@ class ComicBasicInfoTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-    }
-
     private func setupSubViews() {
 
         contentView.addSubview(container)
@@ -89,16 +84,11 @@ class ComicBasicInfoTableViewCell: UITableViewCell {
         id.text = String(model.id)
         body.text = model.body
         dateRelease.text = "Dic 23th 2000"
-        if let price = model.prices.first?.price {
-            prices.text = String(price)
-        } else {
-            prices.text = nil
-        }
-        
+        prices.text = model.price
     }
 
     private enum Constants {
-        static let padding: UIEdgeInsets = .init(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
+        static let padding: UIEdgeInsets = .init(top: 10.0, left: 20.0, bottom: 10.0, right: 20.0)
         enum Labels {
             static let id = "ID:"
             static let price = "Price:"

@@ -8,7 +8,11 @@
 import Foundation
 
 enum ComicSection {
+    case image(URL?)
     case basic(ComicDTO)
+    case creators([GridItem])
+    case stories([GridItem])
+    case events([GridItem])
 }
 
 protocol ComicDetailPresenter {
@@ -23,8 +27,27 @@ final class ComicDetailPresenterImpl: ComicDetailPresenter {
 
     init(comic: ComicDTO) {
         self.comic = comic
-        sections = [.basic(comic)]
+        sections = [
+            .image(comic.thumbnailURL),
+            .basic(comic),
+            .creators(comic.creators),
+            .stories(comic.stories),
+            .events(comic.events)
+        ]
     }
+}
 
-
+extension ComicSection {
+    var title: String {
+        switch self {
+        case .stories:
+            return "Stories"
+        case .events:
+            return "Events"
+        case .creators:
+            return "Creatores"
+        default:
+            return ""
+        }
+    }
 }
