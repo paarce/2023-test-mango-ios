@@ -41,7 +41,7 @@ final class ComicsProviderTests: XCTestCase {
             XCTAssertEqual(withOptions.offset, 0)
         }
         delegate.updateCalled = { content in
-            if case .success(let comicsFecthed) = content {
+            if case .success(let comicsFecthed, _) = content {
                 XCTAssertEqual(comics, comicsFecthed)
                 XCTAssertEqual(observerCalledCount, 1)
             } else if case .loading = content {
@@ -50,13 +50,14 @@ final class ComicsProviderTests: XCTestCase {
         }
 
         //When
-        classUnderTest.fetchComics()
+        classUnderTest.fetchComics(page: 0)
     }
 
     func testFetchComics_nextPage_success() throws {
 
         //Given
         var observerCalledCount = 0
+        let numPage = 0
         let comics: [Comic] = [
             .mock(id: 1),
             .mock(id: 2),
@@ -69,7 +70,7 @@ final class ComicsProviderTests: XCTestCase {
             XCTAssertEqual(withOptions.offset, 20)
         }
         delegate.updateCalled = { content in
-            if case .success(let comicsFecthed) = content {
+            if case .success(let comicsFecthed, _) = content {
                 XCTAssertEqual(comics, comicsFecthed)
                 XCTAssertEqual(observerCalledCount, 1)
             } else if case .loading = content {
@@ -78,7 +79,7 @@ final class ComicsProviderTests: XCTestCase {
         }
 
         //When
-        classUnderTest.fetchComicsNextPage()
+        classUnderTest.fetchComics(page: numPage + 1)
     }
 
     func testFetchComics_reload_fromAnotherPage_success() throws {
@@ -89,14 +90,13 @@ final class ComicsProviderTests: XCTestCase {
         let offset = numPage * 20
         let comics: [Comic] = .collectionMock(count: 3)
         remoteService.result = .success(.mock(offset: offset, comics: comics))
-        classUnderTest.fetchComicsNextPage()
 
         //Then
         remoteService.fecthCalled = { withOptions in
             XCTAssertEqual(withOptions.offset, offset)
         }
         delegate.updateCalled = { content in
-            if case .success(let comicsFecthed) = content {
+            if case .success(let comicsFecthed, _) = content {
                 XCTAssertEqual(comics, comicsFecthed)
                 XCTAssertEqual(observerCalledCount, 1)
             } else if case .loading = content {
@@ -105,7 +105,7 @@ final class ComicsProviderTests: XCTestCase {
         }
 
         //When
-        classUnderTest.fetchComics()
+        classUnderTest.fetchComics(page: numPage)
     }
 
     func testFetchComics_nextPage_fromAnotherPage_success() throws {
@@ -114,15 +114,14 @@ final class ComicsProviderTests: XCTestCase {
         var observerCalledCount = 0
         let numPage = Int.random(in: 2..<10)
         let comics: [Comic] = .collectionMock(count: 3)
-        remoteService.result = .success(.mock(offset: numPage * 20, comics: comics))
-        classUnderTest.fetchComicsNextPage()
+        remoteService.result = .success(.mock(offset: (numPage + 1) * 20, comics: comics))
 
         //Then
         remoteService.fecthCalled = { withOptions in
-            XCTAssertEqual(withOptions.offset, (numPage + 1) * 20)
+            XCTAssertEqual(withOptions.offset, numPage * 20)
         }
         delegate.updateCalled = { content in
-            if case .success(let comicsFecthed) = content {
+            if case .success(let comicsFecthed, _) = content {
                 XCTAssertEqual(comics, comicsFecthed)
                 XCTAssertEqual(observerCalledCount, 1)
             } else if case .loading = content {
@@ -131,7 +130,7 @@ final class ComicsProviderTests: XCTestCase {
         }
 
         //When
-        classUnderTest.fetchComicsNextPage()
+        classUnderTest.fetchComics(page: numPage)
     }
 
     func testInitialFetchComics_fail() throws {
@@ -155,18 +154,19 @@ final class ComicsProviderTests: XCTestCase {
         }
 
         //When
-        classUnderTest.fetchComics()
+        classUnderTest.fetchComics(page: 0)
     }
 
     func testFetchComics_nextPage_fromAnotherPage_fail() throws {
 
         //Given
         var observerCalledCount = 0
+        let numPage = Int.random(in: 2..<10)
         remoteService.result = .failure(APIError.serverError)
 
         //Then
         remoteService.fecthCalled = { withOptions in
-            XCTAssertEqual(withOptions.offset, 20)
+            XCTAssertEqual(withOptions.offset, numPage * 20)
         }
         delegate.updateCalled = { content in
             if case .fail(let error) = content,
@@ -179,6 +179,6 @@ final class ComicsProviderTests: XCTestCase {
         }
 
         //When
-        classUnderTest.fetchComicsNextPage()
+        classUnderTest.fetchComics(page: numPage)
     }
 }

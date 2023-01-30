@@ -85,7 +85,7 @@ class ComicCollectionViewCell: UICollectionViewCell {
 
         if let image = model.image {
             self.imageView.image = image
-        } else if let url = model.dto.imageURL {
+        } else if let url = model.dto.thumbnailURL {
             //TODO: Include cache https://medium.com/@srits.ashish/how-to-download-image-asynchronously-in-uitableviewcell-using-nscache-abbf02cb1e12
             ImageRemote.downloadImage(from: url, completion: { [weak self] image in
                 self?.model?.image = image

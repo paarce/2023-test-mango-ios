@@ -12,14 +12,9 @@ import Foundation
 final class ComicsProviderStub: ComicsProvider {
     var delegate: MangoMarvelApp.ComicsStateDelegate?
 
-    var fetchComicsCalled = false
-    func fetchComics() {
-        fetchComicsCalled = true
-    }
-
-    var fetchComicsNextPageCalled = false
-    func fetchComicsNextPage() {
-        fetchComicsNextPageCalled = true
+    var fetchComicsPageCalled: Int?
+    func fetchComics(page: Int) {
+        fetchComicsPageCalled = page
     }
 
     var fecthFavoritesIdsResult = [Int]()

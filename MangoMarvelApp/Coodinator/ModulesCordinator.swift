@@ -34,6 +34,10 @@ struct ModuleCoordinator {
                 .environment(\.managedObjectContext, services.context)
         )
     }
+
+    func createComicDetail(comic: ComicDTO) -> UIViewController {
+        ComicDetailTableViewController(presenter: ComicDetailPresenterImpl(comic: comic))
+    }
 }
 
 class ServicesContainer {

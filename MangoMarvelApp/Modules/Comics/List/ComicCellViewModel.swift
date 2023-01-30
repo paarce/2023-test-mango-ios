@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol ComicsInteractionDelegate {
+    func addFav(comic: ComicDTO)
+    func removeFav(comic: ComicDTO)
+}
+
 class ComicCellViewModel {
 
     let dto: ComicDTO

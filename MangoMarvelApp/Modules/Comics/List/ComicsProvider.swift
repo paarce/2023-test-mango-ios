@@ -8,8 +8,7 @@
 import Foundation
 
 protocol ComicsRemoteProvider {
-    func fetchComics()
-    func fetchComicsNextPage()
+    func fetchComics(page: Int)
 }
 
 protocol ComicsLocalProvider {
@@ -26,34 +25,29 @@ protocol ComicsProvider: ComicsRemoteProvider, ComicsLocalProvider {
 
 final class ComicsProviderImpl: ComicsProvider  {
 
+
     var delegate: ComicsStateDelegate?
     private var remoteService: ComicsRemoteService
     private var localService: ComicsLocalService
-    private var page: Int
     private let limit: Int
     private var isLoading: Bool
 
     init(remoteService: ComicsRemoteService, localService: ComicsLocalService) {
         self.remoteService = remoteService
         self.localService = localService
-        page = 0
         limit = 20
         isLoading = false
     }
 
     //MARK: - ComicsRemoteProviderReprentable
 
-    func fetchComics() {
+    func fetchComics(page: Int) {
         fetchRemote(page: page)
-    }
-
-    func fetchComicsNextPage() {
-        fetchRemote(page: page + 1)
     }
 
     //MARK: - ComicsLocalProviderReprentable
 
-    func fecthFavoritesIds() -> [Int]{
+    func fecthFavoritesIds() -> [Int] {
         localService.fetch().map({ Int($0.id) })
     }
 
@@ -79,8 +73,12 @@ final class ComicsProviderImpl: ComicsProvider  {
             self.isLoading = false
             switch result {
             case .success(let response):
-                self.page = response.data.offset / self.limit
-                self.delegate?.update(content: .success(response.data.results))
+                self.delegate?.update(content:
+                    .success(
+                        comics: response.data.results,
+                        page: response.data.offset / self.limit
+                    )
+                )
 
             case .failure(let error):
                 self.delegate?.update(content: .fail(error))

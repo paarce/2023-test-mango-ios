@@ -17,16 +17,11 @@ enum ComicsViewState {
 enum ComicsCollectionContent {
     case loading
     case fail(Error)
-    case success([Comic])
+    case success(comics: [Comic], page: Int)
 }
 
 protocol ComicsStateDelegate {
     func update(content: ComicsCollectionContent)
-}
-
-protocol ComicsInteractionDelegate {
-    func addFav(comic: ComicDTO)
-    func removeFav(comic: ComicDTO)
 }
 
 protocol ComicsPresenter: ComicsStateDelegate, ComicsInteractionDelegate {
@@ -41,9 +36,10 @@ protocol ComicsPresenter: ComicsStateDelegate, ComicsInteractionDelegate {
 
 final class ComicsPresenterImpl: ComicsPresenter  {
 
-    private var provider: ComicsProvider
     private (set) var state: ComicsViewState
+    private var provider: ComicsProvider
     private var onRefresh: (() -> Void)?
+    private var page: Int
     private var initialFavIds: [Int]?
 
     init(
@@ -51,22 +47,23 @@ final class ComicsPresenterImpl: ComicsPresenter  {
     ) {
         self.state = .empty
         self.provider = provider
+        page = 0
     }
 
     func initView(onRefresh: (() -> Void)?) {
         self.onRefresh = onRefresh
         provider.delegate = self
         initialFavIds = provider.fecthFavoritesIds()
-        provider.fetchComics()
+        reload()
     }
 
     func reload() {
-        provider.fetchComics()
+        provider.fetchComics(page: page)
     }
 
     func loadNextPageIfNeeded(lastIndexShowed: Int) {
         guard shouldFetchNextPage(lastIndexShowed) else { return }
-        provider.fetchComicsNextPage()
+        provider.fetchComics(page: page + 1)
     }
 
     func close() {
@@ -97,7 +94,8 @@ extension ComicsPresenterImpl {
             state = .loading
         case .fail(let error):
             state = .fail(error)
-        case .success(let comics):
+        case .success(let comics, let page):
+            self.page = page
             if comics.isEmpty {
                 state = .empty
             } else {

@@ -40,6 +40,7 @@ class ComicsCollectionViewController: UICollectionViewController {
     // MARK: - Setup
 
     private func initialSetup() {
+        collectionView.allowsMultipleSelection = false
         self.collectionView!.register(ComicCollectionViewCell.self, forCellWithReuseIdentifier: ComicCollectionViewCell.identifier)
         self.collectionView!.register(InfoCollectionViewCell.self, forCellWithReuseIdentifier: InfoCollectionViewCell.identifier)
 
@@ -50,17 +51,18 @@ class ComicsCollectionViewController: UICollectionViewController {
         })
     }
 
+    // MARK: - Navigation
+
     @objc
     private func moveToFavsView() {
         let favsView = AppState.shared.coodinator.createFavComics()
         self.navigationController?.pushViewController(favsView, animated: true)
     }
 
-    // MARK: - UICollectionViewDelegate
-
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool { false }
-
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool { false }
+    private func moveToDetail(comic: ComicDTO) {
+        let detail = AppState.shared.coodinator.createComicDetail(comic: comic)
+        self.navigationController?.pushViewController(detail, animated: true)
+    }
 
     // MARK: - UICollectionViewDataSource
 
@@ -86,6 +88,12 @@ class ComicsCollectionViewController: UICollectionViewController {
             cell.set(model: .init(comicsState: presenter.state))
             return cell
         }
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.item)
+        guard case .success(let comics) = presenter.state, comics.count > indexPath.item else { return }
+        moveToDetail(comic: comics[indexPath.item].dto)
     }
 
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

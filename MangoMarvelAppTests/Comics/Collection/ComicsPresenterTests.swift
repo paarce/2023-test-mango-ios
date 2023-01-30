@@ -28,7 +28,7 @@ final class ComicsPresenterTests: XCTestCase {
         classUnderTest.initView(onRefresh: {})
 
         XCTAssertNotNil(provider.delegate)
-        XCTAssertTrue(provider.fetchComicsCalled)
+        XCTAssertEqual(provider.fetchComicsPageCalled, 0)
     }
 
     func testInitView_withLoadingState() throws {
@@ -38,17 +38,17 @@ final class ComicsPresenterTests: XCTestCase {
         classUnderTest.initView(onRefresh: {})
 
         XCTAssertNotNil(provider.delegate)
-        XCTAssertTrue(provider.fetchComicsCalled)
+        XCTAssertEqual(provider.fetchComicsPageCalled, 0)
     }
 
     func testInitView_withSucccesState() throws {
 
-        classUnderTest.update(content: .success([]))
+        classUnderTest.update(content: .success(comics: [], page: 0))
 
         classUnderTest.initView(onRefresh: {})
 
         XCTAssertNotNil(provider.delegate)
-        XCTAssertTrue(provider.fetchComicsCalled)
+        XCTAssertEqual(provider.fetchComicsPageCalled, 0)
     }
 
     func testInitView_withFailState() throws {
@@ -58,7 +58,7 @@ final class ComicsPresenterTests: XCTestCase {
         classUnderTest.initView(onRefresh: {})
 
         XCTAssertNotNil(provider.delegate)
-        XCTAssertTrue(provider.fetchComicsCalled)
+        XCTAssertEqual(provider.fetchComicsPageCalled, 0)
     }
 
     func testClose() throws {
@@ -70,14 +70,14 @@ final class ComicsPresenterTests: XCTestCase {
     func testReload() throws {
 
         classUnderTest.reload()
-        XCTAssertTrue(provider.fetchComicsCalled)
+        XCTAssertEqual(provider.fetchComicsPageCalled, 0)
     }
 
     func testLoadNextPageIfNeeded_withEmptyState() throws {
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertFalse(provider.fetchComicsNextPageCalled)
+        XCTAssertNil(provider.fetchComicsPageCalled)
     }
 
     func testLoadNextPageIfNeeded_withFailState() throws {
@@ -85,7 +85,7 @@ final class ComicsPresenterTests: XCTestCase {
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertFalse(provider.fetchComicsNextPageCalled)
+        XCTAssertNil(provider.fetchComicsPageCalled)
     }
 
     func testLoadNextPageIfNeeded_withLoadingState() throws {
@@ -93,49 +93,49 @@ final class ComicsPresenterTests: XCTestCase {
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertFalse(provider.fetchComicsNextPageCalled)
+        XCTAssertNil(provider.fetchComicsPageCalled)
     }
 
     func testLoadNextPageIfNeeded_withSuccessState_butEmptyArray() throws {
-        classUnderTest.update(content: .success([]))
+        classUnderTest.update(content: .success(comics: [], page: 0))
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertFalse(provider.fetchComicsNextPageCalled)
+        XCTAssertNil(provider.fetchComicsPageCalled)
     }
 
     func testLoadNextPageIfNeeded_withSuccessState_butFewComicsArray() throws {
 
-        classUnderTest.update(content: .success(.collectionMock(count: 3)))
+        classUnderTest.update(content: .success(comics: .collectionMock(count: 3), page: 0))
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertTrue(provider.fetchComicsNextPageCalled)
+        XCTAssertEqual(provider.fetchComicsPageCalled, 1)
     }
 
     func testLoadNextPageIfNeeded_withSuccessState_with10elements() throws {
-        classUnderTest.update(content: .success(.collectionMock(count: 10)))
+        classUnderTest.update(content: .success(comics: .collectionMock(count: 10), page: 0))
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertTrue(provider.fetchComicsNextPageCalled)
+        XCTAssertEqual(provider.fetchComicsPageCalled, 1)
     }
 
     func testLoadNextPageIfNeeded_withSuccessState_withMoreThan10elements() throws {
-        classUnderTest.update(content: .success(.collectionMock(count: 20)))
+        classUnderTest.update(content: .success(comics: .collectionMock(count: 20), page: 0))
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertFalse(provider.fetchComicsNextPageCalled)
+        XCTAssertNil(provider.fetchComicsPageCalled)
     }
 
     func testLoadNextPageIfNeeded_withSuccessState_withMoreThan10elements_butLastHiigher() throws {
 
-        classUnderTest.update(content: .success(.collectionMock(count: 20)))
+        classUnderTest.update(content: .success(comics: .collectionMock(count: 20), page: 0))
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 200)
 
-        XCTAssertFalse(provider.fetchComicsNextPageCalled)
+        XCTAssertNil(provider.fetchComicsPageCalled)
     }
 }
 

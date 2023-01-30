@@ -25,19 +25,3 @@ struct ComicsEndpoint: EndpointRepresentable {
         self.params = params
     }
 }
-
-struct Comic: Codable {
-    let id: Int
-    let digitalId: Int?
-    let title: String
-    let description: String?
-    let thumbnail: ImageInfo
-}
-
-extension Comic: Equatable {
-    static func == (lhs: Comic, rhs: Comic) -> Bool {
-        lhs.id == rhs.id
-    }
-}
-
-typealias ComicsCollection = APIResponse<CollectionResponse<Comic>>

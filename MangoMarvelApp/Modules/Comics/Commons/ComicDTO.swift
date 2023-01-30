@@ -12,13 +12,15 @@ struct ComicDTO {
     let id: Int
     let title: String
     let body: String
-    let imageURL: URL?
+    let thumbnailURL: URL?
+    let prices: [Comic.Price]
 
     init(comic: Comic) {
         id = comic.id
         title = comic.title
         body = comic.description ?? ""
         let str = comic.thumbnail.path + "." + comic.thumbnail.fileExtension
-        imageURL = URL(string: str)
+        thumbnailURL = URL(string: str)
+        prices = comic.prices
     }
 }
