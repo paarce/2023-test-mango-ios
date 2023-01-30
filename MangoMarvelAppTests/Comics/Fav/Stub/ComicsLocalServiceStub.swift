@@ -30,6 +30,4 @@ class ComicsLocalServiceStub: ComicsLocalService {
     func remove(fav: MangoMarvelApp.FavComic) {
         removeCalled = false
     }
-    
-
 }

@@ -8,7 +8,7 @@
 import Foundation
 @testable import MangoMarvelApp
 
-final class ComicsCollectionServiceStub: ComicsCollectionServiceRepresentable {
+final class ComicsRemoteServiceStub: ComicsRemoteService {
 
     var fecthCalled: ((MangoMarvelApp.ComicsEndpoint.Options) -> Void)?
     var result: Result<MangoMarvelApp.ComicsCollection, Error> = .failure(APIError.noData)

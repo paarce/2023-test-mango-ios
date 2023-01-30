@@ -7,33 +7,33 @@
 
 import Foundation
 
-protocol ComicsRemoteProviderReprentable {
+protocol ComicsRemoteProvider {
     func fetchComics()
     func fetchComicsNextPage()
 }
 
-protocol ComicsLocalProviderReprentable {
+protocol ComicsLocalProvider {
 
     func fecthFavoritesIds() -> [Int]
     func addFavorite(comic: ComicDTO)
     func removeFavorite(comic: ComicDTO)
 }
 
-protocol ComicsProviderReprentable: ComicsRemoteProviderReprentable, ComicsLocalProviderReprentable {
+protocol ComicsProvider: ComicsRemoteProvider, ComicsLocalProvider {
 
     var delegate: ComicsStateDelegate? { get set }
 }
 
-class ComicsCollectionProvider: ComicsProviderReprentable  {
+final class ComicsProviderImpl: ComicsProvider  {
 
     var delegate: ComicsStateDelegate?
-    private var remoteService: ComicsCollectionServiceRepresentable
+    private var remoteService: ComicsRemoteService
     private var localService: ComicsLocalService
     private var page: Int
     private let limit: Int
     private var isLoading: Bool
 
-    init(remoteService: ComicsCollectionServiceRepresentable, localService: ComicsLocalService ) {
+    init(remoteService: ComicsRemoteService, localService: ComicsLocalService) {
         self.remoteService = remoteService
         self.localService = localService
         page = 0

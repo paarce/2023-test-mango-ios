@@ -8,14 +8,14 @@
 import Foundation
 import Combine
 
-protocol ComicsCollectionServiceRepresentable {
+protocol ComicsRemoteService {
     func fecth(
         options: ComicsEndpoint.Options,
         completion: @escaping (Result<ComicsCollection, Error>) -> Void
     )
 }
 
-class ComicsCollectionService: ComicsCollectionServiceRepresentable {
+class ComicsRemoteServiceImpl: ComicsRemoteService {
 
     private let client: RequestPerformer
     var anyCancellable: AnyCancellable?

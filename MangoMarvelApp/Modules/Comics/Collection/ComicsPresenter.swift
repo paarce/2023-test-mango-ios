@@ -29,7 +29,7 @@ protocol ComicsInteractionDelegate {
     func removeFav(comic: ComicDTO)
 }
 
-protocol ComicsCollectionUseCaseRepresenable: ComicsStateDelegate, ComicsInteractionDelegate {
+protocol ComicsPresenter: ComicsStateDelegate, ComicsInteractionDelegate {
 
     var state: ComicsViewState { get }
 
@@ -40,15 +40,15 @@ protocol ComicsCollectionUseCaseRepresenable: ComicsStateDelegate, ComicsInterac
     func cellSize(from frameSize: CGSize, in identifier: String) -> CGSize
 }
 
-class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable  {
+final class ComicsPresenterImpl: ComicsPresenter  {
 
-    private var provider: ComicsProviderReprentable
+    private var provider: ComicsProvider
     private (set) var state: ComicsViewState
     private var onRefresh: (() -> Void)?
     private var initialFavIds: [Int]?
 
     init(
-        provider: ComicsProviderReprentable
+        provider: ComicsProvider
     ) {
         self.state = .empty
         self.provider = provider
@@ -83,7 +83,7 @@ class ComicsCollectionUseCase: ComicsCollectionUseCaseRepresenable  {
     }
 }
 
-extension ComicsCollectionUseCase {
+extension ComicsPresenterImpl {
 
     private var storeComics: [ComicCellViewModel]? {
         guard case .success(let comics) = state else { return nil }
@@ -117,7 +117,7 @@ extension ComicsCollectionUseCase {
     }
 }
 
-extension ComicsCollectionUseCase {
+extension ComicsPresenterImpl {
 
     func cellSize(from frameSize: CGSize, in identifier: String) -> CGSize {
         if identifier == ComicCollectionViewCell.identifier {

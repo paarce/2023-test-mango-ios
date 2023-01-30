@@ -19,8 +19,8 @@ struct ModuleCoordinator {
 
     func createComicsCollection() -> UIViewController {
         ComicsCollectionViewController(
-            useCase: ComicsCollectionUseCase(
-                provider: ComicsCollectionProvider(
+            presenter: ComicsPresenterImpl(
+                provider: ComicsProviderImpl(
                     remoteService: services.comicsRemoteService,
                     localService: services.comicsLocalService
                 )
@@ -40,13 +40,13 @@ class ServicesContainer {
 
     let context: NSManagedObjectContext
 
-    let comicsRemoteService: ComicsCollectionService
+    let comicsRemoteService: ComicsRemoteService
     let comicsLocalService: ComicsLocalService
 
     init(context: NSManagedObjectContext) {
 
         self.context = context
-        comicsRemoteService = ComicsCollectionService()
+        comicsRemoteService = ComicsRemoteServiceImpl()
         comicsLocalService = ComicsLocalServiceImpl(context: context)
     }
 }

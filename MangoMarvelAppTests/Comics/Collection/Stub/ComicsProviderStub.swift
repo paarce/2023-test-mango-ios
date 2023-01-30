@@ -9,7 +9,7 @@ import Foundation
 
 @testable import MangoMarvelApp
 
-final class ComicsCollectionProviderStub: ComicsProviderReprentable {
+final class ComicsProviderStub: ComicsProvider {
     var delegate: MangoMarvelApp.ComicsStateDelegate?
 
     var fetchComicsCalled = false

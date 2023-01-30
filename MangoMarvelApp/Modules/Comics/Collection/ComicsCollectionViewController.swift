@@ -11,12 +11,12 @@ import UIKit
 class ComicsCollectionViewController: UICollectionViewController {
 
     private var customLayout = ViewFactory.layout
-    private var useCase: ComicsCollectionUseCaseRepresenable
+    private var presenter: ComicsPresenter
 
     init(
-        useCase: ComicsCollectionUseCaseRepresenable
+        presenter: ComicsPresenter
     ) {
-        self.useCase = useCase
+        self.presenter = presenter
         super.init(collectionViewLayout: customLayout)
     }
 
@@ -31,7 +31,7 @@ class ComicsCollectionViewController: UICollectionViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        useCase.close()
+        presenter.close()
     }
 
     // MARK: - Setup
@@ -42,7 +42,7 @@ class ComicsCollectionViewController: UICollectionViewController {
 
         self.navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .rewind, target: self, action: #selector(moveToFavsView))
 
-        useCase.initView(onRefresh: { [weak self] in
+        presenter.initView(onRefresh: { [weak self] in
             self?.collectionView.reloadData()
         })
     }
@@ -64,7 +64,7 @@ class ComicsCollectionViewController: UICollectionViewController {
     override func numberOfSections(in collectionView: UICollectionView) -> Int { 1 }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch useCase.state {
+        switch presenter.state {
         case .success(let comics):
             return comics.count
         default:
@@ -74,19 +74,19 @@ class ComicsCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        if case .success(let comics) = useCase.state {
+        if case .success(let comics) = presenter.state {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ComicCollectionViewCell.identifier, for: indexPath) as! ComicCollectionViewCell
             cell.set(model: comics[indexPath.item])
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectionViewCell.identifier, for: indexPath) as! InfoCollectionViewCell
-            cell.set(model: .init(comicsState: useCase.state))
+            cell.set(model: .init(comicsState: presenter.state))
             return cell
         }
     }
 
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        useCase.loadNextPageIfNeeded(lastIndexShowed: indexPath.item)
+        presenter.loadNextPageIfNeeded(lastIndexShowed: indexPath.item)
     }
 }
 
@@ -95,13 +95,13 @@ extension ComicsCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         var cellIdentifier: String
-        switch useCase.state {
+        switch presenter.state {
         case .success:
             cellIdentifier = ComicCollectionViewCell.identifier
         default:
             cellIdentifier = InfoCollectionViewCell.identifier
         }
-        return useCase.cellSize(from: view.frame.size, in: cellIdentifier)
+        return presenter.cellSize(from: view.frame.size, in: cellIdentifier)
     }
 }
 

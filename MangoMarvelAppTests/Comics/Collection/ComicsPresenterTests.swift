@@ -10,12 +10,12 @@ import XCTest
 
 final class ComicsCollectionUseCaseTests: XCTestCase {
 
-    var classUnderTest: ComicsCollectionUseCaseRepresenable!
-    var provider: ComicsCollectionProviderStub!
+    var classUnderTest: ComicsPresenter!
+    var provider: ComicsProviderStub!
 
     override func setUpWithError() throws {
-        provider = ComicsCollectionProviderStub()
-        classUnderTest = ComicsCollectionUseCase(provider: provider)
+        provider = ComicsProviderStub()
+        classUnderTest = ComicsPresenterImpl(provider: provider)
     }
 
     override func tearDownWithError() throws {
@@ -38,7 +38,7 @@ final class ComicsCollectionUseCaseTests: XCTestCase {
         classUnderTest.initView(onRefresh: {})
 
         XCTAssertNotNil(provider.delegate)
-        XCTAssertFalse(provider.fetchComicsCalled)
+        XCTAssertTrue(provider.fetchComicsCalled)
     }
 
     func testInitView_withSucccesState() throws {

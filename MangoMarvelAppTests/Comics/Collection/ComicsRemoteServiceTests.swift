@@ -10,10 +10,10 @@ import XCTest
 
 final class ComicsCollectionServiceTests: XCTestCase {
 
-    var classUnderTest: ComicsCollectionServiceRepresentable!
+    var classUnderTest: ComicsRemoteService!
     
     override func setUpWithError() throws {
-        classUnderTest = ComicsCollectionService()
+        classUnderTest = ComicsRemoteServiceImpl()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
