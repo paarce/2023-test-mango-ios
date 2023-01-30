@@ -8,7 +8,7 @@
 import XCTest
 @testable import MangoMarvelApp
 
-final class ComicsCollectionUseCaseTests: XCTestCase {
+final class ComicsPresenterTests: XCTestCase {
 
     var classUnderTest: ComicsPresenter!
     var provider: ComicsProviderStub!
@@ -136,27 +136,6 @@ final class ComicsCollectionUseCaseTests: XCTestCase {
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 200)
 
         XCTAssertFalse(provider.fetchComicsNextPageCalled)
-    }
-
-    func testCellSize_withComicCell() throws {
-
-        let size = classUnderTest.cellSize(from: .init(width: 100, height: 100), in: ComicCollectionViewCell.identifier)
-
-        XCTAssertEqual(size, .init(width: 49, height: 21))
-    }
-
-    func testCellSize_withInfoCell() throws {
-
-        let size = classUnderTest.cellSize(from: .init(width: 100, height: 100), in: InfoCollectionViewCell.identifier)
-
-        XCTAssertEqual(size, .init(width: 100, height: 100))
-    }
-
-    func testCellSize_withRamdom() throws {
-
-        let size = classUnderTest.cellSize(from: .init(width: 100, height: 100), in: "CELL")
-
-        XCTAssertEqual(size, .zero)
     }
 }
 

@@ -12,11 +12,14 @@ class ComicsCollectionViewController: UICollectionViewController {
 
     private var customLayout = ViewFactory.layout
     private var presenter: ComicsPresenter
+    private var resizer: ComicsResizer
 
     init(
-        presenter: ComicsPresenter
+        presenter: ComicsPresenter,
+        resizer: ComicsResizer = ComicsResizerImpl()
     ) {
         self.presenter = presenter
+        self.resizer = resizer
         super.init(collectionViewLayout: customLayout)
     }
 
@@ -101,7 +104,7 @@ extension ComicsCollectionViewController: UICollectionViewDelegateFlowLayout {
         default:
             cellIdentifier = InfoCollectionViewCell.identifier
         }
-        return presenter.cellSize(from: view.frame.size, in: cellIdentifier)
+        return resizer.cellSize(from: view.frame.size, in: cellIdentifier)
     }
 }
 

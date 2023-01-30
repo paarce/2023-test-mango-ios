@@ -37,7 +37,6 @@ protocol ComicsPresenter: ComicsStateDelegate, ComicsInteractionDelegate {
     func reload()
     func loadNextPageIfNeeded(lastIndexShowed: Int)
     func close()
-    func cellSize(from frameSize: CGSize, in identifier: String) -> CGSize
 }
 
 final class ComicsPresenterImpl: ComicsPresenter  {
@@ -114,22 +113,6 @@ extension ComicsPresenterImpl {
             }
         }
         onRefresh?()
-    }
-}
-
-extension ComicsPresenterImpl {
-
-    func cellSize(from frameSize: CGSize, in identifier: String) -> CGSize {
-        if identifier == ComicCollectionViewCell.identifier {
-            return .init(
-                width: (frameSize.width / 2) - 1,
-                height: (frameSize.height / 4) - 4
-            )
-        } else if identifier == InfoCollectionViewCell.identifier {
-            return .init(width: frameSize.width, height: frameSize.height)
-        } else {
-            return .zero
-        }
     }
 
     private func shouldFetchNextPage(_ lastIndexShowed: Int) -> Bool {

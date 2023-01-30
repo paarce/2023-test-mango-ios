@@ -8,7 +8,7 @@
 import XCTest
 @testable import MangoMarvelApp
 
-final class ComicsCollectionProviderTests: XCTestCase {
+final class ComicsProviderTests: XCTestCase {
 
     var classUnderTest: ComicsProvider!
     var remoteService: ComicsRemoteServiceStub!

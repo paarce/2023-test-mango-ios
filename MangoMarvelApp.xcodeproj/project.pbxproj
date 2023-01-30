@@ -51,6 +51,8 @@
 		F34FAD7D2983E9AE00E985C7 /* ComicsLocalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD7C2983E9AE00E985C7 /* ComicsLocalService.swift */; };
 		F34FAD812983EA5300E985C7 /* ComicsLocalServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD802983EA5300E985C7 /* ComicsLocalServiceStub.swift */; };
 		F34FAD832983F4A700E985C7 /* ManagedObjectContextMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD822983F4A700E985C7 /* ManagedObjectContextMock.swift */; };
+		F34FAD862987BB7900E985C7 /* ComicsResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD852987BB7900E985C7 /* ComicsResizer.swift */; };
+		F34FAD882987BCA000E985C7 /* ComicsResizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD872987BCA000E985C7 /* ComicsResizerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +123,8 @@
 		F34FAD7C2983E9AE00E985C7 /* ComicsLocalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsLocalService.swift; sourceTree = "<group>"; };
 		F34FAD802983EA5300E985C7 /* ComicsLocalServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsLocalServiceStub.swift; sourceTree = "<group>"; };
 		F34FAD822983F4A700E985C7 /* ManagedObjectContextMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectContextMock.swift; sourceTree = "<group>"; };
+		F34FAD852987BB7900E985C7 /* ComicsResizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsResizer.swift; sourceTree = "<group>"; };
+		F34FAD872987BCA000E985C7 /* ComicsResizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsResizerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,6 +252,7 @@
 				F34FAD792983CDA500E985C7 /* ComicCellViewModel.swift */,
 				F34FA8522981530F00E985C7 /* ComicsProvider.swift */,
 				F34FAD482981A52700E985C7 /* ComicDTO.swift */,
+				F34FAD852987BB7900E985C7 /* ComicsResizer.swift */,
 			);
 			path = Collection;
 			sourceTree = "<group>";
@@ -308,6 +313,7 @@
 		F34FAD542982DC4700E985C7 /* Comics */ = {
 			isa = PBXGroup;
 			children = (
+				F34FAD892987BD1D00E985C7 /* Stub */,
 				F34FAD7E2983EA1600E985C7 /* Fav */,
 				F34FAD552982DC4C00E985C7 /* Collection */,
 				F34FAD5B29832A5A00E985C7 /* Model+extension.swift */,
@@ -323,6 +329,7 @@
 				F34FAD5F29832D1E00E985C7 /* ComicsRemoteServiceTests.swift */,
 				F34FAD64298332F000E985C7 /* ComicsPresenterTests.swift */,
 				F34FAD6A29833E5B00E985C7 /* ComicsEndpointTests.swift */,
+				F34FAD872987BCA000E985C7 /* ComicsResizerTests.swift */,
 			);
 			path = Collection;
 			sourceTree = "<group>";
@@ -330,7 +337,6 @@
 		F34FAD582982DDDC00E985C7 /* Stub */ = {
 			isa = PBXGroup;
 			children = (
-				F34FAD592982DDFC00E985C7 /* ComicsRemoteServiceStub.swift */,
 				F34FAD5D29832B1400E985C7 /* ComicsStateDelegateStub.swift */,
 				F34FAD662983337B00E985C7 /* ComicsProviderStub.swift */,
 			);
@@ -374,7 +380,6 @@
 		F34FAD7F2983EA1B00E985C7 /* Stub */ = {
 			isa = PBXGroup;
 			children = (
-				F34FAD802983EA5300E985C7 /* ComicsLocalServiceStub.swift */,
 			);
 			path = Stub;
 			sourceTree = "<group>";
@@ -386,6 +391,15 @@
 				F34FA85929815DDE00E985C7 /* ModulesCordinator.swift */,
 			);
 			path = Coodinator;
+			sourceTree = "<group>";
+		};
+		F34FAD892987BD1D00E985C7 /* Stub */ = {
+			isa = PBXGroup;
+			children = (
+				F34FAD592982DDFC00E985C7 /* ComicsRemoteServiceStub.swift */,
+				F34FAD802983EA5300E985C7 /* ComicsLocalServiceStub.swift */,
+			);
+			path = Stub;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -542,6 +556,7 @@
 				F34FA861298180E400E985C7 /* Encrypt.swift in Sources */,
 				F34FA85C29816E2C00E985C7 /* ComicsEndpoint.swift in Sources */,
 				F34FA8642981904600E985C7 /* ComicCollectionViewCell.swift in Sources */,
+				F34FAD862987BB7900E985C7 /* ComicsResizer.swift in Sources */,
 				F34FAD452981949800E985C7 /* UIView+extension.swift in Sources */,
 				F34FAD4F2981E08600E985C7 /* InfoCollectionViewCell.swift in Sources */,
 				CC41C22425DD3FA10057D0C9 /* SceneDelegate.swift in Sources */,
@@ -554,6 +569,7 @@
 			files = (
 				F34FAD5E29832B1400E985C7 /* ComicsStateDelegateStub.swift in Sources */,
 				F34FAD5A2982DDFC00E985C7 /* ComicsRemoteServiceStub.swift in Sources */,
+				F34FAD882987BCA000E985C7 /* ComicsResizerTests.swift in Sources */,
 				F34FAD5C29832A5A00E985C7 /* Model+extension.swift in Sources */,
 				F34FAD65298332F000E985C7 /* ComicsPresenterTests.swift in Sources */,
 				F34FAD812983EA5300E985C7 /* ComicsLocalServiceStub.swift in Sources */,
