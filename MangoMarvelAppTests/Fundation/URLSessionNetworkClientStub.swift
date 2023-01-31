@@ -11,20 +11,19 @@ import Combine
 
 class URLSessionNetworkClientStub: NetworkClient {
 
-
     var callCount = 0
-    var responseData: Data!
+    private var responseData: Data?
 
     func setResponse(codable: Codable) throws {
         responseData = try JSONEncoder().encode(codable)
     }
 
-    func perform<Output>(for request: MangoMarvelApp.Request) async throws -> Output where Output : Decodable {
+    func perform<Output>(for request: URLRequest) async throws -> Output where Output : Decodable {
         callCount += 1
-        return try JSONDecoder().decode(Output.self, from: responseData)
+        if let responseData {
+            return try JSONDecoder().decode(Output.self, from: responseData)
+        } else {
+            throw APIError.badRequest
+        }
     }
-//    func perform<Output>(for request: MangoMarvelApp.Request) async throws -> Output where Output: Decodable {
-//        callCount += 1
-//        return reponseData
-//    }
 }

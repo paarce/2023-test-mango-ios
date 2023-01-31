@@ -11,23 +11,23 @@ import CoreData
 
 class ComicsLocalServiceStub: ComicsLocalService {
 
-    var fecthFavoritesIdsResult = [MangoMarvelApp.FavComic]()
+    var fecthFavoritesResult = [MangoMarvelApp.FavComic]()
     func fetch() -> [MangoMarvelApp.FavComic] {
-        fecthFavoritesIdsResult
+        fecthFavoritesResult
     }
 
-    var addFavCalled = false
+    var addFavCount = 0
     func addFav(comic: MangoMarvelApp.ComicDTO) {
-        addFavCalled = true
+        addFavCount += 1
     }
 
-    var removeFavCalled = false
+    var removeFavCount = 0
     func removeFav(comic: MangoMarvelApp.ComicDTO) {
-        removeFavCalled = true
+        removeFavCount += 1
     }
 
-    var removeCalled = false
+    var removeCount = 0
     func remove(fav: MangoMarvelApp.FavComic) {
-        removeCalled = false
+        removeCount += 1
     }
 }

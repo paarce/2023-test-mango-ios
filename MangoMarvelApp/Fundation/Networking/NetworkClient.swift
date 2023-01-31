@@ -7,10 +7,6 @@
 
 import Foundation
 
-protocol Request {
-    var urlRequest: URLRequest { get }
-}
-
 protocol NetworkClient {
-    func perform<Output: Decodable>(for request: Request) async throws -> Output
+    func perform<Output: Decodable>(for request: URLRequest) async throws -> Output
 }

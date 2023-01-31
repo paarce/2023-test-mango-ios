@@ -8,10 +8,10 @@
 import Foundation
 @testable import MangoMarvelApp
 
-final class ComicsStateDelegateStub: ComicsStateDelegate {
-
-    var updateCalled: ((MangoMarvelApp.ComicsCollectionContent) -> Void)?
-    func update(content: MangoMarvelApp.ComicsCollectionContent) {
-        updateCalled?(content)
-    }
-}
+//final class ComicsStateDelegateStub: ComicsStateDelegate {
+//
+//    var updateCalled: ((MangoMarvelApp.ComicsCollectionContent) -> Void)?
+//    func update(content: MangoMarvelApp.ComicsCollectionContent) {
+//        updateCalled?(content)
+//    }
+//}

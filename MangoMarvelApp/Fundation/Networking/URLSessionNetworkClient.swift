@@ -9,21 +9,18 @@ import Foundation
 
 class URLSessionNetworkClient: NetworkClient {
 
-    func perform<Output: Decodable>(for request: Request) async throws -> Output {
+    func perform<Output: Decodable>(for request: URLRequest) async throws -> Output {
 
-        let urlRequest = request.urlRequest
+        print("Request URL: \(request)")
+        print("Request Header: \(String(describing: request.allHTTPHeaderFields))")
+        print("Request httpMethod: \(String(describing: request.httpMethod))")
+        print("Request Body: \(String(decoding: request.httpBody ?? Data(), as: UTF8.self)))")
 
-        print("Request URL: \(urlRequest)")
-        print("Request Header: \(String(describing: urlRequest.allHTTPHeaderFields))")
-        print("Request httpMethod: \(String(describing: urlRequest.httpMethod))")
-        print("Request Body: \(String(decoding: urlRequest.httpBody ?? Data(), as: UTF8.self)))")
-
-        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+        let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpUrlResponse = response as? HTTPURLResponse, httpUrlResponse.statusCode == 200 else {
             throw handleError(data: data, response: response)
         }
-        print("Response: \(urlRequest)")
-        print("Response Data: \(String(decoding: data, as: UTF8.self))")
+
         do {
             let decodedResponseData = try JSONDecoder().decode(Output.self, from: data)
             return decodedResponseData

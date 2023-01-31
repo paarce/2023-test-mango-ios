@@ -30,12 +30,11 @@
 		F34FAD492981A52700E985C7 /* ComicDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD482981A52700E985C7 /* ComicDTO.swift */; };
 		F34FAD4D2981BE0800E985C7 /* ImageRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD4C2981BE0800E985C7 /* ImageRemote.swift */; };
 		F34FAD4F2981E08600E985C7 /* InfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD4E2981E08600E985C7 /* InfoCollectionViewCell.swift */; };
-		F34FAD572982DCA000E985C7 /* ComicsProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD562982DCA000E985C7 /* ComicsProviderTests.swift */; };
+		F34FAD572982DCA000E985C7 /* ComicsProviderRemoteServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD562982DCA000E985C7 /* ComicsProviderRemoteServiceTests.swift */; };
 		F34FAD5A2982DDFC00E985C7 /* ComicsRemoteServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD592982DDFC00E985C7 /* ComicsRemoteServiceStub.swift */; };
 		F34FAD5C29832A5A00E985C7 /* ComicModel+mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD5B29832A5A00E985C7 /* ComicModel+mocks.swift */; };
 		F34FAD5E29832B1400E985C7 /* ComicsStateDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD5D29832B1400E985C7 /* ComicsStateDelegateStub.swift */; };
-		F34FAD6029832D1E00E985C7 /* ComicsRemoteServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD5F29832D1E00E985C7 /* ComicsRemoteServiceTests.swift */; };
-		F34FAD6329832D9F00E985C7 /* RequestPerformerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD6229832D9F00E985C7 /* RequestPerformerStub.swift */; };
+		F34FAD6329832D9F00E985C7 /* URLSessionNetworkClientStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD6229832D9F00E985C7 /* URLSessionNetworkClientStub.swift */; };
 		F34FAD65298332F000E985C7 /* ComicsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD64298332F000E985C7 /* ComicsPresenterTests.swift */; };
 		F34FAD672983337B00E985C7 /* ComicsProviderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD662983337B00E985C7 /* ComicsProviderStub.swift */; };
 		F34FAD6929833CAA00E985C7 /* ModuleCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD6829833CAA00E985C7 /* ModuleCoordinatorTests.swift */; };
@@ -62,6 +61,9 @@
 		F34FADA129891B8F00E985C7 /* URLSessionNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FADA029891B8F00E985C7 /* URLSessionNetworkClient.swift */; };
 		F34FADA52989226800E985C7 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FADA42989226800E985C7 /* NetworkClient.swift */; };
 		F34FADA82989281700E985C7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F34FADAA2989281700E985C7 /* Localizable.strings */; };
+		F34FB28F2989663A00E985C7 /* ComicsProviderLocalServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FB28E2989663A00E985C7 /* ComicsProviderLocalServiceTests.swift */; };
+		F34FB2912989707300E985C7 /* ComicsRemoteServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FB2902989707300E985C7 /* ComicsRemoteServiceTests.swift */; };
+		F34FB293298970EB00E985C7 /* ComicsLocalServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FB292298970EB00E985C7 /* ComicsLocalServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,12 +113,11 @@
 		F34FAD482981A52700E985C7 /* ComicDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDTO.swift; sourceTree = "<group>"; };
 		F34FAD4C2981BE0800E985C7 /* ImageRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRemote.swift; sourceTree = "<group>"; };
 		F34FAD4E2981E08600E985C7 /* InfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectionViewCell.swift; sourceTree = "<group>"; };
-		F34FAD562982DCA000E985C7 /* ComicsProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsProviderTests.swift; sourceTree = "<group>"; };
+		F34FAD562982DCA000E985C7 /* ComicsProviderRemoteServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsProviderRemoteServiceTests.swift; sourceTree = "<group>"; };
 		F34FAD592982DDFC00E985C7 /* ComicsRemoteServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsRemoteServiceStub.swift; sourceTree = "<group>"; };
 		F34FAD5B29832A5A00E985C7 /* ComicModel+mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComicModel+mocks.swift"; sourceTree = "<group>"; };
 		F34FAD5D29832B1400E985C7 /* ComicsStateDelegateStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsStateDelegateStub.swift; sourceTree = "<group>"; };
-		F34FAD5F29832D1E00E985C7 /* ComicsRemoteServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsRemoteServiceTests.swift; sourceTree = "<group>"; };
-		F34FAD6229832D9F00E985C7 /* RequestPerformerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPerformerStub.swift; sourceTree = "<group>"; };
+		F34FAD6229832D9F00E985C7 /* URLSessionNetworkClientStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionNetworkClientStub.swift; sourceTree = "<group>"; };
 		F34FAD64298332F000E985C7 /* ComicsPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsPresenterTests.swift; sourceTree = "<group>"; };
 		F34FAD662983337B00E985C7 /* ComicsProviderStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsProviderStub.swift; sourceTree = "<group>"; };
 		F34FAD6829833CAA00E985C7 /* ModuleCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleCoordinatorTests.swift; sourceTree = "<group>"; };
@@ -144,6 +145,9 @@
 		F34FADA42989226800E985C7 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		F34FADA92989281700E985C7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F34FADAD2989285B00E985C7 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F34FB28E2989663A00E985C7 /* ComicsProviderLocalServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsProviderLocalServiceTests.swift; sourceTree = "<group>"; };
+		F34FB2902989707300E985C7 /* ComicsRemoteServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsRemoteServiceTests.swift; sourceTree = "<group>"; };
+		F34FB292298970EB00E985C7 /* ComicsLocalServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsLocalServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -336,11 +340,13 @@
 			isa = PBXGroup;
 			children = (
 				F34FAD582982DDDC00E985C7 /* Stub */,
-				F34FAD562982DCA000E985C7 /* ComicsProviderTests.swift */,
-				F34FAD5F29832D1E00E985C7 /* ComicsRemoteServiceTests.swift */,
+				F34FAD562982DCA000E985C7 /* ComicsProviderRemoteServiceTests.swift */,
+				F34FB28E2989663A00E985C7 /* ComicsProviderLocalServiceTests.swift */,
 				F34FAD64298332F000E985C7 /* ComicsPresenterTests.swift */,
 				F34FAD6A29833E5B00E985C7 /* ComicsEndpointTests.swift */,
 				F34FAD872987BCA000E985C7 /* ComicsResizerTests.swift */,
+				F34FB2902989707300E985C7 /* ComicsRemoteServiceTests.swift */,
+				F34FB292298970EB00E985C7 /* ComicsLocalServiceTests.swift */,
 			);
 			path = Collection;
 			sourceTree = "<group>";
@@ -357,7 +363,7 @@
 		F34FAD6129832D8800E985C7 /* Fundation */ = {
 			isa = PBXGroup;
 			children = (
-				F34FAD6229832D9F00E985C7 /* RequestPerformerStub.swift */,
+				F34FAD6229832D9F00E985C7 /* URLSessionNetworkClientStub.swift */,
 				F34FAD822983F4A700E985C7 /* ManagedObjectContextMock.swift */,
 				F34FAD9D298914F100E985C7 /* Model+mocks.swift */,
 			);
@@ -634,10 +640,12 @@
 				F34FAD5C29832A5A00E985C7 /* ComicModel+mocks.swift in Sources */,
 				F34FAD65298332F000E985C7 /* ComicsPresenterTests.swift in Sources */,
 				F34FAD812983EA5300E985C7 /* ComicsLocalServiceStub.swift in Sources */,
-				F34FAD6329832D9F00E985C7 /* RequestPerformerStub.swift in Sources */,
-				F34FAD572982DCA000E985C7 /* ComicsProviderTests.swift in Sources */,
+				F34FAD6329832D9F00E985C7 /* URLSessionNetworkClientStub.swift in Sources */,
+				F34FB2912989707300E985C7 /* ComicsRemoteServiceTests.swift in Sources */,
+				F34FAD572982DCA000E985C7 /* ComicsProviderRemoteServiceTests.swift in Sources */,
+				F34FB293298970EB00E985C7 /* ComicsLocalServiceTests.swift in Sources */,
+				F34FB28F2989663A00E985C7 /* ComicsProviderLocalServiceTests.swift in Sources */,
 				CC41C23925DD3FA30057D0C9 /* MangoMarvelAppTests.swift in Sources */,
-				F34FAD6029832D1E00E985C7 /* ComicsRemoteServiceTests.swift in Sources */,
 				F34FAD6B29833E5B00E985C7 /* ComicsEndpointTests.swift in Sources */,
 				F34FAD6929833CAA00E985C7 /* ModuleCoordinatorTests.swift in Sources */,
 				F34FAD832983F4A700E985C7 /* ManagedObjectContextMock.swift in Sources */,

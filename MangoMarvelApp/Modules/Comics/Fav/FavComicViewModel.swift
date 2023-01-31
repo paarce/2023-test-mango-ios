@@ -17,7 +17,7 @@ struct FavComicViewModel {
 
     func deleteFavs(from favs: [FavComic],at offsets: IndexSet) {
       offsets.forEach { index in
-          localService.remove(fav: favs[index])
+          try? localService.remove(fav: favs[index])
       }
     }
 }

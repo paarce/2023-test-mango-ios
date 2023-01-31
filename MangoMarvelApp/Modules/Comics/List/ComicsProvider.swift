@@ -19,34 +19,33 @@ protocol ComicsLocalProvider {
     func removeFavorite(comic: ComicDTO)
 }
 
-protocol ComicsProvider: ComicsRemoteProvider, ComicsLocalProvider {
+protocol ComicsProvider: ComicsRemoteProvider, ComicsLocalProvider {}
 
-}
-
-final class ComicsProviderImpl: ComicsProvider  {
+final class ComicsProviderImpl: ComicsProvider {
 
     private var remoteService: ComicsRemoteService
     private var localService: ComicsLocalService
     private let limit: Int
-    private var page: Int
+    private var page: Int?
 
     init(remoteService: ComicsRemoteService, localService: ComicsLocalService) {
         self.remoteService = remoteService
         self.localService = localService
         limit = 20
-        page = 0
     }
 
     //MARK: - ComicsRemoteProviderReprentable
 
     func reload() async throws -> [Comic] {
-        let reponse = try await remoteService.fecth(options: .init(offset: page * limit) )
+        let currentPage = self.page ?? 0
+        let reponse = try await remoteService.fecth(options: .init(offset: currentPage * limit) )
         page = reponse.data.offset / self.limit
         return reponse.data.results
     }
 
     func fetchNextPageComics() async throws -> [Comic] {
-        let nextPage = page + 1
+        let currentPage = self.page ?? -1
+        let nextPage = currentPage + 1
         let reponse = try await remoteService.fecth(options: .init(offset: nextPage * limit) )
         page = reponse.data.offset / self.limit
         return reponse.data.results
@@ -59,10 +58,10 @@ final class ComicsProviderImpl: ComicsProvider  {
     }
 
     func addFavorite(comic: ComicDTO) {
-        localService.addFav(comic: comic)
+        try? localService.addFav(comic: comic)
     }
 
     func removeFavorite(comic: ComicDTO) {
-        localService.removeFav(comic: comic)
+        try? localService.removeFav(comic: comic)
     }
 }

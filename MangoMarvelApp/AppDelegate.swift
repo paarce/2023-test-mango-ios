@@ -6,7 +6,7 @@
 //
 
 import UIKit
-//TODO: Test everything with iOS 12.1
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

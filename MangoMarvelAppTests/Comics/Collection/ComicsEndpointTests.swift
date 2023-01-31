@@ -23,6 +23,7 @@ final class EndpointTests: XCTestCase {
         classUnderTest = ComicsEndpoint(options: options)
 
         XCTAssertEqual(classUnderTest.id, .comics)
+        XCTAssertEqual(classUnderTest.id.pathName, "/comics")
         XCTAssertEqual(classUnderTest.method, .get)
         XCTAssertTrue(classUnderTest.params.isEmpty)
         XCTAssertTrue(classUnderTest.headers.isEmpty)
@@ -34,6 +35,7 @@ final class EndpointTests: XCTestCase {
         classUnderTest = ComicsEndpoint(options: options)
 
         XCTAssertEqual(classUnderTest.id, .comics)
+        XCTAssertEqual(classUnderTest.id.pathName, "/comics")
         XCTAssertEqual(classUnderTest.method, .get)
         XCTAssertTrue(classUnderTest.headers.isEmpty)
         XCTAssertFalse(classUnderTest.params.isEmpty)

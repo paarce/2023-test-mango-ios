@@ -10,12 +10,14 @@ import XCTest
 
 final class ComicsPresenterTests: XCTestCase {
 
-    var classUnderTest: ComicsPresenter!
+    var classUnderTest: ComicsPresenterImpl!
     var provider: ComicsProviderStub!
+    var onRefresh: (() -> Void)!
 
     override func setUpWithError() throws {
         provider = ComicsProviderStub()
         classUnderTest = ComicsPresenterImpl(provider: provider)
+        onRefresh = {}
     }
 
     override func tearDownWithError() throws {
@@ -23,119 +25,223 @@ final class ComicsPresenterTests: XCTestCase {
         classUnderTest = nil
     }
 
-    func testInitView() throws {
+    func testInitView_success() throws {
+        let exp = expectation(description: "Call reload")
+        var refreshCount = 0
+        onRefresh = {
+            refreshCount += 1
+            if refreshCount == 2 {
+                exp.fulfill()
+            }
+        }
+        provider.reloadResult = .collectionMock(count: 2)
+        classUnderTest.initView(onRefresh: onRefresh)
 
-        classUnderTest.initView(onRefresh: {})
+        XCTAssertEqual(provider.fecthFavoritesIdsCount, 1)
+        XCTAssertEqual(provider.fetchNextPageComicsCount, 0)
 
-        XCTAssertNotNil(provider.delegate)
-        XCTAssertEqual(provider.fetchComicsPageCalled, 0)
+        waitForExpectations(timeout: 0.1, handler: nil)
+        XCTAssertEqual(refreshCount, 2)
+        XCTAssertEqual(provider.reloadCount, 1)
+
+        guard case .success(let comicsFecthed) = classUnderTest.state else {
+            XCTFail("Unexpected result. Expected '.success', got: \(classUnderTest.state)")
+            return
+        }
+
+        XCTAssertEqual(comicsFecthed.count, 2)
     }
 
-    func testInitView_withLoadingState() throws {
+    func testInitView_fail() throws {
+        let exp = expectation(description: "Call reload")
+        var refreshCount = 0
+        onRefresh = {
+            refreshCount += 1
+            if refreshCount == 2 {
+                exp.fulfill()
+            }
+        }
+        classUnderTest.initView(onRefresh: onRefresh)
 
-        classUnderTest.update(content: .loading)
+        XCTAssertEqual(provider.fecthFavoritesIdsCount, 1)
+        XCTAssertEqual(provider.fetchNextPageComicsCount, 0)
 
-        classUnderTest.initView(onRefresh: {})
+        waitForExpectations(timeout: 0.1, handler: nil)
+        XCTAssertEqual(refreshCount, 2)
+        XCTAssertEqual(provider.reloadCount, 1)
 
-        XCTAssertNotNil(provider.delegate)
-        XCTAssertEqual(provider.fetchComicsPageCalled, 0)
+        guard case .fail(let error) = classUnderTest.state else {
+            XCTFail("Unexpected result. Expected '.fail', got: \(classUnderTest.state)")
+            return
+        }
+        XCTAssert(error is APIError)
     }
 
-    func testInitView_withSucccesState() throws {
+    func testReload_success() throws {
 
-        classUnderTest.update(content: .success(comics: [], page: 0))
+        provider.reloadResult = .collectionMock(count: 2)
+        classUnderTest.reload()
 
-        classUnderTest.initView(onRefresh: {})
+        XCTAssertEqual(provider.fecthFavoritesIdsCount, 0)
+        XCTAssertEqual(provider.fetchNextPageComicsCount, 0)
 
-        XCTAssertNotNil(provider.delegate)
-        XCTAssertEqual(provider.fetchComicsPageCalled, 0)
+//        waitForExpectations(timeout: 0.1, handler: nil)
+        XCTAssertEqual(provider.reloadCount, 1)
+
+        guard case .success(let comicsFecthed) = classUnderTest.state else {
+            XCTFail("Unexpected result. Expected '.success', got: \(classUnderTest.state)")
+            return
+        }
+
+        XCTAssertEqual(comicsFecthed.count, 2)
     }
 
-    func testInitView_withFailState() throws {
-
-        classUnderTest.update(content: .fail(APIError.serverError))
-
-        classUnderTest.initView(onRefresh: {})
-
-        XCTAssertNotNil(provider.delegate)
-        XCTAssertEqual(provider.fetchComicsPageCalled, 0)
-    }
-
-    func testClose() throws {
-
-        classUnderTest.close()
-        XCTAssertNil(provider.delegate)
-    }
-
-    func testReload() throws {
+    func testReload_fail() throws {
 
         classUnderTest.reload()
-        XCTAssertEqual(provider.fetchComicsPageCalled, 0)
+
+        XCTAssertEqual(provider.fecthFavoritesIdsCount, 0)
+        XCTAssertEqual(provider.fetchNextPageComicsCount, 0)
+
+//        waitForExpectations(timeout: 0.1, handler: nil)
+        XCTAssertEqual(provider.reloadCount, 1)
+
+        guard case .fail(let error) = classUnderTest.state else {
+            XCTFail("Unexpected result. Expected '.fail', got: \(classUnderTest.state)")
+            return
+        }
+
+        XCTAssert(error is APIError)
     }
 
     func testLoadNextPageIfNeeded_withEmptyState() throws {
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertNil(provider.fetchComicsPageCalled)
+        XCTAssertEqual(provider.fecthFavoritesIdsCount, 0)
+        XCTAssertEqual(provider.reloadCount, 0)
+        XCTAssertEqual(provider.fetchNextPageComicsCount, 0)
+
+        guard case .empty = classUnderTest.state else {
+            XCTFail("Unexpected result. Expected '.empty', got: \(classUnderTest.state)")
+            return
+        }
     }
 
     func testLoadNextPageIfNeeded_withFailState() throws {
-        classUnderTest.update(content: .fail(APIError.serverError))
-
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertNil(provider.fetchComicsPageCalled)
+        XCTAssertEqual(provider.fecthFavoritesIdsCount, 0)
+        XCTAssertEqual(provider.reloadCount, 0)
+        XCTAssertEqual(provider.fetchNextPageComicsCount, 0)
+
+        guard case .fail(let error) = classUnderTest.state else {
+            XCTFail("Unexpected result. Expected '.fail', got: \(classUnderTest.state)")
+            return
+        }
+
+        XCTAssert(error is APIError)
     }
 
     func testLoadNextPageIfNeeded_withLoadingState() throws {
-        classUnderTest.update(content: .loading)
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertNil(provider.fetchComicsPageCalled)
+        XCTAssertEqual(provider.fecthFavoritesIdsCount, 0)
+        XCTAssertEqual(provider.reloadCount, 0)
+        XCTAssertEqual(provider.fetchNextPageComicsCount, 0)
+
+        guard case .loading = classUnderTest.state else {
+            XCTFail("Unexpected result. Expected '.loading', got: \(classUnderTest.state)")
+            return
+        }
     }
 
     func testLoadNextPageIfNeeded_withSuccessState_butEmptyArray() throws {
-        classUnderTest.update(content: .success(comics: [], page: 0))
+
+        provider.reloadResult = []
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertNil(provider.fetchComicsPageCalled)
+        XCTAssertEqual(provider.fecthFavoritesIdsCount, 0)
+        XCTAssertEqual(provider.reloadCount, 0)
+        XCTAssertEqual(provider.fetchNextPageComicsCount, 0)
+
+        guard case .empty = classUnderTest.state else {
+            XCTFail("Unexpected result. Expected '.empty', got: \(classUnderTest.state)")
+            return
+        }
     }
 
     func testLoadNextPageIfNeeded_withSuccessState_butFewComicsArray() throws {
 
-        classUnderTest.update(content: .success(comics: .collectionMock(count: 3), page: 0))
+        provider.reloadResult = .collectionMock(count: 3)
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertEqual(provider.fetchComicsPageCalled, 1)
+        XCTAssertEqual(provider.fecthFavoritesIdsCount, 0)
+        XCTAssertEqual(provider.reloadCount, 0)
+        XCTAssertEqual(provider.fetchNextPageComicsCount, 0)
+
+        guard case .success(let comicsFecthed) = classUnderTest.state else {
+            XCTFail("Unexpected result. Expected '.empty', got: \(classUnderTest.state)")
+            return
+        }
+        XCTAssertEqual(comicsFecthed.count, 3)
     }
 
     func testLoadNextPageIfNeeded_withSuccessState_with10elements() throws {
-        classUnderTest.update(content: .success(comics: .collectionMock(count: 10), page: 0))
+        provider.reloadResult = .collectionMock(count: 10)
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
 
-        XCTAssertEqual(provider.fetchComicsPageCalled, 1)
+        XCTAssertEqual(provider.fecthFavoritesIdsCount, 0)
+        XCTAssertEqual(provider.reloadCount, 0)
+        XCTAssertEqual(provider.fetchNextPageComicsCount, 0)
+
+        guard case .success(let comicsFecthed) = classUnderTest.state else {
+            XCTFail("Unexpected result. Expected '.empty', got: \(classUnderTest.state)")
+            return
+        }
+        XCTAssertEqual(comicsFecthed.count, 10)
     }
 
     func testLoadNextPageIfNeeded_withSuccessState_withMoreThan10elements() throws {
-        classUnderTest.update(content: .success(comics: .collectionMock(count: 20), page: 0))
+//        classUnderTest.update(content: .success(comics: .collectionMock(count: 20), page: 0))
 
-        classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
+            provider.reloadResult = .collectionMock(count: 20)
 
-        XCTAssertNil(provider.fetchComicsPageCalled)
+            classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 1)
+
+            XCTAssertEqual(provider.fecthFavoritesIdsCount, 0)
+            XCTAssertEqual(provider.reloadCount, 0)
+            XCTAssertEqual(provider.fetchNextPageComicsCount, 1)
+
+            guard case .success(let comicsFecthed) = classUnderTest.state else {
+                XCTFail("Unexpected result. Expected '.empty', got: \(classUnderTest.state)")
+                return
+            }
+            XCTAssertEqual(comicsFecthed.count, 20)
     }
 
     func testLoadNextPageIfNeeded_withSuccessState_withMoreThan10elements_butLastHiigher() throws {
+//        classUnderTest.update(content: .success(comics: .collectionMock(count: 20), page: 0))
 
-        classUnderTest.update(content: .success(comics: .collectionMock(count: 20), page: 0))
+        provider.reloadResult = .collectionMock(count: 20)
 
         classUnderTest.loadNextPageIfNeeded(lastIndexShowed: 200)
 
-        XCTAssertNil(provider.fetchComicsPageCalled)
+        XCTAssertEqual(provider.fecthFavoritesIdsCount, 0)
+        XCTAssertEqual(provider.reloadCount, 0)
+        XCTAssertEqual(provider.fetchNextPageComicsCount, 0)
+
+        guard case .success(let comicsFecthed) = classUnderTest.state else {
+            XCTFail("Unexpected result. Expected '.empty', got: \(classUnderTest.state)")
+            return
+        }
+        XCTAssertEqual(comicsFecthed.count, 20)
+
+//        XCTAssertNil(provider.fetchComicsPageCalled)
     }
 }
 
@@ -151,8 +257,9 @@ extension Array where Element == Comic {
 
 extension ComicDTO {
     static func mock(
-        id: Int = 0
+        id: Int = 0,
+        title: String = ""
     ) -> ComicDTO {
-        .init(comic: .mock(id: id))
+        .init(comic: .mock(id: id, title: title))
     }
 }

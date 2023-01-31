@@ -10,9 +10,9 @@ import CoreData
 
 protocol ComicsLocalService {
     func fetch() -> [FavComic]
-    func addFav(comic: ComicDTO)
-    func removeFav(comic: ComicDTO)
-    func remove(fav: FavComic)
+    func addFav(comic: ComicDTO) throws
+    func removeFav(comic: ComicDTO) throws
+    func remove(fav: FavComic) throws
 }
 
 struct ComicsLocalServiceImpl: ComicsLocalService {
@@ -24,39 +24,30 @@ struct ComicsLocalServiceImpl: ComicsLocalService {
     }
 
     func fetch() -> [FavComic] {
-
         let fetchRequest: NSFetchRequest<FavComic> = FavComic.fetchRequest()
         let favs = try? context.fetch(fetchRequest)
         return favs ?? []
     }
 
-    func addFav(comic: ComicDTO) {
+    func addFav(comic: ComicDTO) throws {
+        guard fecthByComic(id: comic.id) == nil else { return }
         let newFavComic = FavComic(context: context)
         newFavComic.id = Int32(comic.id)
         newFavComic.title = comic.title
         newFavComic.shortDescrip = comic.body
         newFavComic.inlcudedDate = Date()
-        saveContext()
+        try context.save()
     }
 
-    func removeFav(comic: ComicDTO) {
+    func removeFav(comic: ComicDTO) throws {
         if let fav = fecthByComic(id: comic.id) {
-            remove(fav: fav)
+            try remove(fav: fav)
         }
     }
 
-    func remove(fav: FavComic) {
+    func remove(fav: FavComic) throws {
         context.delete(fav)
-        saveContext()
-    }
-
-
-    private func saveContext() {
-      do {
         try context.save()
-      } catch {
-        print("Error saving managed object context: \(error)")
-      }
     }
 
     private func fecthByComic(id: Int) -> FavComic? {

@@ -10,16 +10,35 @@ import Foundation
 @testable import MangoMarvelApp
 
 final class ComicsProviderStub: ComicsProvider {
-    var delegate: MangoMarvelApp.ComicsStateDelegate?
 
-    var fetchComicsPageCalled: Int?
-    func fetchComics(page: Int) {
-        fetchComicsPageCalled = page
+    var reloadCount = 0
+    var reloadResult: [MangoMarvelApp.Comic]?
+
+    func reload() async throws -> [MangoMarvelApp.Comic] {
+        reloadCount += 1
+        if let data = reloadResult {
+            return data
+        } else {
+            throw APIError.serverError
+        }
     }
 
+    var fetchNextPageComicsCount = 0
+    var fetchNextPageComicsResult: [MangoMarvelApp.Comic]?
+    func fetchNextPageComics() async throws -> [MangoMarvelApp.Comic] {
+        fetchNextPageComicsCount += 1
+        if let data = reloadResult {
+            return data
+        } else {
+            throw APIError.serverError
+        }
+    }
+
+    var fecthFavoritesIdsCount = 0
     var fecthFavoritesIdsResult = [Int]()
     func fecthFavoritesIds() -> [Int] {
-        fecthFavoritesIdsResult
+        fecthFavoritesIdsCount += 1
+        return fecthFavoritesIdsResult
     }
 
     var addFavoriteCalled = false

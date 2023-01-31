@@ -25,7 +25,6 @@ class ComicsRemoteServiceImpl: ComicsRemoteService {
         options: ComicsEndpoint.Options
     ) async throws -> ComicsCollection {
         let endpoint = ComicsEndpoint(options: options)
-        let request = try! APIRequest(endpoint: endpoint)
-        return try await client.perform(for: request)
+        return try await client.perform(for: APIRequest.urlRequest(by: endpoint))
     }
 }

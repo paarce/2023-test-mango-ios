@@ -8,11 +8,12 @@
 import Foundation
 import Combine
 
-struct APIRequest: Request {
+struct APIRequest {
 
-    let urlRequest: URLRequest
-
-    init(environment: EnvRepresentable = AppState.shared.currentEnv, endpoint: EndpointRepresentable) throws {
+    static func urlRequest(
+        by endpoint: EndpointRepresentable,
+        environment: EnvRepresentable = AppState.shared.currentEnv
+    ) throws ->  URLRequest {
 
         var urlComponents = environment.baseUrlComponents
         urlComponents.path = urlComponents.path.appending(endpoint.id.pathName)
@@ -42,14 +43,9 @@ struct APIRequest: Request {
             urlRequest.setValue(value, forHTTPHeaderField: key)
         }
 
-        print(urlRequest)
-        self.urlRequest = urlRequest
+        return urlRequest
     }
-}
 
-extension APIRequest {
-
-    //TODO: Find a real place to this and keys
     private static func authQueryItems(privateKey: String, publicKey: String) -> [URLQueryItem] {
 
         let timestamp = String(NSDate().timeIntervalSince1970)
