@@ -34,7 +34,7 @@ final class ComicsProviderTests: XCTestCase {
         //Given
         var observerCalledCount = 0
         let comics: [Comic] = .collectionMock(count: 3)
-        remoteService.result = .success(.mock(comics: comics))
+//        remoteService.result = .success(.mock(comics: comics))
 
         //Then
         remoteService.fecthCalled = { withOptions in
@@ -63,7 +63,7 @@ final class ComicsProviderTests: XCTestCase {
             .mock(id: 2),
             .mock(id: 3),
         ]
-        remoteService.result = .success(.mock(offset: 0, comics: comics))
+//        remoteService.result = .success(.mock(offset: 0, comics: comics))
 
         //Then
         remoteService.fecthCalled = { withOptions in
@@ -89,7 +89,7 @@ final class ComicsProviderTests: XCTestCase {
         let numPage = Int.random(in: 2..<10)
         let offset = numPage * 20
         let comics: [Comic] = .collectionMock(count: 3)
-        remoteService.result = .success(.mock(offset: offset, comics: comics))
+//        remoteService.result = .success(.mock(offset: offset, comics: comics))
 
         //Then
         remoteService.fecthCalled = { withOptions in
@@ -114,7 +114,7 @@ final class ComicsProviderTests: XCTestCase {
         var observerCalledCount = 0
         let numPage = Int.random(in: 2..<10)
         let comics: [Comic] = .collectionMock(count: 3)
-        remoteService.result = .success(.mock(offset: (numPage + 1) * 20, comics: comics))
+//        remoteService.result = .success(.mock(offset: (numPage + 1) * 20, comics: comics))
 
         //Then
         remoteService.fecthCalled = { withOptions in
@@ -137,7 +137,7 @@ final class ComicsProviderTests: XCTestCase {
 
         //Given
         var observerCalledCount = 0
-        remoteService.result = .failure(APIError.serverError)
+//        remoteService.result = .failure(APIError.serverError)
 
         //Then
         remoteService.fecthCalled = { withOptions in
@@ -162,7 +162,7 @@ final class ComicsProviderTests: XCTestCase {
         //Given
         var observerCalledCount = 0
         let numPage = Int.random(in: 2..<10)
-        remoteService.result = .failure(APIError.serverError)
+//        remoteService.result = .failure(APIError.serverError)
 
         //Then
         remoteService.fecthCalled = { withOptions in

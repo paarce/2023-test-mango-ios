@@ -7,7 +7,6 @@
 
 import UIKit
 
-//TODO: Multilanguage
 class ComicsCollectionViewController: UICollectionViewController {
 
     private var customLayout = ViewFactory.layout
@@ -32,17 +31,10 @@ class ComicsCollectionViewController: UICollectionViewController {
         initialSetup()
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        if self.isMovingFromParent {
-            presenter.close()
-        }
-    }
-
     // MARK: - Setup
 
     private func initialSetup() {
-        self.navigationItem.title = "Marvel Comics"
+        self.navigationItem.title = "COMICS_LIST_TITLE".localized
         collectionView.allowsMultipleSelection = false
         collectionView.register(ComicCollectionViewCell.self, forCellWithReuseIdentifier: ComicCollectionViewCell.identifier)
         collectionView.register(InfoCollectionViewCell.self, forCellWithReuseIdentifier: InfoCollectionViewCell.identifier)
@@ -50,7 +42,9 @@ class ComicsCollectionViewController: UICollectionViewController {
         self.navigationItem.rightBarButtonItem = .init(image: .init(systemName: "heart.fill"), style: .plain, target: self, action: #selector(moveToFavsView))
 
         presenter.initView(onRefresh: { [weak self] in
-            self?.collectionView.reloadData()
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
         })
     }
 
@@ -113,21 +107,6 @@ extension ComicsCollectionViewController: UICollectionViewDelegateFlowLayout {
             return resizer.cellSize(from: view.frame.size, in: ComicCollectionViewCell.identifier)
         default:
             return resizer.cellSize(from: view.frame.size, in: InfoCollectionViewCell.identifier)
-        }
-    }
-}
-
-private extension InfoCellModel {
-    init?(comicsState: ComicsViewState) {
-        switch comicsState {
-        case .loading:
-            self = .init(loadingMessage: "We are receiving the comics...")
-        case .fail(let error):
-            self = .init(error: error)
-        case .empty:
-            self = .init(loadingMessage: "Here you should shoulde see the MARVEL comics.")
-        default:
-            return nil
         }
     }
 }

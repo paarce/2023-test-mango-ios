@@ -33,11 +33,13 @@ struct FavComicsView: View {
                 viewModel.deleteFavs(from: Array(favs), at: $0)
             })
           }
-          .navigationBarTitle(Text("Favorites comics"))
+          .navigationBarTitle(Text(Constants.navTitle))
         }
     }
 
-
+    enum Constants {
+        static let navTitle = "COMICS_FAVORITES_TITLE".localized
+    }
 }
 
 struct FavComicsView_Previews: PreviewProvider {

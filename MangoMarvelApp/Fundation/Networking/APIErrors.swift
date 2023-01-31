@@ -17,8 +17,7 @@ enum APIError: LocalizedError {
     case invalid(message: String?)
     case methodNotAllowed
     case forbidden
-
-    case requestCreation
+    case badRequest
 
     public var errorDescription: String? {
         switch self {
@@ -28,7 +27,7 @@ enum APIError: LocalizedError {
             return "Parse error. Please retry."
         case .unknown:
             return "Somthing went wrong. Please retry."
-        case .requestCreation:
+        case .badRequest:
             return "Somthing went wrong connecting with the sever. Please retry."
         case .notFound:
             return "Data not found. Please retry."

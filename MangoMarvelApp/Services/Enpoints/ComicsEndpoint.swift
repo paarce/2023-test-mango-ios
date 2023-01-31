@@ -20,7 +20,7 @@ struct ComicsEndpoint: EndpointRepresentable {
     init(options: Options) {
         var params: [String: String] = [:]
         if let offset = options.offset {
-            params["offset"] = "\(offset)"
+            params["offset"] = String(offset)
         }
         self.params = params
     }

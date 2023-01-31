@@ -57,7 +57,7 @@ class ComicGridTableViewCell: UITableViewCell {
 
         if items.isEmpty {
             let body = ViewFactory.body()
-            body.text = "There is no information registered"
+            body.text = "COMICS_DETAIL_SECTION_EMPTY_CONTENT".localized
             grid!.addArrangedSubview(body)
 
         } else {

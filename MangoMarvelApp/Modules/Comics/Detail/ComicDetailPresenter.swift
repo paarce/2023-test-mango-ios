@@ -23,10 +23,7 @@ protocol ComicDetailPresenter {
 final class ComicDetailPresenterImpl: ComicDetailPresenter {
     let sections: [ComicSection]
 
-    private let comic: ComicDTO
-
     init(comic: ComicDTO) {
-        self.comic = comic
         sections = [
             .image(comic.thumbnailURL),
             .basic(comic),
@@ -41,11 +38,11 @@ extension ComicSection {
     var title: String {
         switch self {
         case .stories:
-            return "Stories"
+            return "COMICS_DETAIL_SECTION_STORIES".localized
         case .events:
-            return "Events"
+            return "COMICS_DETAIL_SECTION_EVENTS".localized
         case .creators:
-            return "Creatores"
+            return "COMICS_DETAIL_SECTION_CREATORS".localized
         default:
             return ""
         }

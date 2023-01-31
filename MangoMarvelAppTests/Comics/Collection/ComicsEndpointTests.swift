@@ -25,7 +25,7 @@ final class EndpointTests: XCTestCase {
         XCTAssertEqual(classUnderTest.id, .comics)
         XCTAssertEqual(classUnderTest.method, .get)
         XCTAssertTrue(classUnderTest.params.isEmpty)
-        XCTAssertTrue(classUnderTest.header.isEmpty)
+        XCTAssertTrue(classUnderTest.headers.isEmpty)
     }
 
     func testComicsEnpoint_withOffset() throws {
@@ -35,7 +35,7 @@ final class EndpointTests: XCTestCase {
 
         XCTAssertEqual(classUnderTest.id, .comics)
         XCTAssertEqual(classUnderTest.method, .get)
-        XCTAssertTrue(classUnderTest.header.isEmpty)
+        XCTAssertTrue(classUnderTest.headers.isEmpty)
         XCTAssertFalse(classUnderTest.params.isEmpty)
 
         let value = classUnderTest.params["offset"]

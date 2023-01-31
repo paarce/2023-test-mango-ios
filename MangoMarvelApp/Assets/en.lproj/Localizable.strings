@@ -1,0 +1,15 @@
+
+"COMICS_LIST_TITLE" = "Marvel Comics";
+"COMICS_LIST_LOADING" = "We are receiving the comics...";
+"COMICS_LIST_EMPTY" = "Here you should shoulde see the MARVEL comics.";
+
+"COMICS_DETAIL_LABEL_ID" = "ID:";
+"COMICS_DETAIL_LABEL_PRICE" = "Price:";
+"COMICS_DETAIL_LABEL_RELEASE" = "Release:";
+"COMICS_DETAIL_SECTION_EMPTY_CONTENT" = "There is no information registered";
+"COMICS_DETAIL_SECTION_STORIES" = "Stories";
+"COMICS_DETAIL_SECTION_EVENTS" = "Events";
+"COMICS_DETAIL_SECTION_CREATORS" = "Creators";
+
+
+"COMICS_FAVORITES_TITLE" = "Favorites comics";

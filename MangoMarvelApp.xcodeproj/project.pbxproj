@@ -13,15 +13,14 @@
 		CC41C22E25DD3FA30057D0C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC41C22C25DD3FA30057D0C9 /* LaunchScreen.storyboard */; };
 		CC41C23925DD3FA30057D0C9 /* MangoMarvelAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC41C23825DD3FA30057D0C9 /* MangoMarvelAppTests.swift */; };
 		CC41C24425DD3FA30057D0C9 /* MangoMarvelAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC41C24325DD3FA30057D0C9 /* MangoMarvelAppUITests.swift */; };
-		F34FA84629814A9A00E985C7 /* RequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA84529814A9A00E985C7 /* RequestHandler.swift */; };
+		F34FA84629814A9A00E985C7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA84529814A9A00E985C7 /* APIRequest.swift */; };
 		F34FA84829814ACF00E985C7 /* APIErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA84729814ACF00E985C7 /* APIErrors.swift */; };
 		F34FA84A29814C4000E985C7 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA84929814C4000E985C7 /* Environment.swift */; };
 		F34FA84C29814DF800E985C7 /* EndpointRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA84B29814DF800E985C7 /* EndpointRepresentable.swift */; };
 		F34FA84E298150CA00E985C7 /* ComicsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA84D298150CA00E985C7 /* ComicsCollectionViewController.swift */; };
 		F34FA851298151D300E985C7 /* ComicsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA850298151D300E985C7 /* ComicsPresenter.swift */; };
 		F34FA8532981530F00E985C7 /* ComicsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA8522981530F00E985C7 /* ComicsProvider.swift */; };
-		F34FA855298154B900E985C7 /* ComicsCollectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA854298154B900E985C7 /* ComicsCollectionService.swift */; };
-		F34FA8582981585700E985C7 /* RestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA8572981585700E985C7 /* RestClient.swift */; };
+		F34FA855298154B900E985C7 /* ComicsRemoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA854298154B900E985C7 /* ComicsRemoteService.swift */; };
 		F34FA85A29815DDE00E985C7 /* ModulesCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA85929815DDE00E985C7 /* ModulesCordinator.swift */; };
 		F34FA85C29816E2C00E985C7 /* ComicsEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA85B29816E2C00E985C7 /* ComicsEndpoint.swift */; };
 		F34FA85F29816EA100E985C7 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA85E29816EA100E985C7 /* APIResponse.swift */; };
@@ -60,6 +59,9 @@
 		F34FAD992989064F00E985C7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD982989064F00E985C7 /* Theme.swift */; };
 		F34FAD9C29890D6600E985C7 /* ServicesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD9B29890D6600E985C7 /* ServicesContainer.swift */; };
 		F34FAD9E298914F100E985C7 /* Model+mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FAD9D298914F100E985C7 /* Model+mocks.swift */; };
+		F34FADA129891B8F00E985C7 /* URLSessionNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FADA029891B8F00E985C7 /* URLSessionNetworkClient.swift */; };
+		F34FADA52989226800E985C7 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FADA42989226800E985C7 /* NetworkClient.swift */; };
+		F34FADA82989281700E985C7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F34FADAA2989281700E985C7 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,15 +94,14 @@
 		CC41C23F25DD3FA30057D0C9 /* MangoMarvelAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MangoMarvelAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC41C24325DD3FA30057D0C9 /* MangoMarvelAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangoMarvelAppUITests.swift; sourceTree = "<group>"; };
 		CC41C24525DD3FA30057D0C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F34FA84529814A9A00E985C7 /* RequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHandler.swift; sourceTree = "<group>"; };
+		F34FA84529814A9A00E985C7 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		F34FA84729814ACF00E985C7 /* APIErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrors.swift; sourceTree = "<group>"; };
 		F34FA84929814C4000E985C7 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		F34FA84B29814DF800E985C7 /* EndpointRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointRepresentable.swift; sourceTree = "<group>"; };
 		F34FA84D298150CA00E985C7 /* ComicsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsCollectionViewController.swift; sourceTree = "<group>"; };
 		F34FA850298151D300E985C7 /* ComicsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsPresenter.swift; sourceTree = "<group>"; };
 		F34FA8522981530F00E985C7 /* ComicsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsProvider.swift; sourceTree = "<group>"; };
-		F34FA854298154B900E985C7 /* ComicsCollectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsCollectionService.swift; sourceTree = "<group>"; };
-		F34FA8572981585700E985C7 /* RestClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestClient.swift; sourceTree = "<group>"; };
+		F34FA854298154B900E985C7 /* ComicsRemoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsRemoteService.swift; sourceTree = "<group>"; };
 		F34FA85929815DDE00E985C7 /* ModulesCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesCordinator.swift; sourceTree = "<group>"; };
 		F34FA85B29816E2C00E985C7 /* ComicsEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsEndpoint.swift; sourceTree = "<group>"; };
 		F34FA85E29816EA100E985C7 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
@@ -139,6 +140,10 @@
 		F34FAD982989064F00E985C7 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		F34FAD9B29890D6600E985C7 /* ServicesContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesContainer.swift; sourceTree = "<group>"; };
 		F34FAD9D298914F100E985C7 /* Model+mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+mocks.swift"; sourceTree = "<group>"; };
+		F34FADA029891B8F00E985C7 /* URLSessionNetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionNetworkClient.swift; sourceTree = "<group>"; };
+		F34FADA42989226800E985C7 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		F34FADA92989281700E985C7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F34FADAD2989285B00E985C7 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +194,8 @@
 		CC41C22025DD3FA10057D0C9 /* MangoMarvelApp */ = {
 			isa = PBXGroup;
 			children = (
+				F34FADAF29893F2E00E985C7 /* Assets */,
+				F34FADA229891F1200E985C7 /* Helpers */,
 				F34FA83F298145BA00E985C7 /* Fundation */,
 				F34FA840298145C100E985C7 /* Modules */,
 				F34FAD9A29890D4900E985C7 /* Services */,
@@ -196,7 +203,6 @@
 				CC41C22125DD3FA10057D0C9 /* AppDelegate.swift */,
 				F34FAD6D2983BDC900E985C7 /* AppState.swift */,
 				CC41C22325DD3FA10057D0C9 /* SceneDelegate.swift */,
-				CC41C22A25DD3FA30057D0C9 /* Assets.xcassets */,
 				CC41C22C25DD3FA30057D0C9 /* LaunchScreen.storyboard */,
 				CC41C22F25DD3FA30057D0C9 /* Info.plist */,
 			);
@@ -227,13 +233,9 @@
 		F34FA83F298145BA00E985C7 /* Fundation */ = {
 			isa = PBXGroup;
 			children = (
+				F34FA84929814C4000E985C7 /* Environment.swift */,
 				F34FAD6F2983BF2E00E985C7 /* Persistence */,
 				F34FA84429814A6A00E985C7 /* Networking */,
-				F34FAD432981946900E985C7 /* Extensions */,
-				F34FA84929814C4000E985C7 /* Environment.swift */,
-				F34FA860298180E400E985C7 /* Encrypt.swift */,
-				F34FAD4C2981BE0800E985C7 /* ImageRemote.swift */,
-				F34FAD982989064F00E985C7 /* Theme.swift */,
 			);
 			path = Fundation;
 			sourceTree = "<group>";
@@ -263,10 +265,8 @@
 				F34FA8622981902200E985C7 /* Cells */,
 				F34FA84D298150CA00E985C7 /* ComicsCollectionViewController.swift */,
 				F34FA850298151D300E985C7 /* ComicsPresenter.swift */,
-				F34FAD792983CDA500E985C7 /* ComicCellViewModel.swift */,
 				F34FA8522981530F00E985C7 /* ComicsProvider.swift */,
 				F34FAD852987BB7900E985C7 /* ComicsResizer.swift */,
-				F34FA85B29816E2C00E985C7 /* ComicsEndpoint.swift */,
 				F34FAD962987CF6500E985C7 /* ComicModel.swift */,
 			);
 			path = List;
@@ -286,10 +286,10 @@
 			isa = PBXGroup;
 			children = (
 				F34FA85D29816E6D00E985C7 /* Model */,
-				F34FA84529814A9A00E985C7 /* RequestHandler.swift */,
+				F34FADA42989226800E985C7 /* NetworkClient.swift */,
+				F34FA84529814A9A00E985C7 /* APIRequest.swift */,
 				F34FA84729814ACF00E985C7 /* APIErrors.swift */,
-				F34FA84B29814DF800E985C7 /* EndpointRepresentable.swift */,
-				F34FA8572981585700E985C7 /* RestClient.swift */,
+				F34FADA029891B8F00E985C7 /* URLSessionNetworkClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -297,6 +297,7 @@
 		F34FA85D29816E6D00E985C7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F34FA84B29814DF800E985C7 /* EndpointRepresentable.swift */,
 				F34FA85E29816EA100E985C7 /* APIResponse.swift */,
 			);
 			path = Model;
@@ -305,8 +306,9 @@
 		F34FA8622981902200E985C7 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				F34FAD4E2981E08600E985C7 /* InfoCollectionViewCell.swift */,
+				F34FAD792983CDA500E985C7 /* ComicCellViewModel.swift */,
 				F34FA8632981904600E985C7 /* ComicCollectionViewCell.swift */,
+				F34FAD4E2981E08600E985C7 /* InfoCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -416,11 +418,40 @@
 		F34FAD9A29890D4900E985C7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F34FADAE29892B0100E985C7 /* Enpoints */,
 				F34FAD9B29890D6600E985C7 /* ServicesContainer.swift */,
 				F34FAD7C2983E9AE00E985C7 /* ComicsLocalService.swift */,
-				F34FA854298154B900E985C7 /* ComicsCollectionService.swift */,
+				F34FA854298154B900E985C7 /* ComicsRemoteService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		F34FADA229891F1200E985C7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				F34FAD4C2981BE0800E985C7 /* ImageRemote.swift */,
+				F34FA860298180E400E985C7 /* Encrypt.swift */,
+				F34FAD432981946900E985C7 /* Extensions */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		F34FADAE29892B0100E985C7 /* Enpoints */ = {
+			isa = PBXGroup;
+			children = (
+				F34FA85B29816E2C00E985C7 /* ComicsEndpoint.swift */,
+			);
+			path = Enpoints;
+			sourceTree = "<group>";
+		};
+		F34FADAF29893F2E00E985C7 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				F34FAD982989064F00E985C7 /* Theme.swift */,
+				CC41C22A25DD3FA30057D0C9 /* Assets.xcassets */,
+				F34FADAA2989281700E985C7 /* Localizable.strings */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -508,6 +539,7 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
 			);
 			mainGroup = CC41C21525DD3FA00057D0C9;
 			productRefGroup = CC41C21F25DD3FA10057D0C9 /* Products */;
@@ -527,6 +559,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC41C22E25DD3FA30057D0C9 /* LaunchScreen.storyboard in Resources */,
+				F34FADA82989281700E985C7 /* Localizable.strings in Resources */,
 				CC41C22B25DD3FA30057D0C9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -561,20 +594,21 @@
 				F34FA84C29814DF800E985C7 /* EndpointRepresentable.swift in Sources */,
 				F34FAD7A2983CDA500E985C7 /* ComicCellViewModel.swift in Sources */,
 				F34FA84A29814C4000E985C7 /* Environment.swift in Sources */,
-				F34FA8582981585700E985C7 /* RestClient.swift in Sources */,
-				F34FA855298154B900E985C7 /* ComicsCollectionService.swift in Sources */,
+				F34FA855298154B900E985C7 /* ComicsRemoteService.swift in Sources */,
 				F34FAD8D2987CC3800E985C7 /* ComicDetailPresenter.swift in Sources */,
 				F34FAD492981A52700E985C7 /* ComicDTO.swift in Sources */,
 				F34FA85A29815DDE00E985C7 /* ModulesCordinator.swift in Sources */,
 				F34FA85F29816EA100E985C7 /* APIResponse.swift in Sources */,
 				CC41C22225DD3FA10057D0C9 /* AppDelegate.swift in Sources */,
+				F34FADA129891B8F00E985C7 /* URLSessionNetworkClient.swift in Sources */,
 				F34FAD742983C00100E985C7 /* FavComicsView.swift in Sources */,
 				F34FAD8F2987CD4700E985C7 /* ComicBasicInfoTableViewCell.swift in Sources */,
-				F34FA84629814A9A00E985C7 /* RequestHandler.swift in Sources */,
+				F34FA84629814A9A00E985C7 /* APIRequest.swift in Sources */,
 				F34FAD722983BF6800E985C7 /* MangoMarvelApp.xcdatamodeld in Sources */,
 				F34FAD7D2983E9AE00E985C7 /* ComicsLocalService.swift in Sources */,
 				F34FA851298151D300E985C7 /* ComicsPresenter.swift in Sources */,
 				F34FA8532981530F00E985C7 /* ComicsProvider.swift in Sources */,
+				F34FADA52989226800E985C7 /* NetworkClient.swift in Sources */,
 				F34FAD922987CDC200E985C7 /* ComicGridTableViewCell.swift in Sources */,
 				F34FA861298180E400E985C7 /* Encrypt.swift in Sources */,
 				F34FA85C29816E2C00E985C7 /* ComicsEndpoint.swift in Sources */,
@@ -644,6 +678,15 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		F34FADAA2989281700E985C7 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F34FADA92989281700E985C7 /* en */,
+				F34FADAD2989285B00E985C7 /* es */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -651,6 +694,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -712,6 +756,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

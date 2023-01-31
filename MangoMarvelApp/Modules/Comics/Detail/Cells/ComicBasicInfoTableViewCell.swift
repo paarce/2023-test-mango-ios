@@ -90,9 +90,9 @@ class ComicBasicInfoTableViewCell: UITableViewCell {
     private enum Constants {
         static let padding: UIEdgeInsets = .init(top: 10.0, left: 20.0, bottom: 10.0, right: 20.0)
         enum Labels {
-            static let id = "ID:"
-            static let price = "Price:"
-            static let dateRelease = "Release:"
+            static let id = "COMICS_DETAIL_LABEL_ID".localized
+            static let price = "COMICS_DETAIL_LABEL_PRICE".localized
+            static let dateRelease = "COMICS_DETAIL_LABEL_RELEASE".localized
         }
     }
 }

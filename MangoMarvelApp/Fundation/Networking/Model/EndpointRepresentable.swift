@@ -18,11 +18,11 @@ protocol EndpointRepresentable {
     var id: EndpointSupported { get }
     var method: HTTPMethod { get }
     var params: [String: Any] { get }
-    var header: [String: Any] { get }
+    var headers: [String: String] { get }
 }
 
 extension EndpointRepresentable {
-    var header: [String: Any] { [:] }
+    var headers: [String: String] { [:] }
 }
 
 enum EndpointSupported: Equatable {

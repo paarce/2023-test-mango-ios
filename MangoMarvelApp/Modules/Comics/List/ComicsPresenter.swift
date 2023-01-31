@@ -14,60 +14,62 @@ enum ComicsViewState {
     case success([ComicCellViewModel])
 }
 
-enum ComicsCollectionContent {
-    case loading
-    case fail(Error)
-    case success(comics: [Comic], page: Int)
-}
-
-protocol ComicsStateDelegate {
-    func update(content: ComicsCollectionContent)
-}
-
-protocol ComicsPresenter: ComicsStateDelegate, ComicsInteractionDelegate {
+protocol ComicsPresenter: ComicsInteractionDelegate {
 
     var state: ComicsViewState { get }
 
     func initView(onRefresh: (() -> Void)?)
     func reload()
     func loadNextPageIfNeeded(lastIndexShowed: Int)
-    func close()
 }
 
 final class ComicsPresenterImpl: ComicsPresenter  {
 
-    private (set) var state: ComicsViewState
     private var provider: ComicsProvider
     private var onRefresh: (() -> Void)?
-    private var page: Int
     private var initialFavIds: [Int]?
+    private (set) var state: ComicsViewState {
+        didSet {
+            onRefresh?()
+        }
+    }
 
     init(
         provider: ComicsProvider
     ) {
         self.state = .empty
         self.provider = provider
-        page = 0
     }
 
     func initView(onRefresh: (() -> Void)?) {
         self.onRefresh = onRefresh
-        provider.delegate = self
         initialFavIds = provider.fecthFavoritesIds()
         reload()
     }
 
     func reload() {
-        provider.fetchComics(page: page)
+        guard !isLoading else { return }
+        self.state = .loading
+        Task {
+            do {
+                let list = try await provider.reload()
+                updateStateWith(comics: list)
+            } catch {
+                self.state = .fail(error)
+            }
+        }
     }
 
     func loadNextPageIfNeeded(lastIndexShowed: Int) {
-        guard shouldFetchNextPage(lastIndexShowed) else { return }
-        provider.fetchComics(page: page + 1)
-    }
-
-    func close() {
-        provider.delegate = nil
+        guard !isLoading, shouldFetchNextPage(lastIndexShowed) else { return }
+        Task {
+            do {
+                let list = try await provider.fetchNextPageComics()
+                updateStateWith(comics: list)
+            } catch {
+                self.state = .fail(error)
+            }
+        }
     }
 
     func addFav(comic: ComicDTO) {
@@ -81,36 +83,30 @@ final class ComicsPresenterImpl: ComicsPresenter  {
 
 extension ComicsPresenterImpl {
 
-    private var storeComics: [ComicCellViewModel]? {
-        guard case .success(let comics) = state else { return nil }
-        return comics
+    private var isLoading: Bool {
+        guard case .loading = state else { return false }
+        return true
     }
 
-    func update(content: ComicsCollectionContent) {
+    private func updateStateWith(comics: [Comic]) {
+        if comics.isEmpty {
+            state = .empty
+        } else {
 
-        switch content {
-        case .loading:
-            guard storeComics == nil else { return }
-            state = .loading
-        case .fail(let error):
-            state = .fail(error)
-        case .success(let comics, let page):
-            self.page = page
-            if comics.isEmpty {
-                state = .empty
-            } else {
+            var fullComics = [ComicCellViewModel]()
+            if case .success(let comics) = state {
+                fullComics = comics
+            }
 
-                let viewModels = comics.map({ ComicCellViewModel(
+            fullComics.append(contentsOf:
+                comics.map{ .init(
                     comic: $0,
                     isFav: initialFavIds?.contains($0.id) ?? false,
                     interaction: self
-                )})
-                var array = self.storeComics ?? []
-                array.append(contentsOf: viewModels)
-                state = .success(array)
-            }
+                )}
+            )
+            state = .success(fullComics)
         }
-        onRefresh?()
     }
 
     private func shouldFetchNextPage(_ lastIndexShowed: Int) -> Bool {
@@ -120,5 +116,20 @@ extension ComicsPresenterImpl {
 
     private enum Constants {
         static let offsetToLoadMore = 10
+    }
+}
+
+extension InfoCellModel {
+    init?(comicsState: ComicsViewState) {
+        switch comicsState {
+        case .loading:
+            self = .init(loadingMessage: "COMICS_LIST_LOADING".localized)
+        case .fail(let error):
+            self = .init(error: error)
+        case .empty:
+            self = .init(loadingMessage: "COMICS_LIST_EMPTY".localized)
+        default:
+            return nil
+        }
     }
 }

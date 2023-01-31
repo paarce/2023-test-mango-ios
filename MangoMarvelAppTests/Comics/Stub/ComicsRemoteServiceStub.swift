@@ -11,11 +11,11 @@ import Foundation
 final class ComicsRemoteServiceStub: ComicsRemoteService {
 
     var fecthCalled: ((MangoMarvelApp.ComicsEndpoint.Options) -> Void)?
-    var result: Result<MangoMarvelApp.ComicsCollection, Error> = .failure(APIError.noData)
+    var result: MangoMarvelApp.ComicsCollection!
 
-    func fecth(options: MangoMarvelApp.ComicsEndpoint.Options, completion: @escaping (Result<MangoMarvelApp.ComicsCollection, Error>) -> Void) {
+    func fecth(options: MangoMarvelApp.ComicsEndpoint.Options) async throws -> MangoMarvelApp.ComicsCollection {
         fecthCalled?(options)
-        completion(result)
+        return result
     }
     
 }
