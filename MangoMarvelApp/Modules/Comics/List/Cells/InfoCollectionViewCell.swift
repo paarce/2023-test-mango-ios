@@ -105,6 +105,7 @@ extension InfoCollectionViewCell {
             label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
             label.numberOfLines = 0
             label.textAlignment = .center
+            label.textColor = .thTitle
             return label
         }
     }

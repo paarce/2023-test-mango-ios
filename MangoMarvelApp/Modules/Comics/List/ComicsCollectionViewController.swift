@@ -42,6 +42,7 @@ class ComicsCollectionViewController: UICollectionViewController {
     // MARK: - Setup
 
     private func initialSetup() {
+        self.navigationItem.title = "Marvel Comics"
         collectionView.allowsMultipleSelection = false
         collectionView.register(ComicCollectionViewCell.self, forCellWithReuseIdentifier: ComicCollectionViewCell.identifier)
         collectionView.register(InfoCollectionViewCell.self, forCellWithReuseIdentifier: InfoCollectionViewCell.identifier)

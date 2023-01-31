@@ -13,7 +13,7 @@ final class ModuleCoordinatorTests: XCTestCase {
     var classUnderTest: ModuleCoordinator!
 
     override func setUpWithError() throws {
-        classUnderTest = .init(.init(services: .init(context: PersistenceMock().managedObjectContext())))
+        classUnderTest = .init(.init(services: .init()))
     }
 
     override func tearDownWithError() throws {

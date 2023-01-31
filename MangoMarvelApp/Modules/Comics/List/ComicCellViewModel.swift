@@ -17,8 +17,8 @@ class ComicCellViewModel {
     let dto: ComicDTO
     let interaction: ComicsInteractionDelegate
     var image: UIImage?
-    var favButtonText: String {
-        isFav ? "Remove fav" : "Add fav"
+    var favButtonImage: UIImage {
+        isFav ? UIImage(systemName: "heart.fill")! : UIImage(systemName: "heart")!
     }
     var isFav: Bool {
         didSet {

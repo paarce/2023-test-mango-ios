@@ -31,26 +31,11 @@ struct ModuleCoordinator {
     func createFavComics() -> UIViewController {
         UIHostingController(rootView:
             FavComicsView(viewModel: .init(localService: services.comicsLocalService))
-                .environment(\.managedObjectContext, services.context)
+                .environment(\.managedObjectContext, services.coreDataStack.container.viewContext)
         )
     }
 
     func createComicDetail(comic: ComicDTO) -> UIViewController {
         ComicDetailTableViewController(presenter: ComicDetailPresenterImpl(comic: comic))
-    }
-}
-
-class ServicesContainer {
-
-    let context: NSManagedObjectContext
-
-    let comicsRemoteService: ComicsRemoteService
-    let comicsLocalService: ComicsLocalService
-
-    init(context: NSManagedObjectContext) {
-
-        self.context = context
-        comicsRemoteService = ComicsRemoteServiceImpl()
-        comicsLocalService = ComicsLocalServiceImpl(context: context)
     }
 }

@@ -134,6 +134,7 @@ extension ComicGridTableViewCell {
             label.font = UIFont.systemFont(ofSize: 16, weight: .black)
             label.numberOfLines = 0
             label.textAlignment = .left
+            label.textColor = .thTitle
             return label
         }
 
@@ -142,6 +143,7 @@ extension ComicGridTableViewCell {
             label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
             label.numberOfLines = 0
             label.textAlignment = .left
+            label.textColor = .thSubheading
             return label
         }
 
@@ -150,6 +152,7 @@ extension ComicGridTableViewCell {
             label.font = UIFont.systemFont(ofSize: 10, weight: .light)
             label.numberOfLines = 0
             label.textAlignment = .left
+            label.textColor = .thBody
             return label
         }
         static func spacer() -> UIView {

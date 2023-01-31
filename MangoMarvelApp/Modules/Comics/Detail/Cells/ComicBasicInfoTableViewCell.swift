@@ -14,7 +14,7 @@ class ComicBasicInfoTableViewCell: UITableViewCell {
     private var container = ViewFactory.container()
     private var row = ViewFactory.row()
 
-    private var title = ViewFactory.titleLabel()
+    private var title = ViewFactory.heading()
     private var body = ViewFactory.contentLabel()
 
     private var pricesContent = ViewFactory.content()
@@ -131,12 +131,21 @@ extension ComicBasicInfoTableViewCell {
             return stack
         }
 
-        static func titleLabel() -> UILabel {
+        static func heading() -> UILabel {
             let label = UILabel()
-            label.font = UIFont.systemFont(ofSize: 16, weight: .black)
+            label.font = UIFont.systemFont(ofSize: 18, weight: .black)
             label.numberOfLines = 0
             label.textAlignment = .left
+            label.textColor = .thTitle
+            return label
+        }
 
+        static func titleLabel() -> UILabel {
+            let label = UILabel()
+            label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+            label.numberOfLines = 0
+            label.textAlignment = .left
+            label.textColor = .thSubheading
             return label
         }
 
@@ -145,7 +154,7 @@ extension ComicBasicInfoTableViewCell {
             label.font = UIFont.systemFont(ofSize: 13, weight: .light)
             label.numberOfLines = 0
             label.textAlignment = .left
-
+            label.textColor = .thBody
             return label
         }
     }

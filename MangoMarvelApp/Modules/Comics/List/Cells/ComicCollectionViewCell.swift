@@ -53,8 +53,7 @@ class ComicCollectionViewCell: UICollectionViewCell {
         interactionStack.addArrangedSubview(fav)
 
         imageView.clipsToBounds = true
-        imageView.alpha = 0.4
-        body.textColor = .darkGray
+        imageView.alpha = Constants.imageOpacity
 
         fav.addTarget(self, action:  #selector(addFav(button:)), for: .touchUpInside)
     }
@@ -68,11 +67,10 @@ class ComicCollectionViewCell: UICollectionViewCell {
             to: contentView,
             insets: .init(top: Constants.padding, left: Constants.padding, bottom: Constants.padding, right: Constants.padding)
         )
-        title.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        body.setContentHuggingPriority(.defaultLow, for: .vertical)
-        interactionStack.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        fav.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        imageView.setContentHuggingPriority(.defaultHigh, for: .vertical)
+//        title.setContentHuggingPriority(.defaultLow, for: .vertical)
+//        body.setContentHuggingPriority(.defaultHigh, for: .vertical)
+//        interactionStack.setContentHuggingPriority(.defaultLow, for: .vertical)
+//        imageView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
     }
 
     func set(model: ComicCellViewModel?) {
@@ -81,7 +79,7 @@ class ComicCollectionViewCell: UICollectionViewCell {
         title.text = model.dto.title
         body.text = model.dto.body
 
-        fav.setTitle(model.favButtonText, for: .normal)
+        fav.setImage(model.favButtonImage, for: .normal)
 
         if let image = model.image {
             self.imageView.image = image
@@ -101,7 +99,7 @@ class ComicCollectionViewCell: UICollectionViewCell {
 
     private func updateDynamicComponents() {
         guard let model = model else { return }
-        fav.setTitle(model.favButtonText, for: .normal)
+        fav.setImage(model.favButtonImage, for: .normal)
     }
 
     @objc
@@ -111,9 +109,10 @@ class ComicCollectionViewCell: UICollectionViewCell {
     }
 
     private enum Constants {
+        static let imageOpacity: CGFloat = 0.3
         static let padding: CGFloat = 10.0
         static let imagePercentage: CGFloat = 0.70
-        static let placeholderImage = UIImage(contentsOfFile: "placeholderImage")
+        static let placeholderImage = UIImage(named: "placeholderImage")
     }
 }
 
@@ -126,7 +125,7 @@ extension ComicCollectionViewCell {
             stack.axis = .vertical
             stack.distribution = .fill
             stack.alignment = .fill
-            stack.spacing = 0
+            stack.spacing = 8
             return stack
         }
 
@@ -141,14 +140,16 @@ extension ComicCollectionViewCell {
             label.font = UIFont.systemFont(ofSize: 16, weight: .black)
             label.numberOfLines = 0
             label.textAlignment = .left
+            label.textColor = .thTitle
             return label
         }
 
         static func body() -> UILabel {
             let label = UILabel()
-            label.font = UIFont.systemFont(ofSize: 10, weight: .black)
-            label.numberOfLines = 0
+            label.font = UIFont.systemFont(ofSize: 10, weight: .semibold)
+            label.numberOfLines = 4
             label.textAlignment = .left
+            label.textColor = .thBody
             return label
         }
 
@@ -165,6 +166,7 @@ extension ComicCollectionViewCell {
             let button = UIButton()
             button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .black)
             button.titleEdgeInsets = .init(top: 5, left: 5, bottom: 5, right: 5)
+            button.tintColor = .thFavorite
             return button
         }
 
