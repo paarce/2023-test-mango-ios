@@ -27,10 +27,10 @@ final class ComicsProviderRemoteServicesTests: XCTestCase {
 
         //Given
         let comics: [Comic] = .collectionMock(count: 3)
-        remoteService.result = .mock(comics: comics)
+        remoteService.fetchResult = .mock(comics: comics)
 
         //When
-        remoteService.fecthCalled = { withOptions in
+        remoteService.fetchCalled = { withOptions in
             XCTAssertEqual(withOptions.offset, 0)
         }
         let comicsFecthed = try await classUnderTest.reload()
@@ -44,10 +44,10 @@ final class ComicsProviderRemoteServicesTests: XCTestCase {
         //Given
         var numPage = 0
         let comics: [Comic] = .collectionMock(count: 3)
-        remoteService.result = .mock(comics: comics)
+        remoteService.fetchResult = .mock(comics: comics)
 
         //When
-        remoteService.fecthCalled = { withOptions in
+        remoteService.fetchCalled = { withOptions in
             XCTAssertEqual(withOptions.offset, numPage * 20)
         }
         var comicsFecthed = try await classUnderTest.reload()
@@ -64,11 +64,11 @@ final class ComicsProviderRemoteServicesTests: XCTestCase {
         let numPage = 1
         let offset = numPage * 20
         let comics: [Comic] = .collectionMock(count: 3)
-        remoteService.result = .mock(offset: offset, comics: comics)
+        remoteService.fetchResult = .mock(offset: offset, comics: comics)
         let _ = try await classUnderTest.fetchNextPageComics()
 
         //When
-        remoteService.fecthCalled = { withOptions in
+        remoteService.fetchCalled = { withOptions in
             XCTAssertEqual(withOptions.offset, offset)
         }
         let comicsFecthed = try await classUnderTest.reload()
@@ -81,10 +81,10 @@ final class ComicsProviderRemoteServicesTests: XCTestCase {
 
         var numPage = 0
         let comics: [Comic] = .collectionMock(count: 3)
-        remoteService.result = .mock(comics: comics)
+        remoteService.fetchResult = .mock(comics: comics)
 
         //When
-        remoteService.fecthCalled = { withOptions in
+        remoteService.fetchCalled = { withOptions in
             XCTAssertEqual(withOptions.offset, numPage * 20)
         }
         var comicsFecthed = try await classUnderTest.fetchNextPageComics()
@@ -98,7 +98,7 @@ final class ComicsProviderRemoteServicesTests: XCTestCase {
     func testInitialFetchComics_fail() async throws {
 
         //When
-        remoteService.fecthCalled = { withOptions in
+        remoteService.fetchCalled = { withOptions in
             XCTAssertEqual(withOptions.offset, 0)
         }
         do {
@@ -112,17 +112,17 @@ final class ComicsProviderRemoteServicesTests: XCTestCase {
 
         var numPage = 0
         let comics: [Comic] = .collectionMock(count: 3)
-        remoteService.result = .mock(comics: comics)
+        remoteService.fetchResult = .mock(comics: comics)
 
         //When
-        remoteService.fecthCalled = { withOptions in
+        remoteService.fetchCalled = { withOptions in
             XCTAssertEqual(withOptions.offset, numPage * 20)
         }
         let comicsFecthed = try await classUnderTest.fetchNextPageComics()
         XCTAssertEqual(comics, comicsFecthed)
         numPage += 1
 
-        remoteService.result = nil
+        remoteService.fetchResult = nil
 
         do {
             let _ = try await classUnderTest.fetchNextPageComics()

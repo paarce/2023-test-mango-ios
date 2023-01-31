@@ -27,7 +27,7 @@ final class ComicsProviderStub: ComicsProvider {
     var fetchNextPageComicsResult: [MangoMarvelApp.Comic]?
     func fetchNextPageComics() async throws -> [MangoMarvelApp.Comic] {
         fetchNextPageComicsCount += 1
-        if let data = reloadResult {
+        if let data = fetchNextPageComicsResult {
             return data
         } else {
             throw APIError.serverError

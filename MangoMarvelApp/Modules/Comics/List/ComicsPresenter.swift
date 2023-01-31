@@ -14,11 +14,16 @@ enum ComicsViewState {
     case success([ComicCellViewModel])
 }
 
+protocol ComicsViewStateDelegate {
+    func stateUpdated()
+}
+
 protocol ComicsPresenter: ComicsInteractionDelegate {
 
     var state: ComicsViewState { get }
+    var delegate: ComicsViewStateDelegate? { get set }
 
-    func initView(onRefresh: (() -> Void)?)
+    func initView()
     func reload()
     func loadNextPageIfNeeded(lastIndexShowed: Int)
 }
@@ -26,23 +31,25 @@ protocol ComicsPresenter: ComicsInteractionDelegate {
 final class ComicsPresenterImpl: ComicsPresenter  {
 
     private var provider: ComicsProvider
-    private var onRefresh: (() -> Void)?
+    var delegate: ComicsViewStateDelegate?
     private var initialFavIds: [Int]?
     private (set) var state: ComicsViewState {
         didSet {
-            onRefresh?()
+            delegate?.stateUpdated()
         }
     }
 
     init(
-        provider: ComicsProvider
+        state: ComicsViewState = .empty,
+        provider: ComicsProvider,
+        delegate: ComicsViewStateDelegate? = nil
     ) {
-        self.state = .empty
+        self.state = state
         self.provider = provider
+        self.delegate = delegate
     }
 
-    func initView(onRefresh: (() -> Void)?) {
-        self.onRefresh = onRefresh
+    func initView() {
         initialFavIds = provider.fecthFavoritesIds()
         reload()
     }
@@ -118,6 +125,7 @@ extension ComicsPresenterImpl {
         static let offsetToLoadMore = 10
     }
 }
+
 
 extension InfoCellModel {
     init?(comicsState: ComicsViewState) {

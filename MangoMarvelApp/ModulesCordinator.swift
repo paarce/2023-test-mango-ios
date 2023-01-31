@@ -19,23 +19,25 @@ struct ModuleCoordinator {
 
     func createComicsCollection() -> UIViewController {
         ComicsCollectionViewController(
-            presenter: ComicsPresenterImpl(
-                provider: ComicsProviderImpl(
-                    remoteService: services.comicsRemoteService,
-                    localService: services.comicsLocalService
-                )
+            provider: ComicsProviderImpl(
+                remoteService: services.comicsRemoteService,
+                localService: services.comicsLocalService
             )
         )
     }
 
-    func createFavComics() -> UIViewController {
+    func createFavComics(parentView: UIViewController) -> UIViewController {
         UIHostingController(rootView:
-            FavComicsView(viewModel: .init(localService: services.comicsLocalService))
+            FavComicsView(viewModel: .init(
+                remoteService: services.comicsRemoteService,
+                localService: services.comicsLocalService,
+                parentView: parentView
+            ))
                 .environment(\.managedObjectContext, services.coreDataStack.container.viewContext)
         )
     }
 
     func createComicDetail(comic: ComicDTO) -> UIViewController {
-        ComicDetailTableViewController(presenter: ComicDetailPresenterImpl(comic: comic))
+        ComicDetailTableViewController(viewModel: ComicDetailViewModelImpl(comic: comic))
     }
 }

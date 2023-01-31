@@ -12,7 +12,6 @@ final class EndpointTests: XCTestCase {
     
     var classUnderTest: EndpointRepresentable!
 
-
     override func tearDownWithError() throws {
         classUnderTest = nil
     }
@@ -44,6 +43,18 @@ final class EndpointTests: XCTestCase {
         XCTAssertNotNil(value)
         let offset = try? XCTUnwrap(value as? String)
         XCTAssertEqual(offset, "20")
+    }
+
+
+    func testComicsDetailEnpoint() throws {
+
+        classUnderTest = ComicDetailEndpoint(id: 1)
+
+        XCTAssertEqual(classUnderTest.id, .comic(id: 1))
+        XCTAssertEqual(classUnderTest.id.pathName, "/comics/1")
+        XCTAssertEqual(classUnderTest.method, .get)
+        XCTAssertTrue(classUnderTest.headers.isEmpty)
+        XCTAssertTrue(classUnderTest.params.isEmpty)
     }
 
 }

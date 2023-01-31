@@ -17,7 +17,7 @@ extension Comic {
         description: String? = nil,
         thumbnail: ImageInfo = .mock(),
         prices: [Comic.Price] = [.mock()],
-        dates: [Comic.ComicDate] = [.mock()],
+        dates: [Comic.Date] = [.mock()],
         images: [ImageInfo] = [.mock()],
         creators: CreatorsContent = .mock(),
         stories: StoriesContent = .mock(),
@@ -39,11 +39,11 @@ extension Comic {
     }
 }
 
-extension Comic.ComicDate {
+extension Comic.Date {
     static func mock(
         date: String? = "",
-        type: String? = ""
-    ) -> Comic.ComicDate {
+        type: Comic.Date.DateType? = .sale
+    ) -> Comic.Date {
         .init(date: date, type: type)
     }
 }

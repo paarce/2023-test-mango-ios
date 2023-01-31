@@ -9,32 +9,35 @@ import SwiftUI
 
 struct FavComicsView: View {
 
-    var viewModel: FavComicViewModel
+    @ObservedObject var viewModel: FavComicViewModel
 
     init(viewModel: FavComicViewModel) {
         self.viewModel = viewModel
     }
 
-    @FetchRequest(
-      entity: FavComic.entity(),
-      sortDescriptors: [
-        NSSortDescriptor(keyPath: \FavComic.inlcudedDate, ascending: true)
-      ]
-    ) var favs: FetchedResults<FavComic>
+//    @FetchRequest(
+//      entity: FavComic.entity(),
+//      sortDescriptors: [
+//        NSSortDescriptor(keyPath: \FavComic.inlcudedDate, ascending: true)
+//      ]
+//    ) var favs: FetchedResults<FavComic>
 
     var body: some View {
 
         NavigationView {
           List {
-            ForEach(favs, id: \.title) {
-                Text($0.title ?? "")
+              ForEach(viewModel.favs, id: \.title) {
+                  RowView(favComic: $0, completion: { comic in
+                      viewModel.moveToDetail(fav: comic)
+                  })
             }
             .onDelete(perform: {
-                viewModel.deleteFavs(from: Array(favs), at: $0)
+                viewModel.deleteFavs(at: $0)
             })
           }
           .navigationBarTitle(Text(Constants.navTitle))
         }
+        .onAppear(perform: viewModel.fetchFavoriteComics)
     }
 
     enum Constants {
@@ -42,8 +45,32 @@ struct FavComicsView: View {
     }
 }
 
+struct RowView: View {
+
+    let favComic: FavComic
+    let completion: (FavComic) -> Void
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(favComic.title ?? "")
+            if let date = favComic.dateFormatted {
+                Text(String.localizedStringWithFormat("COMICS_FAVORITES_DATE".localized, date))
+                    .font(.footnote)
+                    .fontWeight(.light)
+            }
+        }
+        .onTapGesture {
+            completion(favComic)
+        }
+    }
+}
+
 struct FavComicsView_Previews: PreviewProvider {
     static var previews: some View {
-        FavComicsView(viewModel: .init(localService: AppState.shared.coodinator.services.comicsLocalService))
+        FavComicsView(viewModel: .init(
+            remoteService: AppState.shared.coodinator.services.comicsRemoteService,
+            localService: AppState.shared.coodinator.services.comicsLocalService,
+            parentView: UIViewController()
+        ))
     }
 }

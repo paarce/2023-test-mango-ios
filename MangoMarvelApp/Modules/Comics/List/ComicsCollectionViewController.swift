@@ -7,17 +7,17 @@
 
 import UIKit
 
-class ComicsCollectionViewController: UICollectionViewController {
+class ComicsCollectionViewController: UICollectionViewController, ComicsViewStateDelegate {
 
     private var customLayout = ViewFactory.layout
     private var presenter: ComicsPresenter
     private var resizer: ComicsResizer
 
     init(
-        presenter: ComicsPresenter,
+        provider: ComicsProvider,
         resizer: ComicsResizer = ComicsResizerImpl()
     ) {
-        self.presenter = presenter
+        self.presenter = ComicsPresenterImpl(provider: provider)
         self.resizer = resizer
         super.init(collectionViewLayout: customLayout)
     }
@@ -40,19 +40,21 @@ class ComicsCollectionViewController: UICollectionViewController {
         collectionView.register(InfoCollectionViewCell.self, forCellWithReuseIdentifier: InfoCollectionViewCell.identifier)
 
         self.navigationItem.rightBarButtonItem = .init(image: .init(systemName: "heart.fill"), style: .plain, target: self, action: #selector(moveToFavsView))
-
-        presenter.initView(onRefresh: { [weak self] in
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-            }
-        })
+    
+        presenter.delegate = self
+        presenter.initView()
     }
 
+    func stateUpdated() {
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
     // MARK: - Navigation
 
     @objc
     private func moveToFavsView() {
-        let favsView = AppState.shared.coodinator.createFavComics()
+        let favsView = AppState.shared.coodinator.createFavComics(parentView: self)
         self.navigationController?.pushViewController(favsView, animated: true)
     }
 

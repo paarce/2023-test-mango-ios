@@ -64,6 +64,9 @@
 		F34FB28F2989663A00E985C7 /* ComicsProviderLocalServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FB28E2989663A00E985C7 /* ComicsProviderLocalServiceTests.swift */; };
 		F34FB2912989707300E985C7 /* ComicsRemoteServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FB2902989707300E985C7 /* ComicsRemoteServiceTests.swift */; };
 		F34FB293298970EB00E985C7 /* ComicsLocalServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FB292298970EB00E985C7 /* ComicsLocalServiceTests.swift */; };
+		F34FB2952989877900E985C7 /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FB2942989877900E985C7 /* String+extension.swift */; };
+		F34FB297298998EB00E985C7 /* ComicsViewStateDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FB296298998EB00E985C7 /* ComicsViewStateDelegateStub.swift */; };
+		F34FB2992989A62B00E985C7 /* ComicDetailEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FB2982989A62B00E985C7 /* ComicDetailEndpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +151,9 @@
 		F34FB28E2989663A00E985C7 /* ComicsProviderLocalServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsProviderLocalServiceTests.swift; sourceTree = "<group>"; };
 		F34FB2902989707300E985C7 /* ComicsRemoteServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsRemoteServiceTests.swift; sourceTree = "<group>"; };
 		F34FB292298970EB00E985C7 /* ComicsLocalServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsLocalServiceTests.swift; sourceTree = "<group>"; };
+		F34FB2942989877900E985C7 /* String+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extension.swift"; sourceTree = "<group>"; };
+		F34FB296298998EB00E985C7 /* ComicsViewStateDelegateStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsViewStateDelegateStub.swift; sourceTree = "<group>"; };
+		F34FB2982989A62B00E985C7 /* ComicDetailEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDetailEndpoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,6 +327,7 @@
 			isa = PBXGroup;
 			children = (
 				F34FAD442981949800E985C7 /* UIView+extension.swift */,
+				F34FB2942989877900E985C7 /* String+extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -356,6 +363,7 @@
 			children = (
 				F34FAD5D29832B1400E985C7 /* ComicsStateDelegateStub.swift */,
 				F34FAD662983337B00E985C7 /* ComicsProviderStub.swift */,
+				F34FB296298998EB00E985C7 /* ComicsViewStateDelegateStub.swift */,
 			);
 			path = Stub;
 			sourceTree = "<group>";
@@ -446,6 +454,7 @@
 			isa = PBXGroup;
 			children = (
 				F34FA85B29816E2C00E985C7 /* ComicsEndpoint.swift */,
+				F34FB2982989A62B00E985C7 /* ComicDetailEndpoint.swift */,
 			);
 			path = Enpoints;
 			sourceTree = "<group>";
@@ -599,6 +608,7 @@
 				F34FAD6E2983BDC900E985C7 /* AppState.swift in Sources */,
 				F34FA84C29814DF800E985C7 /* EndpointRepresentable.swift in Sources */,
 				F34FAD7A2983CDA500E985C7 /* ComicCellViewModel.swift in Sources */,
+				F34FB2952989877900E985C7 /* String+extension.swift in Sources */,
 				F34FA84A29814C4000E985C7 /* Environment.swift in Sources */,
 				F34FA855298154B900E985C7 /* ComicsRemoteService.swift in Sources */,
 				F34FAD8D2987CC3800E985C7 /* ComicDetailPresenter.swift in Sources */,
@@ -611,6 +621,7 @@
 				F34FAD8F2987CD4700E985C7 /* ComicBasicInfoTableViewCell.swift in Sources */,
 				F34FA84629814A9A00E985C7 /* APIRequest.swift in Sources */,
 				F34FAD722983BF6800E985C7 /* MangoMarvelApp.xcdatamodeld in Sources */,
+				F34FB2992989A62B00E985C7 /* ComicDetailEndpoint.swift in Sources */,
 				F34FAD7D2983E9AE00E985C7 /* ComicsLocalService.swift in Sources */,
 				F34FA851298151D300E985C7 /* ComicsPresenter.swift in Sources */,
 				F34FA8532981530F00E985C7 /* ComicsProvider.swift in Sources */,
@@ -645,6 +656,7 @@
 				F34FAD572982DCA000E985C7 /* ComicsProviderRemoteServiceTests.swift in Sources */,
 				F34FB293298970EB00E985C7 /* ComicsLocalServiceTests.swift in Sources */,
 				F34FB28F2989663A00E985C7 /* ComicsProviderLocalServiceTests.swift in Sources */,
+				F34FB297298998EB00E985C7 /* ComicsViewStateDelegateStub.swift in Sources */,
 				CC41C23925DD3FA30057D0C9 /* MangoMarvelAppTests.swift in Sources */,
 				F34FAD6B29833E5B00E985C7 /* ComicsEndpointTests.swift in Sources */,
 				F34FAD6929833CAA00E985C7 /* ModuleCoordinatorTests.swift in Sources */,

@@ -12,6 +12,7 @@ struct ComicDTO {
     let id: Int
     let title: String
     let body: String
+    let dateFormatted: String?
     let thumbnailURL: URL?
     let price: String?
     let images: [URL]
@@ -28,6 +29,17 @@ struct ComicDTO {
         creators = comic.creators.items.compactMap({ .init(creator: $0) })
         events = comic.events.items.compactMap({ .init(event: $0) })
         stories = comic.stories.items.compactMap({ .init(story: $0) })
+
+
+        let saleDate = comic.dates.first(where: { $0.type == .sale })
+        if let date = saleDate?.dateValue {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM d, YYYY"
+            dateFormatted = dateFormatter.string(from: date)
+        } else {
+            dateFormatted = nil
+        }
+
         if let price = comic.prices.first?.price {
             self.price = String(format: "$%.02f", price)
         } else {
@@ -35,7 +47,6 @@ struct ComicDTO {
         }
     }
 }
-
 
 extension GridItem {
 
@@ -52,5 +63,15 @@ extension GridItem {
     init?(event: Comic.Event) {
         guard let name = event.name else { return nil }
         self = .init(title: name, subtitle: nil)
+    }
+}
+
+extension  Comic.Date {
+
+    var dateValue: Date? {
+        guard let sdate = date else { return nil }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        return dateFormatter.date(from: sdate)
     }
 }

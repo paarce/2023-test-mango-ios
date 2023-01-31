@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ComicSection {
+enum ComicDetail {
     case image(URL?)
     case basic(ComicDTO)
     case creators([GridItem])
@@ -15,16 +15,15 @@ enum ComicSection {
     case events([GridItem])
 }
 
-protocol ComicDetailPresenter {
-
-    var sections: [ComicSection] { get }
+protocol ComicDetailViewModel {
+    var details: [ComicDetail] { get }
 }
 
-final class ComicDetailPresenterImpl: ComicDetailPresenter {
-    let sections: [ComicSection]
+final class ComicDetailViewModelImpl: ComicDetailViewModel {
+    let details: [ComicDetail]
 
     init(comic: ComicDTO) {
-        sections = [
+        details = [
             .image(comic.thumbnailURL),
             .basic(comic),
             .creators(comic.creators),
@@ -34,7 +33,7 @@ final class ComicDetailPresenterImpl: ComicDetailPresenter {
     }
 }
 
-extension ComicSection {
+extension ComicDetail {
     var title: String {
         switch self {
         case .stories:

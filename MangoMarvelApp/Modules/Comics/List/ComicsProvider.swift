@@ -23,6 +23,7 @@ protocol ComicsProvider: ComicsRemoteProvider, ComicsLocalProvider {}
 
 final class ComicsProviderImpl: ComicsProvider {
 
+
     private var remoteService: ComicsRemoteService
     private var localService: ComicsLocalService
     private let limit: Int
@@ -37,17 +38,18 @@ final class ComicsProviderImpl: ComicsProvider {
     //MARK: - ComicsRemoteProviderReprentable
 
     func reload() async throws -> [Comic] {
-        let currentPage = self.page ?? 0
-        let reponse = try await remoteService.fecth(options: .init(offset: currentPage * limit) )
-        page = reponse.data.offset / self.limit
-        return reponse.data.results
+        try await fetch(page: page ?? 0)
     }
 
     func fetchNextPageComics() async throws -> [Comic] {
         let currentPage = self.page ?? -1
         let nextPage = currentPage + 1
-        let reponse = try await remoteService.fecth(options: .init(offset: nextPage * limit) )
-        page = reponse.data.offset / self.limit
+        return try await fetch(page: nextPage)
+    }
+
+    func fetch(page: Int) async throws -> [Comic] {
+        let reponse = try await remoteService.fecth(options: .init(offset: page * limit) )
+        self.page = reponse.data.offset / self.limit
         return reponse.data.results
     }
 

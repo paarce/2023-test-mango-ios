@@ -48,5 +48,4 @@ final class ComicsRemoteServiceTests: XCTestCase {
             XCTAssertNotNil(error as? APIError)
         }
     }
-
 }

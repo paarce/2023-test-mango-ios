@@ -9,10 +9,10 @@ import UIKit
 
 class ComicDetailTableViewController: UITableViewController {
 
-    private var presenter: ComicDetailPresenter!
+    private var viewModel: ComicDetailViewModel
 
-    init(presenter: ComicDetailPresenter) {
-        self.presenter = presenter
+    init(viewModel: ComicDetailViewModel) {
+        self.viewModel = viewModel
         super.init(style: .plain)
     }
 
@@ -42,14 +42,14 @@ class ComicDetailTableViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int { 1 }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.sections.count
+        viewModel.details.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let section = presenter.sections[indexPath.row]
+        let detail = viewModel.details[indexPath.row]
 
-        switch section {
+        switch detail {
         case .basic(let dto):
             let cell = tableView.dequeueReusableCell(withIdentifier: ComicBasicInfoTableViewCell.identifier, for: indexPath) as! ComicBasicInfoTableViewCell
             cell.set(model: dto)
@@ -60,7 +60,7 @@ class ComicDetailTableViewController: UITableViewController {
             return cell
         case .creators(let items), .events(let items), .stories(let items):
             let cell = tableView.dequeueReusableCell(withIdentifier: ComicGridTableViewCell.identifier, for: indexPath) as! ComicGridTableViewCell
-            cell.set(title: section.title, items: items)
+            cell.set(title: detail.title, items: items)
             return cell
         }
     }

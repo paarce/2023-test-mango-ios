@@ -83,7 +83,7 @@ class ComicBasicInfoTableViewCell: UITableViewCell {
         title.text = model.title
         id.text = String(model.id)
         body.text = model.body
-        dateRelease.text = "Dic 23th 2000"
+        dateRelease.text = model.dateFormatted
         prices.text = model.price
     }
 

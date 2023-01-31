@@ -14,7 +14,7 @@ struct Comic: Codable {
     let description: String?
     let thumbnail: ImageInfo
     let prices: [Price]
-    let dates: [ComicDate]
+    let dates: [Comic.Date]
     let images: [ImageInfo]
     let creators: CreatorsContent
     let stories: StoriesContent
@@ -35,12 +35,12 @@ extension Comic {
 
     struct Date: Codable {
         let date: String?
-        let type: String?
-    }
+        let type: DateType?
 
-    struct ComicDate: Codable {
-        let date: String?
-        let type: String?
+        enum DateType: String, Codable {
+            case sale = "onsaleDate"
+            case foc = "focDate"
+        }
     }
 }
 extension Comic {

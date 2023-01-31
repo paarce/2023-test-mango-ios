@@ -24,9 +24,3 @@ extension UIColor {
     static let thSubheading = Theme.Colors.subheading
     static let thFavorite = Theme.Colors.favorite
 }
-
-extension String {
-    var localized: String {
-        NSLocalizedString(self, comment: "")
-    }
-}

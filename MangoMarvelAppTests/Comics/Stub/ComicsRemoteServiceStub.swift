@@ -10,13 +10,25 @@ import Foundation
 
 final class ComicsRemoteServiceStub: ComicsRemoteService {
 
-    var fecthCalled: ((MangoMarvelApp.ComicsEndpoint.Options) -> Void)?
-    var result: MangoMarvelApp.ComicsCollection?
+
+    var fetchCalled: ((MangoMarvelApp.ComicsEndpoint.Options) -> Void)?
+    var fetchResult: MangoMarvelApp.ComicsCollection?
 
     func fecth(options: MangoMarvelApp.ComicsEndpoint.Options) async throws -> MangoMarvelApp.ComicsCollection {
-        fecthCalled?(options)
-        if let result {
-            return result
+        fetchCalled?(options)
+        if let fetchResult {
+            return fetchResult
+        } else {
+            throw APIError.serverError
+        }
+    }
+    var findCalled: ((Int) -> Void)?
+    var findResult: MangoMarvelApp.Comic?
+
+    func find(id: Int) async throws -> MangoMarvelApp.Comic {
+        findCalled?(id)
+        if let findResult {
+            return findResult
         } else {
             throw APIError.serverError
         }

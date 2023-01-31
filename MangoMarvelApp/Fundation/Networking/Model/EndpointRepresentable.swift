@@ -27,7 +27,7 @@ extension EndpointRepresentable {
 
 enum EndpointSupported: Equatable {
     case comics
-    case comic(id: String)
+    case comic(id: Int)
 
     var pathName: String {
         switch self {
