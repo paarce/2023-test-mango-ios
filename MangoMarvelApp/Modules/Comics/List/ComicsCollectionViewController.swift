@@ -48,12 +48,7 @@ class ComicsCollectionViewController: UICollectionViewController, ComicsViewStat
     }
 
     private func setupRefresh() {
-
-        if #available(iOS 10.0, *) {
-            collectionView.refreshControl = refreshControl
-        } else {
-            collectionView.addSubview(refreshControl)
-        }
+        collectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshWeatherData(_:)), for: .valueChanged)
     }
 
