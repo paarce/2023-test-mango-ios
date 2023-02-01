@@ -9,33 +9,23 @@ import SwiftUI
 
 struct FavComicsView: View {
 
-    @ObservedObject var viewModel: FavComicViewModel
+    @ObservedObject private var viewModel: FavComicViewModel
 
     init(viewModel: FavComicViewModel) {
         self.viewModel = viewModel
     }
 
-//    @FetchRequest(
-//      entity: FavComic.entity(),
-//      sortDescriptors: [
-//        NSSortDescriptor(keyPath: \FavComic.inlcudedDate, ascending: true)
-//      ]
-//    ) var favs: FetchedResults<FavComic>
-
     var body: some View {
 
-        NavigationView {
-          List {
-              ForEach(viewModel.favs, id: \.title) {
-                  RowView(favComic: $0, completion: { comic in
-                      viewModel.moveToDetail(fav: comic)
-                  })
+        List {
+            ForEach(viewModel.favs, id: \.title) {
+                RowView(favComic: $0, completion: { comic in
+                    viewModel.moveToDetail(fav: comic)
+                })
             }
             .onDelete(perform: {
                 viewModel.deleteFavs(at: $0)
             })
-          }
-          .navigationBarTitle(Text(Constants.navTitle))
         }
         .onAppear(perform: viewModel.fetchFavoriteComics)
     }
@@ -59,6 +49,8 @@ struct RowView: View {
                     .fontWeight(.light)
             }
         }
+        .frame(maxWidth: .infinity)
+        .padding(20)
         .onTapGesture {
             completion(favComic)
         }

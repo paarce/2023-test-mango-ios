@@ -22,25 +22,25 @@ enum APIError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .noData:
-            return "Could not received data from the server. Please retry."
+            return "COMICS_API_ERROR_NO_DATA".localized
         case .parseError:
-            return "Parse error. Please retry."
+            return "COMICS_API_ERROR_PARSE".localized
         case .unknown:
-            return "Somthing went wrong. Please retry."
+            return "COMICS_API_ERROR_UNKNOWN".localized
         case .badRequest:
-            return "Somthing went wrong connecting with the sever. Please retry."
+            return "COMICS_API_ERROR_BAD_REQUEST".localized
         case .notFound:
-            return "Data not found. Please retry."
+            return "COMICS_API_ERROR_NOT_FOUND".localized
         case .serverError:
-            return "Somthing went wrong IN the server. Please retry."
+            return "COMICS_API_ERROR_SERVER_ERROR".localized
         case .missingParameter(message: let message):
-            return message ?? "Missing parameter"
+            return message ?? "COMICS_API_ERROR_MISSING_PARAMETER".localized
         case .invalid(message: let message):
-            return message ?? "Invalid parameter"
+            return message ?? "COMICS_API_ERROR_INVALID_PARAMETER".localized
         case .methodNotAllowed:
-            return "You are trying to use a worng method Please retry."
+            return "COMICS_API_ERROR_METHOD_NOT_ALLOWED".localized
         case .forbidden:
-            return "You are not allowed to parform this action."
+            return "COMICS_API_ERROR_FORBIDDEN".localized
         }
     }
 }

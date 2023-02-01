@@ -13,3 +13,14 @@
 
 "COMICS_FAVORITES_TITLE" = "Comics favoritos";
 "COMICS_FAVORITES_DATE" = "Agregado en %@";
+
+"COMICS_API_ERROR_NO_DATA" = "No se recibio ningun dato del servidor.";
+"COMICS_API_ERROR_PARSE" = "Error al parsear. Intentar de nuevo.";
+"COMICS_API_ERROR_UNKNOWN" = "Algo ha occurido. Intentar de nuevo.";
+"COMICS_API_ERROR_BAD_REQUEST" = "Algo ha ocurrido con tu conexión. Intentar de nuevo.";
+"COMICS_API_ERROR_NOT_FOUND" = "Informacion no encontrada. Intentar de nuevo.";
+"COMICS_API_ERROR_SERVER_ERROR" = "Algo occurio en el servidor. Intentar de nuevo.";
+"COMICS_API_ERROR_MISSING_PARAMETER" = "No se pudo encontrar un parametro";
+"COMICS_API_ERROR_INVALID_PARAMETER" = "Un parametro es invalido";
+"COMICS_API_ERROR_METHOD_NOT_ALLOWED" = "Esta utilizando un metodo no permitido.Intentar de nuevo.";
+"COMICS_API_ERROR_FORBIDDEN" = "No puedes realizar esta acción.";

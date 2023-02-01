@@ -27,7 +27,7 @@ struct ModuleCoordinator {
     }
 
     func createFavComics(parentView: UIViewController) -> UIViewController {
-        UIHostingController(rootView:
+        let viewController = UIHostingController(rootView:
             FavComicsView(viewModel: .init(
                 remoteService: services.comicsRemoteService,
                 localService: services.comicsLocalService,
@@ -35,6 +35,8 @@ struct ModuleCoordinator {
             ))
                 .environment(\.managedObjectContext, services.coreDataStack.container.viewContext)
         )
+        viewController.title = "COMICS_FAVORITES_TITLE".localized
+        return viewController
     }
 
     func createComicDetail(comic: ComicDTO) -> UIViewController {

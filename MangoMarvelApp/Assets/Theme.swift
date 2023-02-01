@@ -14,6 +14,7 @@ struct Theme {
         static let body: UIColor = UIColor(named: "body") ?? .lightText
         static let subheading: UIColor = UIColor(named: "subheading") ?? .lightText
         static let favorite: UIColor = UIColor(named: "favorite") ?? .lightGray
+        static let background: UIColor = UIColor(named: "mainBackground") ?? .lightText
     }
 
 }
@@ -23,4 +24,5 @@ extension UIColor {
     static let thBody = Theme.Colors.body
     static let thSubheading = Theme.Colors.subheading
     static let thFavorite = Theme.Colors.favorite
+    static let thBackground = Theme.Colors.background
 }

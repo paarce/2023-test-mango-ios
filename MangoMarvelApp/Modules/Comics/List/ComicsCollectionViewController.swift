@@ -9,6 +9,7 @@ import UIKit
 
 class ComicsCollectionViewController: UICollectionViewController, ComicsViewStateDelegate {
 
+    private let refreshControl = UIRefreshControl()
     private var customLayout = ViewFactory.layout
     private var presenter: ComicsPresenter
     private var resizer: ComicsResizer
@@ -38,16 +39,33 @@ class ComicsCollectionViewController: UICollectionViewController, ComicsViewStat
         collectionView.allowsMultipleSelection = false
         collectionView.register(ComicCollectionViewCell.self, forCellWithReuseIdentifier: ComicCollectionViewCell.identifier)
         collectionView.register(InfoCollectionViewCell.self, forCellWithReuseIdentifier: InfoCollectionViewCell.identifier)
-
+        collectionView.backgroundColor = .thBackground
         self.navigationItem.rightBarButtonItem = .init(image: .init(systemName: "heart.fill"), style: .plain, target: self, action: #selector(moveToFavsView))
-    
+
+        setupRefresh()
         presenter.delegate = self
         presenter.initView()
+    }
+
+    private func setupRefresh() {
+
+        if #available(iOS 10.0, *) {
+            collectionView.refreshControl = refreshControl
+        } else {
+            collectionView.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refreshWeatherData(_:)), for: .valueChanged)
+    }
+
+    @objc
+    private func refreshWeatherData(_ sender: Any) {
+        self.presenter.reload()
     }
 
     func stateUpdated() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
+            self.refreshControl.endRefreshing()
         }
     }
     // MARK: - Navigation

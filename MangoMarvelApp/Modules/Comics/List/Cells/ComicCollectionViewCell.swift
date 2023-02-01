@@ -67,10 +67,6 @@ class ComicCollectionViewCell: UICollectionViewCell {
             to: contentView,
             insets: .init(top: Constants.padding, left: Constants.padding, bottom: Constants.padding, right: Constants.padding)
         )
-//        title.setContentHuggingPriority(.defaultLow, for: .vertical)
-//        body.setContentHuggingPriority(.defaultHigh, for: .vertical)
-//        interactionStack.setContentHuggingPriority(.defaultLow, for: .vertical)
-//        imageView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
     }
 
     func set(model: ComicCellViewModel?) {

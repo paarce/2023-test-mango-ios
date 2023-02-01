@@ -13,3 +13,14 @@
 
 "COMICS_FAVORITES_TITLE" = "Favorites comics";
 "COMICS_FAVORITES_DATE" = "Added at %@";
+
+"COMICS_API_ERROR_NO_DATA" = "Could not received data from the server. Please retry.";
+"COMICS_API_ERROR_PARSE" = "Parse error. Please retry.";
+"COMICS_API_ERROR_UNKNOWN" = "Somthing went wrong. Please retry.";
+"COMICS_API_ERROR_BAD_REQUEST" = "Somthing went wrong connecting with the sever. Please retry.";
+"COMICS_API_ERROR_NOT_FOUND" = "Data not found. Please retry.";
+"COMICS_API_ERROR_SERVER_ERROR" = "Somthing went wrong IN the server. Please retry.";
+"COMICS_API_ERROR_MISSING_PARAMETER" = "Missing parameter";
+"COMICS_API_ERROR_INVALID_PARAMETER" = "Invalid parameter";
+"COMICS_API_ERROR_METHOD_NOT_ALLOWED" = "You are trying to use a worng method Please retry.";
+"COMICS_API_ERROR_FORBIDDEN" = "You are not allowed to parform this action.";
