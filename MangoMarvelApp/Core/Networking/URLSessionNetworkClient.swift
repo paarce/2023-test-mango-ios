@@ -11,10 +11,7 @@ class URLSessionNetworkClient: NetworkClient {
 
     func perform<Output: Decodable>(for request: URLRequest) async throws -> Output {
 
-        print("Request URL: \(request)")
-        print("Request Header: \(String(describing: request.allHTTPHeaderFields))")
-        print("Request httpMethod: \(String(describing: request.httpMethod))")
-        print("Request Body: \(String(decoding: request.httpBody ?? Data(), as: UTF8.self)))")
+        print(request)
 
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpUrlResponse = response as? HTTPURLResponse, httpUrlResponse.statusCode == 200 else {

@@ -13,6 +13,17 @@
 		CC41C22E25DD3FA30057D0C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC41C22C25DD3FA30057D0C9 /* LaunchScreen.storyboard */; };
 		CC41C23925DD3FA30057D0C9 /* MangoMarvelAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC41C23825DD3FA30057D0C9 /* MangoMarvelAppTests.swift */; };
 		CC41C24425DD3FA30057D0C9 /* MangoMarvelAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC41C24325DD3FA30057D0C9 /* MangoMarvelAppUITests.swift */; };
+		F3250AD92990E1A800AB3347 /* ComicListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3250AD82990E1A800AB3347 /* ComicListView.swift */; };
+		F3250ADB2990E1CD00AB3347 /* ComicListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3250ADA2990E1CD00AB3347 /* ComicListInteractor.swift */; };
+		F3250ADD2990E1E100AB3347 /* ComicListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3250ADC2990E1E100AB3347 /* ComicListRouter.swift */; };
+		F3250ADF2990E1F800AB3347 /* ComicListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3250ADE2990E1F800AB3347 /* ComicListPresenter.swift */; };
+		F34402B629925411007B6239 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34402B529925411007B6239 /* ContentView.swift */; };
+		F34402B929927130007B6239 /* InfoGenericView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34402B82992712F007B6239 /* InfoGenericView.swift */; };
+		F34402BB29927166007B6239 /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34402BA29927166007B6239 /* RemoteImage.swift */; };
+		F34402C02993A059007B6239 /* ComicDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34402BF2993A059007B6239 /* ComicDetailView.swift */; };
+		F34402C22993A092007B6239 /* ComicDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34402C12993A092007B6239 /* ComicDetailPresenter.swift */; };
+		F34402C42993A0AF007B6239 /* ComicDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34402C32993A0AF007B6239 /* ComicDetailInteractor.swift */; };
+		F34402C62993AF40007B6239 /* CarouselImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34402C52993AF40007B6239 /* CarouselImageView.swift */; };
 		F34FA84629814A9A00E985C7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA84529814A9A00E985C7 /* APIRequest.swift */; };
 		F34FA84829814ACF00E985C7 /* APIErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA84729814ACF00E985C7 /* APIErrors.swift */; };
 		F34FA84A29814C4000E985C7 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34FA84929814C4000E985C7 /* Environment.swift */; };
@@ -98,6 +109,17 @@
 		CC41C23F25DD3FA30057D0C9 /* MangoMarvelAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MangoMarvelAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC41C24325DD3FA30057D0C9 /* MangoMarvelAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangoMarvelAppUITests.swift; sourceTree = "<group>"; };
 		CC41C24525DD3FA30057D0C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F3250AD82990E1A800AB3347 /* ComicListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicListView.swift; sourceTree = "<group>"; };
+		F3250ADA2990E1CD00AB3347 /* ComicListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicListInteractor.swift; sourceTree = "<group>"; };
+		F3250ADC2990E1E100AB3347 /* ComicListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicListRouter.swift; sourceTree = "<group>"; };
+		F3250ADE2990E1F800AB3347 /* ComicListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicListPresenter.swift; sourceTree = "<group>"; };
+		F34402B529925411007B6239 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F34402B82992712F007B6239 /* InfoGenericView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoGenericView.swift; sourceTree = "<group>"; };
+		F34402BA29927166007B6239 /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
+		F34402BF2993A059007B6239 /* ComicDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ComicDetailView.swift; path = MangoMarvelApp/Modules/ComicDetail/ComicDetailView.swift; sourceTree = SOURCE_ROOT; };
+		F34402C12993A092007B6239 /* ComicDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDetailPresenter.swift; sourceTree = "<group>"; };
+		F34402C32993A0AF007B6239 /* ComicDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDetailInteractor.swift; sourceTree = "<group>"; };
+		F34402C52993AF40007B6239 /* CarouselImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselImageView.swift; sourceTree = "<group>"; };
 		F34FA84529814A9A00E985C7 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		F34FA84729814ACF00E985C7 /* APIErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrors.swift; sourceTree = "<group>"; };
 		F34FA84929814C4000E985C7 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -202,10 +224,12 @@
 		CC41C22025DD3FA10057D0C9 /* MangoMarvelApp */ = {
 			isa = PBXGroup;
 			children = (
+				F34402BC29939F9F007B6239 /* CustomArchitecture */,
+				F34402B729927106007B6239 /* Funtional Views */,
+				F3250AD62990E0E400AB3347 /* Entities */,
+				F34402BD29939FE6007B6239 /* Modules */,
 				F34FADAF29893F2E00E985C7 /* Assets */,
-				F34FADA229891F1200E985C7 /* Helpers */,
 				F34FA83F298145BA00E985C7 /* Core */,
-				F34FA840298145C100E985C7 /* Modules */,
 				F34FAD9A29890D4900E985C7 /* Services */,
 				F34FA85929815DDE00E985C7 /* ModulesCordinator.swift */,
 				CC41C22125DD3FA10057D0C9 /* AppDelegate.swift */,
@@ -213,6 +237,7 @@
 				CC41C22325DD3FA10057D0C9 /* SceneDelegate.swift */,
 				CC41C22C25DD3FA30057D0C9 /* LaunchScreen.storyboard */,
 				CC41C22F25DD3FA30057D0C9 /* Info.plist */,
+				F34402B529925411007B6239 /* ContentView.swift */,
 			);
 			path = MangoMarvelApp;
 			sourceTree = "<group>";
@@ -238,6 +263,65 @@
 			path = MangoMarvelAppUITests;
 			sourceTree = "<group>";
 		};
+		F3250AD62990E0E400AB3347 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				F34FA85E29816EA100E985C7 /* APIResponse.swift */,
+				F34FAD962987CF6500E985C7 /* ComicModel.swift */,
+				F34FAD482981A52700E985C7 /* ComicDTO.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		F3250AD72990E19600AB3347 /* ComicList */ = {
+			isa = PBXGroup;
+			children = (
+				F3250AD82990E1A800AB3347 /* ComicListView.swift */,
+				F3250ADA2990E1CD00AB3347 /* ComicListInteractor.swift */,
+				F3250ADC2990E1E100AB3347 /* ComicListRouter.swift */,
+				F3250ADE2990E1F800AB3347 /* ComicListPresenter.swift */,
+			);
+			path = ComicList;
+			sourceTree = "<group>";
+		};
+		F34402B729927106007B6239 /* Funtional Views */ = {
+			isa = PBXGroup;
+			children = (
+				F34402B82992712F007B6239 /* InfoGenericView.swift */,
+				F34402BA29927166007B6239 /* RemoteImage.swift */,
+				F34402C52993AF40007B6239 /* CarouselImageView.swift */,
+			);
+			path = "Funtional Views";
+			sourceTree = "<group>";
+		};
+		F34402BC29939F9F007B6239 /* CustomArchitecture */ = {
+			isa = PBXGroup;
+			children = (
+				F34FA840298145C100E985C7 /* Modules */,
+				F34FADA229891F1200E985C7 /* Helpers */,
+			);
+			path = CustomArchitecture;
+			sourceTree = "<group>";
+		};
+		F34402BD29939FE6007B6239 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				F34402BE2993A04A007B6239 /* ComicDetail */,
+				F3250AD72990E19600AB3347 /* ComicList */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		F34402BE2993A04A007B6239 /* ComicDetail */ = {
+			isa = PBXGroup;
+			children = (
+				F34402BF2993A059007B6239 /* ComicDetailView.swift */,
+				F34402C12993A092007B6239 /* ComicDetailPresenter.swift */,
+				F34402C32993A0AF007B6239 /* ComicDetailInteractor.swift */,
+			);
+			path = ComicDetail;
+			sourceTree = "<group>";
+		};
 		F34FA83F298145BA00E985C7 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -259,10 +343,9 @@
 		F34FA841298145CB00E985C7 /* Comics */ = {
 			isa = PBXGroup;
 			children = (
-				F34FAD482981A52700E985C7 /* ComicDTO.swift */,
-				F34FAD6C2983BD3700E985C7 /* Fav */,
 				F34FA842298145E200E985C7 /* List */,
 				F34FA843298145EE00E985C7 /* Detail */,
+				F34FAD6C2983BD3700E985C7 /* Fav */,
 			);
 			path = Comics;
 			sourceTree = "<group>";
@@ -275,7 +358,6 @@
 				F34FA850298151D300E985C7 /* ComicsPresenter.swift */,
 				F34FA8522981530F00E985C7 /* ComicsProvider.swift */,
 				F34FAD852987BB7900E985C7 /* ComicsResizer.swift */,
-				F34FAD962987CF6500E985C7 /* ComicModel.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -306,7 +388,6 @@
 			isa = PBXGroup;
 			children = (
 				F34FA84B29814DF800E985C7 /* EndpointRepresentable.swift */,
-				F34FA85E29816EA100E985C7 /* APIResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -613,6 +694,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F34402B929927130007B6239 /* InfoGenericView.swift in Sources */,
 				F34FA84E298150CA00E985C7 /* ComicsCollectionViewController.swift in Sources */,
 				F34FAD4D2981BE0800E985C7 /* ImageRemote.swift in Sources */,
 				F34FAD762983C01700E985C7 /* FavComicViewModel.swift in Sources */,
@@ -622,24 +704,33 @@
 				F34FA84C29814DF800E985C7 /* EndpointRepresentable.swift in Sources */,
 				F34FAD7A2983CDA500E985C7 /* ComicCellViewModel.swift in Sources */,
 				F34FB2952989877900E985C7 /* String+extension.swift in Sources */,
+				F3250ADD2990E1E100AB3347 /* ComicListRouter.swift in Sources */,
 				F34FA84A29814C4000E985C7 /* Environment.swift in Sources */,
 				F34FA855298154B900E985C7 /* ComicsRemoteService.swift in Sources */,
 				F34FAD8D2987CC3800E985C7 /* ComicDetailViewModel.swift in Sources */,
 				F34FAD492981A52700E985C7 /* ComicDTO.swift in Sources */,
+				F34402C42993A0AF007B6239 /* ComicDetailInteractor.swift in Sources */,
 				F34FA85A29815DDE00E985C7 /* ModulesCordinator.swift in Sources */,
+				F3250ADF2990E1F800AB3347 /* ComicListPresenter.swift in Sources */,
+				F34402C62993AF40007B6239 /* CarouselImageView.swift in Sources */,
 				F34FA85F29816EA100E985C7 /* APIResponse.swift in Sources */,
+				F34402BB29927166007B6239 /* RemoteImage.swift in Sources */,
 				CC41C22225DD3FA10057D0C9 /* AppDelegate.swift in Sources */,
 				F34FADA129891B8F00E985C7 /* URLSessionNetworkClient.swift in Sources */,
+				F3250ADB2990E1CD00AB3347 /* ComicListInteractor.swift in Sources */,
 				F34FAD742983C00100E985C7 /* FavComicsView.swift in Sources */,
 				F34FAD8F2987CD4700E985C7 /* ComicBasicInfoTableViewCell.swift in Sources */,
 				F34FA84629814A9A00E985C7 /* APIRequest.swift in Sources */,
 				F34FAD722983BF6800E985C7 /* MangoMarvelApp.xcdatamodeld in Sources */,
+				F3250AD92990E1A800AB3347 /* ComicListView.swift in Sources */,
 				F34FB2992989A62B00E985C7 /* ComicDetailEndpoint.swift in Sources */,
 				F34FAD7D2983E9AE00E985C7 /* ComicsLocalService.swift in Sources */,
+				F34402B629925411007B6239 /* ContentView.swift in Sources */,
 				F34FA851298151D300E985C7 /* ComicsPresenter.swift in Sources */,
 				F34FA8532981530F00E985C7 /* ComicsProvider.swift in Sources */,
 				F34FADA52989226800E985C7 /* NetworkClient.swift in Sources */,
 				F34FAD922987CDC200E985C7 /* ComicGridTableViewCell.swift in Sources */,
+				F34402C22993A092007B6239 /* ComicDetailPresenter.swift in Sources */,
 				F34FA861298180E400E985C7 /* Encrypt.swift in Sources */,
 				F34FA85C29816E2C00E985C7 /* ComicsEndpoint.swift in Sources */,
 				F34FAD942987CDEF00E985C7 /* ComicImagesTableViewCell.swift in Sources */,
@@ -651,6 +742,7 @@
 				F34FAD9C29890D6600E985C7 /* ServicesContainer.swift in Sources */,
 				F34FAD4F2981E08600E985C7 /* InfoCollectionViewCell.swift in Sources */,
 				CC41C22425DD3FA10057D0C9 /* SceneDelegate.swift in Sources */,
+				F34402C02993A059007B6239 /* ComicDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -848,7 +940,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4V75V87SH9;
 				INFOPLIST_FILE = MangoMarvelApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -868,7 +960,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4V75V87SH9;
 				INFOPLIST_FILE = MangoMarvelApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
