@@ -43,7 +43,7 @@ class ComicImagesTableViewCell: UITableViewCell {
 
     func set(url: URL?) {
         if let url = url {
-            ImageRemote.downloadImage(from: url, completion: { [weak self] imageFetched in
+            UIRemoteImage.downloadImage(from: url, completion: { [weak self] imageFetched in
                 self?.set(image: imageFetched)
             })
         } else {

@@ -80,7 +80,7 @@ class ComicCollectionViewCell: UICollectionViewCell {
         if let image = model.image {
             self.imageView.image = image
         } else if let url = model.dto.thumbnailURL {
-            ImageRemote.downloadImage(from: url, completion: { [weak self] image in
+            UIRemoteImage.downloadImage(from: url, completion: { [weak self] image in
                 self?.model?.image = image
                 DispatchQueue.main.async {
                     self?.imageView.image = image ?? Constants.placeholderImage
