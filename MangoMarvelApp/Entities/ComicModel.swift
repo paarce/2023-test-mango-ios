@@ -40,6 +40,8 @@ extension Comic {
         enum DateType: String, Codable {
             case sale = "onsaleDate"
             case foc = "focDate"
+            case unlimited = "unlimitedDate"
+            case digital = "digitalPurchaseDate"
         }
     }
 }
