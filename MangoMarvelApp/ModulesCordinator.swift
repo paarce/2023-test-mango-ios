@@ -18,12 +18,19 @@ struct ModuleCoordinator {
     }
 
     func createComicsCollection() -> UIViewController {
-        ComicsCollectionViewController(
-            provider: ComicsProviderImpl(
-                remoteService: services.comicsRemoteService,
-                localService: services.comicsLocalService
+        if #available(iOS 16.0, *) {
+            return UIHostingController(
+                rootView: ComicsGridView(presenter: .init(interactor: .init(service: services.comicsRemoteService, limit: 10)))
             )
-        )
+        } else {
+            return ComicsCollectionViewController(
+                provider: ComicsProviderImpl(
+                    remoteService: services.comicsRemoteService,
+                    localService: services.comicsLocalService
+                )
+            )
+        }
+
     }
 
     func createFavComics(parentView: UIViewController) -> UIViewController {

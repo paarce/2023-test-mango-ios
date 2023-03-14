@@ -48,7 +48,7 @@ final class ComicsProviderImpl: ComicsProvider {
     }
 
     func fetch(page: Int) async throws -> [Comic] {
-        let reponse = try await remoteService.fecth(options: .init(offset: page * limit) )
+        let reponse = try await remoteService.fecth(options: .init(page: page, limit: limit) )
         self.page = reponse.data.offset / self.limit
         return reponse.data.results
     }

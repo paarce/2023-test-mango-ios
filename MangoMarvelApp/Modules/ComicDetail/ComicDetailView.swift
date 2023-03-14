@@ -18,9 +18,13 @@ struct ComicDetailView: View {
                 CarouselImagesView(height: proxy.size.height / 3, items: presenter.galleryImages())
                     .background(Color.red)
 
-                Text(presenter.comic.title)
-                    .multilineTextAlignment(.leading)
-                    .font(Font.largeTitle)
+                if let title = presenter.comic?.title {
+                    Text(title)
+                        .multilineTextAlignment(.leading)
+                        .font(Font.largeTitle)
+                } else {
+                    Text("Unable to load the detail information")
+                }
 
                 Spacer()
             }

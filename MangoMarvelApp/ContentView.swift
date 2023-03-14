@@ -10,12 +10,15 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         NavigationView {
-          VStack(spacing: 32) {
-              ComicListView(presenter:
-                ComicListPresenter(interactor: ComicListInteractor())
-              )
-              .navigationTitle("Comics")
-          }
+            VStack(spacing: 32) {
+                if #available(iOS 16.0, *) {
+                    ComicsGridView(presenter: .init(interactor: .init(limit: 10)))
+                        .navigationTitle("Comics")
+                } else {
+                    ComicListView(presenter: ComicListPresenter(interactor: ComicListInteractor()))
+                        .navigationTitle("Comics")
+                }
+            }
         }
     }
 }

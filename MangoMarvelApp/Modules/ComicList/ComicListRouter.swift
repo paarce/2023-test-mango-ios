@@ -9,7 +9,7 @@ import SwiftUI
 
 class ComicListRouter {
 
-    func makeDetailView(for comic: Comic) -> some View {
+    func makeDetailView(for comic: Comic?) -> some View {
         ComicDetailView(presenter: .init(comic: comic))
     }
 }

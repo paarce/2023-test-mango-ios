@@ -12,12 +12,14 @@ class ComicListInteractor {
     @Published private (set) var comics: [Comic]
     private let remoteService: ComicsRemoteService
     private var page: Int
+    private let limit: Int
     private var isLoading = false
 
-    init(service: ComicsRemoteService = ComicsRemoteServiceImpl()) {
+    init(service: ComicsRemoteService = ComicsRemoteServiceImpl(), limit: Int = 20) {
         comics = []
         page = 0
         remoteService = service
+        self.limit = limit
     }
 
     func load() {
@@ -45,13 +47,9 @@ class ComicListInteractor {
 
     private func fetch(page: Int) async throws -> [Comic] {
         isLoading = true
-        let reponse = try await remoteService.fecth(options: .init(offset: page * Constants.limit) )
-        self.page = reponse.data.offset / Constants.limit
+        let reponse = try await remoteService.fecth(options: .init(page: page, limit: limit))
+        self.page = reponse.data.offset / limit
         isLoading = false
         return reponse.data.results
-    }
-
-    private enum Constants {
-        static let limit = 20
     }
 }

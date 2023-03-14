@@ -9,10 +9,11 @@ import SwiftUI
 
 struct ComicDetailPresenter {
 
-    let comic: Comic
+    let comic: Comic?
 
     func galleryImages() -> [CarouselImagItemView] {
-        comic.images.compactMap({
+        guard let comic = comic else { return [] }
+        return comic.images.compactMap({
             guard let url = $0.url else { return nil }
             return CarouselImagItemView(url: url)
         })

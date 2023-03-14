@@ -10,7 +10,8 @@ import Foundation
 struct ComicsEndpoint: EndpointRepresentable {
 
     struct Options {
-        let offset: Int?
+        let page: Int?
+        let limit: Int
     }
 
     let id: EndpointSupported = .comics
@@ -18,9 +19,11 @@ struct ComicsEndpoint: EndpointRepresentable {
     let params: [String : Any]
 
     init(options: Options) {
-        var params: [String: String] = [:]
-        if let offset = options.offset {
-            params["offset"] = String(offset)
+        var params = [
+            "limit": String(options.limit)
+        ]
+        if let page = options.page {
+            params["offset"] = String(page / options.limit)
         }
         self.params = params
     }
